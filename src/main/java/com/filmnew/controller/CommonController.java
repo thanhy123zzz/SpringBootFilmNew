@@ -32,6 +32,9 @@ public class CommonController{
 	private String getVideo(String id) {
 		return "https://api.themoviedb.org/3/movie/"+id+"/videos?api_key=b7c3309b3ea8fdf5c9afa62154eefc7f&language=en-US";
 	}
+	private String getUrlCasts(String id) {
+		return "http://api.themoviedb.org/3/movie/"+id+"/casts?api_key=b7c3309b3ea8fdf5c9afa62154eefc7f";
+	}
 	public String findWithKeyword(String keyword) throws URISyntaxException, IOException, InterruptedException {
 		HttpRequest request = HttpRequest.newBuilder()
 				.uri(URI.create(urlFindWithKeyword + keyword))
@@ -59,6 +62,14 @@ public class CommonController{
 	public String getVideos(String idFilm) throws URISyntaxException, IOException, InterruptedException {
 		HttpRequest request = HttpRequest.newBuilder()
 				.uri(URI.create(getVideo(idFilm)))
+				.method("GET", HttpRequest.BodyPublishers.noBody())
+				.build();
+		HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
+		return response.body();
+	}
+	public String getCasts(String idFilm) throws URISyntaxException, IOException, InterruptedException {
+		HttpRequest request = HttpRequest.newBuilder()
+				.uri(URI.create(getUrlCasts(idFilm)))
 				.method("GET", HttpRequest.BodyPublishers.noBody())
 				.build();
 		HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
