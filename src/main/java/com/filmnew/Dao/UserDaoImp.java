@@ -27,5 +27,22 @@ public class UserDaoImp implements UserDao{
 		user = jdbctemplate.query(sql, new MapperUser());
 		return user;
 	}
+	@Override
+	public int delete(String name) {
+		String sql = "delete from user where name = '"+name+"'";
+		return jdbctemplate.update(sql);
+	}
+	@Override
+	public int update(User user) {
+		String sql = "update user set pass = ? where name = ?";
+		return jdbctemplate.update(sql, new Object[] {user.getPass(),user.getName()});
+	}
+	@Override
+	public List<User> findAll() {
+		String sql = "select*from user";
+		List<User> user = new ArrayList<User>();
+		user = jdbctemplate.query(sql, new MapperUser());
+		return user;
+	}
 	
 }

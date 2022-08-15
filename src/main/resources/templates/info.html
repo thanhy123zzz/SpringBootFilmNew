@@ -5,10 +5,11 @@
 <title>Insert title here</title>
 </head>
 <body>
-<h1>chào </h1>
-<h2 th:text ="${user.name}"></h2>
-<h2 th:text ="${user.pass}"></h2>
 
-<p th:text="${stt}"></p>
+	<th:block th:each="url : ${urls}">
+		<a href="https://www.facebook.com"> <img class="image" th:src="${url.}">
+		</a>
+	</th:block>
+
 </body>
 </html>

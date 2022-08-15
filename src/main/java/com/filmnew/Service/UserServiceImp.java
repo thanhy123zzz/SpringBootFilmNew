@@ -1,5 +1,7 @@
 package com.filmnew.Service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,9 +15,8 @@ public class UserServiceImp implements UserService{
 	private UserDao userDao;
 	
 	@Override
-	public void delete(String id) {
-		// TODO Auto-generated method stub
-		
+	public int delete(String id) {
+		return userDao.delete(id);
 	}
 
 	@Override
@@ -26,6 +27,16 @@ public class UserServiceImp implements UserService{
 	@Override
 	public User finpOne(String name) {
 		return userDao.findOne(name).get(0);
+	}
+
+	@Override
+	public int update(User user) {
+		return userDao.update(user);
+	}
+
+	@Override
+	public List<User> findAll() {
+		return userDao.findAll();
 	}
 
 }
