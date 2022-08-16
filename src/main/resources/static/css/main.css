@@ -8350,7 +8350,7 @@ button:focus {
 =======================*/
 .comments-container {
   margin: 60px auto 15px;
-  width: 768px; }
+  width: 760px; }
 
 .comments-container h1 {
   font-size: 36px;
@@ -8442,8 +8442,8 @@ button:focus {
 * Caja del Comentario
 ---------------------------*/
 .comments-list .comment-box {
-  width: 600px;
-  float: right;
+  width: 680px;
+  float: left;
   position: relative;
   -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.15);
   -moz-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.15);

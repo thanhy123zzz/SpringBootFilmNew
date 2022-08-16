@@ -50,6 +50,11 @@ public class HelloController extends CommonController {
 			throws JsonSyntaxException, URISyntaxException, IOException, InterruptedException {
 		film film = new Gson().fromJson(getDetailwPage("1"), film.class);
 		List<results> r = film.getResults();
+		List<results> slides = new ArrayList<results>();
+		for(int i = 0;i<5;i++) {
+			slides.add(r.get(i));
+		}
+		mv.addObject("slides", slides);
 		mv.addObject("newMovies", r);
 		mv.setViewName("index");
 		return mv;
@@ -114,7 +119,6 @@ public class HelloController extends CommonController {
 		return mv;
 	}
 
-	@SuppressWarnings("null")
 	@GetMapping("/detail/{id}")
 	public ModelAndView detailFilm(@PathVariable("id") String id)
 			throws JsonSyntaxException, URISyntaxException, IOException, InterruptedException {
@@ -151,6 +155,13 @@ public class HelloController extends CommonController {
 		mv.addObject("comments", r);
 		mv.addObject("casts", casts);
 		mv.addObject("key", key);
+		mv.addObject("movie", dt);
+		return mv;
+	}
+	@GetMapping("/watch/{id}")
+	public ModelAndView watchMovie(@PathVariable("id") String id) throws JsonSyntaxException, URISyntaxException, IOException, InterruptedException {
+		mv.setViewName("Watching");
+		DetailFilm dt = new Gson().fromJson(getDetailFilm(id), DetailFilm.class);
 		mv.addObject("movie", dt);
 		return mv;
 	}

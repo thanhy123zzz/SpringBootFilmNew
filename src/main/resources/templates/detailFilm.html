@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
-<title></title>
+<title th:text="${movie.original_title}"></title>
 <link rel="stylesheet" th:href="@{/css/main.css}">
 <style>
 .modal-backdrop.show {
@@ -76,7 +76,7 @@
 						<div class="movie-poster">
 							<img
 								th:src="@{${'https://image.tmdb.org/t/p/w500'+movie.poster_path}}"
-								alt=""> <a href="movie-watching.html"
+								alt=""> <a th:href="@{'/watch/'+${movie.id}}"
 								class="btn btn-primary btn-lg btn-block"><i
 								class="fa fa-television" aria-hidden="true"></i> Watch Now</a>
 
@@ -227,7 +227,6 @@
 						</div>
 					</div>
 				</div>
-		</div>
 
 		<div class="container-fluid pading-md">
 
@@ -314,6 +313,7 @@
 
 		</div>
 		</main>
+	</div>
 	</div>
 
 	<!-- Bootstrap core JavaScript
