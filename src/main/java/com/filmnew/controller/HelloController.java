@@ -24,6 +24,8 @@ import com.filmnew.Enity.Casts;
 import com.filmnew.Enity.DetailFilm;
 import com.filmnew.Enity.IMDB;
 import com.filmnew.Enity.User;
+import com.filmnew.Enity.author_details;
+import com.filmnew.Enity.comments;
 import com.filmnew.Enity.film;
 import com.filmnew.Enity.image;
 import com.filmnew.Enity.results;
@@ -120,6 +122,7 @@ public class HelloController extends CommonController {
 		DetailFilm dt = new Gson().fromJson(getDetailFilm(id), DetailFilm.class);
 		videos v = new Gson().fromJson(getVideos(id), videos.class);
 		Casts cs = new Gson().fromJson(getCasts(id), Casts.class);
+		comments cms = new Gson().fromJson(getReviews(id), comments.class);
 		String key = null;
 		for(results r: v.getResults()) {
 			if(r.getType().equals("Trailer")) {
@@ -134,6 +137,18 @@ public class HelloController extends CommonController {
 			}
 			casts.add(cs.getCast().get(i));
 		}
+		List<results> r = new ArrayList<results>();
+		for(int i = 0; i < cms.getResults().size();i++) {
+			if(i==5)break;
+			r.add(cms.getResults().get(i));
+			if(r.get(i).getAuthor_details().getAvatar_path()==null || !r.get(i).getAuthor_details().getAvatar_path().startsWith("/http")) {
+				r.get(i).getAuthor_details().setAvatar_path(null);
+			}
+			else {
+				r.get(i).getAuthor_details().setAvatar_path(r.get(i).getAuthor_details().getAvatar_path().substring(1));
+			}
+		}
+		mv.addObject("comments", r);
 		mv.addObject("casts", casts);
 		mv.addObject("key", key);
 		mv.addObject("movie", dt);

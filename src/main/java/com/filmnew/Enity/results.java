@@ -1,5 +1,9 @@
 package com.filmnew.Enity;
 
+import java.util.Date;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
 public class results {
 private String original_title;
 private String id;
@@ -8,6 +12,35 @@ private String key;
 private String title;
 private String type;
 private String imdb_id;
+private String author;
+private String content;
+private author_details author_details;
+public String getAuthor() {
+	return author;
+}
+public author_details getAuthor_details() {
+	return author_details;
+}
+public void setAuthor_details(author_details author_details) {
+	this.author_details = author_details;
+}
+public void setAuthor(String author) {
+	this.author = author;
+}
+public String getContent() {
+	return content;
+}
+public void setContent(String content) {
+	this.content = content;
+}
+public Date getUpdated_at() {
+	return updated_at;
+}
+public void setUpdated_at(Date updated_at) {
+	this.updated_at = updated_at;
+}
+@DateTimeFormat(pattern = "MM/dd/yyyy")
+private Date updated_at;
 public String getImdb_id() {
 	return imdb_id;
 }

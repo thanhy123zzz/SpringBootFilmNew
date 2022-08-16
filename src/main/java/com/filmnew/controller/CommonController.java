@@ -35,6 +35,9 @@ public class CommonController{
 	private String getUrlCasts(String id) {
 		return "http://api.themoviedb.org/3/movie/"+id+"/casts?api_key=b7c3309b3ea8fdf5c9afa62154eefc7f";
 	}
+	private String getUrlReview(String id) {
+		return "https://api.themoviedb.org/3/movie/"+id+"/reviews?api_key=b7c3309b3ea8fdf5c9afa62154eefc7f&language=en-US&page=1";
+	}
 	public String findWithKeyword(String keyword) throws URISyntaxException, IOException, InterruptedException {
 		HttpRequest request = HttpRequest.newBuilder()
 				.uri(URI.create(urlFindWithKeyword + keyword))
@@ -75,4 +78,13 @@ public class CommonController{
 		HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
 		return response.body();
 	}
+	public String getReviews(String idFilm) throws URISyntaxException, IOException, InterruptedException {
+		HttpRequest request = HttpRequest.newBuilder()
+				.uri(URI.create(getUrlReview(idFilm)))
+				.method("GET", HttpRequest.BodyPublishers.noBody())
+				.build();
+		HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
+		return response.body();
+	}
+	
 }

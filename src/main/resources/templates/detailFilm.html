@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
-<title ></title>
+<title></title>
 <link rel="stylesheet" th:href="@{/css/main.css}">
 <style>
 .modal-backdrop.show {
@@ -82,8 +82,8 @@
 
 							<!-- Button trigger modal -->
 							<button type="button" class="btn btn-secondary btn-lg btn-block"
-								data-toggle="modal" data-target="#trailerMovie">
-								Watch Trailer</button>
+								data-toggle="modal" data-target="#trailerMovie">Watch
+								Trailer</button>
 
 							<!-- Modal -->
 							<div class="modal fade bd-example-modal-lg" id="trailerMovie"
@@ -92,7 +92,8 @@
 								<div class="modal-dialog" role="document">
 									<div class="modal-content">
 										<div class="modal-header">
-											<h5 class="modal-title" id="trailerMovieLabel" th:text = "${'Trailer '+movie.original_title}"></h5>
+											<h5 class="modal-title" id="trailerMovieLabel"
+												th:text="${'Trailer '+movie.original_title}"></h5>
 											<button type="button" class="close" data-dismiss="modal"
 												aria-label="Close">
 												<span aria-hidden="true">&times;</span>
@@ -133,10 +134,14 @@
 								<div class="movie-rate__rate-star">
 									<p>Đánh giá phim:</p>
 									<th:block th:each="i: ${#numbers.sequence(0, 9)}">
-									<i th:if = "${movie.vote_average-i>=1}" class="fa fa-star" aria-hidden="true"></i>
-									<i th:if = "${movie.vote_average-i>=0.5 && movie.vote_average-i<1}" class="fa fa-star-half-o" aria-hidden="true"></i>
-									<i th:if = "${movie.vote_average-i<0.5}" class="fa fa-star-o" aria-hidden="true"></i>
-										</th:block>
+										<i th:if="${movie.vote_average-i>=1}" class="fa fa-star"
+											aria-hidden="true"></i>
+										<i
+											th:if="${movie.vote_average-i>=0.5 && movie.vote_average-i<1}"
+											class="fa fa-star-half-o" aria-hidden="true"></i>
+										<i th:if="${movie.vote_average-i<0.5}" class="fa fa-star-o"
+											aria-hidden="true"></i>
+									</th:block>
 								</div>
 							</div>
 							<div class="cast-bio movie-nav-tabs">
@@ -154,37 +159,61 @@
 								<div class="tab-content" id="myTabContent">
 									<div class="tab-pane fade show active" id="overview"
 										role="tabpanel" aria-labelledby="overview-tab">
-										<p th:text = "${movie.overview}"></p>
+										<p th:text="${movie.overview}"></p>
 									</div>
 									<div class="tab-pane fade" id="review" role="tabpanel"
 										aria-labelledby="review-tab">
-										<p>Liên Minh Công Lý, tên tiếng Anh “Justice League”, là
-											bộ phim mà sự tồn tại của nó giống như một cuốn sách giáo
-											khoa vậy. Bạn có thể nghĩ việc đặt tất cả những siêu hành
-											hùng nổi tiếng bậc nhất của DC vào một bộ phim là lựa chọn
-											cực kỳ tuyệt vời khiến khán giả phải sướng mê cả người. Nhưng
-											thực tế cũng giống như một cuốn sách giáo khoa với đầy thông
-											tin của những bậc vĩ nhân, mỗi người vài trang giấy mà đứa
-											học sinh nào nhìn vào cũng thấy choáng ngợp,… và ngu đi từng
-											phút một.</p>
-										<iframe width="660" height="415"
-											th:src="${'https://www.youtube.com/embed/'+key}"
-											frameborder="0" gesture="media" allow="encrypted-media"
-											allowfullscreen></iframe>
+										<div class="container">
+											<div class="row">
+												<div class="comments-container">
+													<h3>Comments</h3>
+
+													<ul id="comments-list" class="comments-list">
+														<li th:each="cmt:${comments}">
+															<div class="comment-main-level">
+																<!-- Avatar -->
+																<div class="comment-avatar">
+																	<img th:if="${cmt.author_details.avatar_path}"
+																		th:src="${cmt.author_details.avatar_path}" alt="">
+																	<img th:unless="${cmt.author_details.avatar_path}"
+																		th:src="@{/images/cast/default.jpg}">
+																</div>
+																<!-- Comment Container -->
+																<div class="comment-box">
+																	<div class="comment-head">
+																		<h6 class="comment-name">
+																			<a href="#" th:text="${cmt.author}"></a>
+																		</h6>
+																		<span th:text="${cmt.updated_at}"></span> <i
+																			class="fa fa-star" aria-hidden="true"
+																			th:text="${cmt.author_details.rating}"></i>
+																	</div>
+																	<div class="comment-content" th:text="${cmt.content}">
+																	</div>
+																</div>
+															</div> <!-- Comments responses -->
+														</li>
+													</ul>
+												</div>
+											</div>
+										</div>
+
 									</div>
 									<div class="tab-pane fade" id="cast" role="tabpanel"
 										aria-labelledby="cast-tab">
 										<div class="row">
 											<div class="col-md-3" th:each="cast : ${casts}">
 												<div class="card">
-													<a href="cast-detail.html"><img th:if ="${cast.profile_path}" class="card-img-top"
-														th:src="@{${'https://image.tmdb.org/t/p/original'+cast.profile_path}}" alt="Card image cap">
-														<img th:unless ="${cast.profile_path}" class="card-img-top"
+													<a href="cast-detail.html"><img
+														th:if="${cast.profile_path}" class="card-img-top"
+														th:src="@{${'https://image.tmdb.org/t/p/original'+cast.profile_path}}"
+														alt="Card image cap"> <img
+														th:unless="${cast.profile_path}" class="card-img-top"
 														th:src="@{/images/cast/default.jpg}" alt="Card image cap">
-														</a>
+													</a>
 													<div class="card-block">
 														<h4 class="card-title text-center">
-															<a href="#" th:text = "${cast.original_name}"></a>
+															<a href="#" th:text="${cast.original_name}"></a>
 														</h4>
 													</div>
 												</div>
@@ -193,97 +222,98 @@
 										</div>
 									</div>
 								</div>
+
 							</div>
 						</div>
 					</div>
 				</div>
+		</div>
 
-				<div class="container-fluid pading-md">
+		<div class="container-fluid pading-md">
 
-					<section class="wrap post-news">
+			<section class="wrap post-news">
 
-						<div class="wrap-heading">
-							<h2 class="wrap-heading__title">
-								<a href="list-movies.html">Tin tức liên quan</a>
-							</h2>
-						</div>
-						<!-- /.wrap-heading -->
+				<div class="wrap-heading">
+					<h2 class="wrap-heading__title">
+						<a href="list-movies.html">Tin tức liên quan</a>
+					</h2>
+				</div>
+				<!-- /.wrap-heading -->
 
-						<div class="row">
-							<div class="col-md-4">
-								<article class="card">
-									<a href="news_post.html"> <img class="card-img-top"
-										src="images/news/news-5.jpg"
-										alt="Bạn biết gì về bộ tộc nữ chiến binh Amazon đang làm mưa làm gió trên các rạp phim toàn thế giới?">
-									</a>
-									<div class="card-block">
-										<h4 class="card-title">
-											<a href="#">Bạn biết gì về bộ tộc nữ chiến binh Amazon
-												đang làm mưa làm gió trên các rạp phim toàn thế giới?</a>
-										</h4>
-										<p class="card-text">Wonder Woman là một nhân vật hư cấu
-											của vũ trụ điện ảnh DC. Với hình hài từ đất được nhào nặn bởi
-											nữ hoàng Hippolyta cùng với sự sống được nữ thần Tình yêu
-											Aphrodite...</p>
-									</div>
-									<div class="card-footer">
-										<small class="text-muted">02/11/2017</small>
-									</div>
-								</article>
+				<div class="row">
+					<div class="col-md-4">
+						<article class="card">
+							<a href="news_post.html"> <img class="card-img-top"
+								src="images/news/news-5.jpg"
+								alt="Bạn biết gì về bộ tộc nữ chiến binh Amazon đang làm mưa làm gió trên các rạp phim toàn thế giới?">
+							</a>
+							<div class="card-block">
+								<h4 class="card-title">
+									<a href="#">Bạn biết gì về bộ tộc nữ chiến binh Amazon đang
+										làm mưa làm gió trên các rạp phim toàn thế giới?</a>
+								</h4>
+								<p class="card-text">Wonder Woman là một nhân vật hư cấu của
+									vũ trụ điện ảnh DC. Với hình hài từ đất được nhào nặn bởi nữ
+									hoàng Hippolyta cùng với sự sống được nữ thần Tình yêu
+									Aphrodite...</p>
 							</div>
-							<!-- item -->
-
-							<div class="col-md-4">
-								<article class="card">
-									<a href="news_post.html"> <img class="card-img-top"
-										src="images/news/news-6.jpg" alt="Card image cap">
-									</a>
-									<div class="card-block">
-										<h4 class="card-title">
-											<a href="#">Warner Bros. tiết lộ thêm thông tin thú vị về
-												hai bom tấn "Wonder Woman" và "Aquaman"</a>
-										</h4>
-										<p class="card-text">Giống như "Justice League" trên phim
-											ảnh, các ngôi sao của DC đã tụ hội lại với nhau tại ComicCon
-											thứ 4 vừa qua để quảng cáo cho bộ phim sắp ra mắt của Warner
-											Bros...</p>
-									</div>
-									<div class="card-footer">
-										<small class="text-muted">02/11/2017</small>
-									</div>
-								</article>
+							<div class="card-footer">
+								<small class="text-muted">02/11/2017</small>
 							</div>
-							<!-- item -->
+						</article>
+					</div>
+					<!-- item -->
 
-							<div class="col-md-4">
-								<article class="card">
-									<img class="card-img-top" src="images/news/news-7.jpg"
-										alt="Quên hết hiềm khích đi, hôm nay là ngày sung sướng nhất của fan Marvel và DC">
-									<div class="card-block">
-										<h4 class="card-title">
-											<a href="#">Quên hết hiềm khích đi, hôm nay là ngày sung
-												sướng nhất của fan Marvel và DC</a>
-										</h4>
-										<p class="card-text">Như thường lệ, lễ hội truyện tranh
-											San Diego Comic-Con là dịp để các hãng giới thiệu các dự án
-											tiếp theo. Comic-Con đã khiến người hâm mộ chết ngất trong
-											sung sướng...</p>
-									</div>
-									<div class="card-footer">
-										<small class="text-muted">02/11/2017</small>
-									</div>
-								</article>
+					<div class="col-md-4">
+						<article class="card">
+							<a href="news_post.html"> <img class="card-img-top"
+								src="images/news/news-6.jpg" alt="Card image cap">
+							</a>
+							<div class="card-block">
+								<h4 class="card-title">
+									<a href="#">Warner Bros. tiết lộ thêm thông tin thú vị về
+										hai bom tấn "Wonder Woman" và "Aquaman"</a>
+								</h4>
+								<p class="card-text">Giống như "Justice League" trên phim
+									ảnh, các ngôi sao của DC đã tụ hội lại với nhau tại ComicCon
+									thứ 4 vừa qua để quảng cáo cho bộ phim sắp ra mắt của Warner
+									Bros...</p>
 							</div>
-							<!-- item -->
+							<div class="card-footer">
+								<small class="text-muted">02/11/2017</small>
+							</div>
+						</article>
+					</div>
+					<!-- item -->
 
-						</div>
-						<!-- /.row -->
-					</section>
-					<!-- /section.wrap -->
+					<div class="col-md-4">
+						<article class="card">
+							<img class="card-img-top" src="images/news/news-7.jpg"
+								alt="Quên hết hiềm khích đi, hôm nay là ngày sung sướng nhất của fan Marvel và DC">
+							<div class="card-block">
+								<h4 class="card-title">
+									<a href="#">Quên hết hiềm khích đi, hôm nay là ngày sung
+										sướng nhất của fan Marvel và DC</a>
+								</h4>
+								<p class="card-text">Như thường lệ, lễ hội truyện tranh San
+									Diego Comic-Con là dịp để các hãng giới thiệu các dự án tiếp
+									theo. Comic-Con đã khiến người hâm mộ chết ngất trong sung
+									sướng...</p>
+							</div>
+							<div class="card-footer">
+								<small class="text-muted">02/11/2017</small>
+							</div>
+						</article>
+					</div>
+					<!-- item -->
 
 				</div>
-			</main>
+				<!-- /.row -->
+			</section>
+			<!-- /section.wrap -->
+
 		</div>
+		</main>
 	</div>
 
 	<!-- Bootstrap core JavaScript
