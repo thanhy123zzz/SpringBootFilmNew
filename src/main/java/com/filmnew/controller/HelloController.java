@@ -35,7 +35,6 @@ import com.google.gson.JsonSyntaxException;
 
 @RestController
 public class HelloController extends CommonController {
-	String zzz;
 	@RequestMapping(value = "/nhan", method = RequestMethod.POST, consumes = {
 			MediaType.APPLICATION_FORM_URLENCODED_VALUE })
 	public ModelAndView insert(@RequestBody User user) {
