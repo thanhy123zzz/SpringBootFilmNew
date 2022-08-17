@@ -24,7 +24,6 @@ import com.filmnew.Enity.Casts;
 import com.filmnew.Enity.DetailFilm;
 import com.filmnew.Enity.IMDB;
 import com.filmnew.Enity.User;
-import com.filmnew.Enity.author_details;
 import com.filmnew.Enity.comments;
 import com.filmnew.Enity.film;
 import com.filmnew.Enity.image;
@@ -48,13 +47,24 @@ public class HelloController extends CommonController {
 	public ModelAndView hele(HttpServletRequest request)
 			throws JsonSyntaxException, URISyntaxException, IOException, InterruptedException {
 		film film = new Gson().fromJson(getDetailwPage("1"), film.class);
-		List<results> r = film.getResults();
+		film trending = new Gson().fromJson(getTrending(), film.class);
+		film toprates = new Gson().fromJson(getTopRated(), film.class);
 		List<results> slides = new ArrayList<results>();
 		for(int i = 0;i<5;i++) {
-			slides.add(r.get(i));
+			slides.add(film.getResults().get(i));
+		}
+		List<results> r = new ArrayList<results>();
+		List<results> trend = new ArrayList<results>();
+		List<results> toprate = new ArrayList<results>();
+		for(int i = 0;i<8;i++) {
+			r.add(film.getResults().get(i));
+			trend.add(trending.getResults().get(i));
+			toprate.add(toprates.getResults().get(i));
 		}
 		mv.addObject("slides", slides);
 		mv.addObject("newMovies", r);
+		mv.addObject("trends", trend);
+		mv.addObject("toprate", toprate);
 		mv.setViewName("index");
 		return mv;
 	}
@@ -162,6 +172,14 @@ public class HelloController extends CommonController {
 		mv.setViewName("Watching");
 		DetailFilm dt = new Gson().fromJson(getDetailFilm(id), DetailFilm.class);
 		mv.addObject("movie", dt);
+		return mv;
+	}
+	@GetMapping("/search")
+	public ModelAndView searchMovie(@RequestParam("keyword")String keyWord) throws JsonSyntaxException, URISyntaxException, IOException, InterruptedException {
+		mv.setViewName("Search");
+		film film = new Gson().fromJson(findWithKeyword(keyWord), film.class);
+		List<results> r = film.getResults();
+		mv.addObject("SearchMovies", r);
 		return mv;
 	}
 }

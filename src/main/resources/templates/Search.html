@@ -203,7 +203,6 @@ body, .search-bar {
 						<li class="nav-item"><a class="nav-link"
 							href="list-movies.html"><span class="sr-only"></span>Đăng nhập</a>
 						</li>
-
 					</ul>
 					<form action="search" class="search-bar" method="get">
 						<input type="search" name="keyword" pattern=".*\S.*" required>
@@ -231,6 +230,7 @@ body, .search-bar {
 									class="d-block img-fluid"
 									th:src="@{${'https://image.tmdb.org/t/p/original'+slide.backdrop_path}}"
 									alt="First slide"></a>
+
 							</div>
 							<div th:unless="${state.first}" class="carousel-item">
 								<a th:href="@{${'/detail/'+slide.id}}"> <img
@@ -259,14 +259,14 @@ body, .search-bar {
 
 						<div class="wrap-heading">
 							<h2 class="wrap-heading__title">
-								<a href="list-movies.html">New Movie</a>
+								<a href="list-movies.html">Tìm kiếm:</a>
 							</h2>
 						</div>
 						<!-- /.wrap-heading -->
 
 						<div class="row">
 							<!-- / item 4 -->
-							<div class="col-md-3" th:each="movie : ${newMovies}">
+							<div class="col-md-3" th:each="movie : ${SearchMovies}">
 								<div class="card">
 									<a th:href="@{'/detail/'+${movie.id}}"><img
 										class="card-img-top"
@@ -283,63 +283,6 @@ body, .search-bar {
 						</div>
 					</section>
 					<!-- /.section -->
-
-					<section class="wrap">
-
-						<div class="wrap-heading">
-							<h2 class="wrap-heading__title">
-								<a href="list-movies.html">Trending</a>
-							</h2>
-						</div>
-						<!-- /.wrap-heading -->
-
-						<div class="row">
-							<div class="col-md-3" th:each="movie : ${trends}">
-								<div class="card">
-									<a th:href="@{'/detail/'+${movie.id}}"><img
-										class="card-img-top"
-										th:src="@{${'https://image.tmdb.org/t/p/w500'+movie.poster_path}}"
-										th:alt="${movie.original_title}"></a>
-									<div class="card-block">
-										<h4 class="card-title text-center">
-											<a th:href="@{${'/detail/'+movie.id}}"
-												th:text="${movie.title}"></a>
-										</h4>
-									</div>
-								</div>
-							</div>
-							<!-- / item 4 -->
-						</div>
-					</section>
-					<!-- /.section -->
-
-					<section class="wrap">
-
-						<div class="wrap-heading">
-							<h2 class="wrap-heading__title">
-								<a href="list-movies.html">Top Rated</a>
-							</h2>
-						</div>
-						<!-- /.wrap-heading -->
-
-						<div class="row">
-							<div class="col-md-3" th:each="movie : ${toprate}">
-								<div class="card">
-									<a th:href="@{'/detail/'+${movie.id}}"><img
-										class="card-img-top"
-										th:src="@{${'https://image.tmdb.org/t/p/w500'+movie.poster_path}}"
-										th:alt="${movie.original_title}"></a>
-									<div class="card-block">
-										<h4 class="card-title text-center">
-											<a th:href="@{${'/detail/'+movie.id}}"
-												th:text="${movie.title}"></a>
-										</h4>
-									</div>
-								</div>
-							</div>
-							<!-- / item 4 -->
-						</div>
-					</section>
 				</div>
 			</main>
 		</div>

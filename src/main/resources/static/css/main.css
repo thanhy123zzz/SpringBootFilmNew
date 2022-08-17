@@ -445,7 +445,7 @@ mark,
     content: "\2014 \00A0"; }
 
 .img-fluid {
-  max-width: 80%;
+  max-width: 100%;
   height: auto; }
 
 .img-thumbnail {
@@ -3843,19 +3843,18 @@ button.close {
 
 .carousel-inner {
   position: relative;
-  width: 80%;
+  width: 100%;
   overflow: hidden; }
 
 .carousel-item {
   position: relative;
   display: none;
   align-items: center;
-  width: 80%;
+  width: 100%;
   transition: transform 0.6s ease;
   backface-visibility: hidden;
-  perspective: 1000px; 
-  
-  }
+  perspective: 1000px; }
+
 .carousel-item.active,
 .carousel-item-next,
 .carousel-item-prev {
@@ -8323,7 +8322,7 @@ button:focus {
       font-size: 48px; }
 
 .carousel.slide img {
-  width: 80%; }
+  width: 100%; }
 
 .carousel-indicators .active {
   background: #ed215e;
@@ -8351,7 +8350,7 @@ button:focus {
 =======================*/
 .comments-container {
   margin: 60px auto 15px;
-  width: 760px; }
+  width: 768px; }
 
 .comments-container h1 {
   font-size: 36px;
@@ -8444,7 +8443,7 @@ button:focus {
 ---------------------------*/
 .comments-list .comment-box {
   width: 680px;
-  float: left;
+  float: right;
   position: relative;
   -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.15);
   -moz-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.15);
