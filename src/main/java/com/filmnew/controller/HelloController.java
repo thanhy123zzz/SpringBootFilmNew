@@ -35,6 +35,7 @@ import com.google.gson.JsonSyntaxException;
 
 @RestController
 public class HelloController extends CommonController {
+	String zzz;
 	@RequestMapping(value = "/nhan", method = RequestMethod.POST, consumes = {
 			MediaType.APPLICATION_FORM_URLENCODED_VALUE })
 	public ModelAndView insert(@RequestBody User user) {
@@ -44,7 +45,6 @@ public class HelloController extends CommonController {
 		mv.addObject("kq", kq);
 		return mv;
 	}
-
 	@GetMapping("/")
 	public ModelAndView hele(HttpServletRequest request)
 			throws JsonSyntaxException, URISyntaxException, IOException, InterruptedException {

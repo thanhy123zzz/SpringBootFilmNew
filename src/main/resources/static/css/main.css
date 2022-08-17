@@ -445,7 +445,7 @@ mark,
     content: "\2014 \00A0"; }
 
 .img-fluid {
-  max-width: 100%;
+  max-width: 80%;
   height: auto; }
 
 .img-thumbnail {
@@ -3843,18 +3843,19 @@ button.close {
 
 .carousel-inner {
   position: relative;
-  width: 100%;
+  width: 80%;
   overflow: hidden; }
 
 .carousel-item {
   position: relative;
   display: none;
   align-items: center;
-  width: 100%;
+  width: 80%;
   transition: transform 0.6s ease;
   backface-visibility: hidden;
-  perspective: 1000px; }
-
+  perspective: 1000px; 
+  
+  }
 .carousel-item.active,
 .carousel-item-next,
 .carousel-item-prev {
@@ -8322,7 +8323,7 @@ button:focus {
       font-size: 48px; }
 
 .carousel.slide img {
-  width: 100%; }
+  width: 80%; }
 
 .carousel-indicators .active {
   background: #ed215e;

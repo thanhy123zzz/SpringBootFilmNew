@@ -67,25 +67,25 @@
 					</ol>
 					<div class="carousel-inner" role="listbox">
 						<th:block th:each="slide, state: ${slides}">
-							<div th:if="${state.first}" class="carousel-item active" >
-								<h2 style="text-align: center; vertical-align: middle;"
+							<div th:if="${state.first}" class="carousel-item active">
+								 <h1 style="text-align: center; vertical-align: middle;"
 									class="movie-watching__title">
 									<a th:href="@{${'/detail/'+slide.id}}"
 										th:text="${slide.original_title}"></a>
-								</h2>
+								</h1> 
 								<img class="d-block img-fluid"
-									th:src="@{${'https://image.tmdb.org/t/p/w500'+slide.backdrop_path}}"
+									th:src="@{${'https://image.tmdb.org/t/p/original'+slide.backdrop_path}}"
 									alt="First slide">
 
 							</div>
 							<div th:unless="${state.first}" class="carousel-item">
-								<h2 style="text-align: center; vertical-align: middle;"
+								 <h1 style="text-align: center; vertical-align: middle;"
 									class="movie-watching__title">
 									<a th:href="@{${'/detail/'+slide.id}}"
 										th:text="${slide.original_title}"></a>
-								</h2>
+								</h1>
 								<img class="d-block img-fluid"
-									th:src="@{${'https://image.tmdb.org/t/p/w500'+slide.backdrop_path}}"
+									th:src="@{${'https://image.tmdb.org/t/p/original'+slide.backdrop_path}}"
 									alt="Second slide">
 							</div>
 						</th:block>
