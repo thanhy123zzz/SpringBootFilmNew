@@ -164,34 +164,28 @@ body, .search-bar {
 }
 </style>
 <link rel="stylesheet" th:href="@{/css/main.css}">
-<link rel="stylesheet"
-	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" th:href="@{https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css}">
 </head>
 <body>
 	<div class="container-fluid">
 		<div class="row">
 			<nav class="sidebar">
-				<a class="sidebar__brand" href="/">MOVIE</a>
+				<a class="sidebar__brand" href="/">FilmNew</a>
 				<ul class="nav nav-pills flex-column">
-					<li class="nav-item"><a class="nav-link active" href="/">
+					<li class="nav-item"><a class="nav-link active" th:href="@{/}">
 							<div class="sidebar__icon">
 								<i class="fa fa-home"></i>
-							</div> Trang chủ <span class="sr-only">(current)</span>
+							</div>Home<span class="sr-only">(current)</span>
 					</a></li>
-					<li class="nav-item"><a class="nav-link" href="discover.html">
+					<li class="nav-item"><a class="nav-link" th:href="@{/moives}">
 							<div class="sidebar__icon">
-								<i class="fa fa-bullseye"></i>
-							</div> Khám phá
+								<i class="fa fa-film"></i>
+							</div> Movies
 					</a></li>
-					<li class="nav-item"><a class="nav-link" href="news.html">
+					<li class="nav-item"><a class="nav-link" href="@{/tv}">
 							<div class="sidebar__icon">
 								<i class="fa fa-newspaper-o"></i>
-							</div> Tin tức
-					</a></li>
-					<li class="nav-item"><a class="nav-link" href="cast.html">
-							<div class="sidebar__icon">
-								<i class="fa fa-street-view"></i>
-							</div> Diễn viên
+							</div> TV series
 					</a></li>
 				</ul>
 			</nav>
@@ -259,7 +253,7 @@ body, .search-bar {
 
 						<div class="wrap-heading">
 							<h2 class="wrap-heading__title">
-								<a href="list-movies.html">New Movie</a>
+								<a href="list-movies.html">New Movies</a>
 							</h2>
 						</div>
 						<!-- /.wrap-heading -->
@@ -268,9 +262,13 @@ body, .search-bar {
 							<!-- / item 4 -->
 							<div class="col-md-3" th:each="movie : ${newMovies}">
 								<div class="card">
-									<a th:href="@{'/detail/'+${movie.id}}"><img
+										<a th:if = "${movie.poster_path}" th:href="@{'/detail/'+${movie.id}}"><img
 										class="card-img-top"
 										th:src="@{${'https://image.tmdb.org/t/p/w500'+movie.poster_path}}"
+										th:alt="${movie.original_title}"></a>
+									<a th:unless = "${movie.poster_path}" th:href="@{'/detail/'+${movie.id}}"><img
+										class="card-img-top"
+										th:src="@{/images/poster105665.jpg}"
 										th:alt="${movie.original_title}"></a>
 									<div class="card-block">
 										<h4 class="card-title text-center">
@@ -296,9 +294,13 @@ body, .search-bar {
 						<div class="row">
 							<div class="col-md-3" th:each="movie : ${trends}">
 								<div class="card">
-									<a th:href="@{'/detail/'+${movie.id}}"><img
+									<a th:if = "${movie.poster_path}" th:href="@{'/detail/'+${movie.id}}"><img
 										class="card-img-top"
 										th:src="@{${'https://image.tmdb.org/t/p/w500'+movie.poster_path}}"
+										th:alt="${movie.original_title}"></a>
+									<a th:unless = "${movie.poster_path}" th:href="@{'/detail/'+${movie.id}}"><img
+										class="card-img-top"
+										th:src="@{/images/poster105665.jpg}"
 										th:alt="${movie.original_title}"></a>
 									<div class="card-block">
 										<h4 class="card-title text-center">
@@ -325,14 +327,49 @@ body, .search-bar {
 						<div class="row">
 							<div class="col-md-3" th:each="movie : ${toprate}">
 								<div class="card">
-									<a th:href="@{'/detail/'+${movie.id}}"><img
+									<a th:if = "${movie.poster_path}" th:href="@{'/detail/'+${movie.id}}"><img
 										class="card-img-top"
 										th:src="@{${'https://image.tmdb.org/t/p/w500'+movie.poster_path}}"
+										th:alt="${movie.original_title}"></a>
+									<a th:unless = "${movie.poster_path}" th:href="@{'/detail/'+${movie.id}}"><img
+										class="card-img-top"
+										th:src="@{/images/poster105665.jpg}"
 										th:alt="${movie.original_title}"></a>
 									<div class="card-block">
 										<h4 class="card-title text-center">
 											<a th:href="@{${'/detail/'+movie.id}}"
 												th:text="${movie.title}"></a>
+										</h4>
+									</div>
+								</div>
+							</div>
+							<!-- / item 4 -->
+						</div>
+					</section>
+					<section class="wrap">
+
+						<div class="wrap-heading">
+							<h2 class="wrap-heading__title">
+								<a href="list-movies.html">TV Series</a>
+							</h2>
+						</div>
+						<!-- /.wrap-heading -->
+
+						<div class="row">
+							<div class="col-md-3" th:each="movie : ${tvs}">
+								<div class="card">
+									<a th:if = "${movie.poster_path}" th:href="@{'/detail/tv/'+${movie.id}}"><img
+										class="card-img-top"
+										th:src="@{${'https://image.tmdb.org/t/p/w500'+movie.poster_path}}"
+										th:alt="${movie.original_name}"></a>
+									<a th:unless = "${movie.poster_path}" th:href="@{'/detail/tv/'+${movie.id}}"><img
+										class="card-img-top"
+										th:src="@{/images/poster105665.jpg}"
+										th:alt="${movie.original_name}"></a>
+									<div class="card-block">
+										<h4 class="card-title text-center">
+											<a th:href="@{${'/detail/tv/'+movie.id}}"
+												th:text="${movie.original_name}"></a>
 										</h4>
 									</div>
 								</div>

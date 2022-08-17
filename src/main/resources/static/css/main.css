@@ -8672,10 +8672,11 @@ button:focus {
   margin: 20px 0 0; }
 
 .movie-social {
-  margin: 20px 0; }
+  margin: 20px 0 2px 2px; }
   .movie-social a {
     font-size: 1.3rem;
-    padding-right: 20px; }
+    padding-right: 20px; 
+    }
     .movie-social a:hover {
       text-decoration: none; }
 

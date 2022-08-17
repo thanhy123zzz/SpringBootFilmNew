@@ -97,7 +97,7 @@
 									<div class="modal-content">
 										<div class="modal-header">
 											<h5 class="modal-title" id="trailerMovieLabel"
-												th:text="${'Trailer '+movie.original_title}"></h5>
+												th:text="${'Trailer '+movie.original_name}"></h5>
 											<button type="button" class="close" data-dismiss="modal"
 												aria-label="Close">
 												<span aria-hidden="true">&times;</span>
@@ -116,16 +116,28 @@
 						<!-- /.movie-poster -->
 						<div class="cast-info">
 							<div class="cast-name">
-								<h3 th:text="${movie.original_title}"></h3>
+								<h3 th:text="${movie.original_name}"></h3>
 							</div>
 							<div class="cast-job">
 								<a href="#"
-									th:text="${movie.tagline +'('+ movie.release_date+')'}"></a>
+									th:text="${movie.tagline}"></a>
 							</div>
 							<div class="movie-social">
 								<a href="#"><i class="fa fa-heart" aria-hidden="true"></i>
-									Lưu phim</a> <a href="#"><i class="fa fa-facebook-official"
-									aria-hidden="true"></i> Chia sẻ</a>
+									Lưu phim</a>
+								<a th:href="@{'/watch/'+${movie.id}}"
+								class="btn btn-primary btn-lg">sesion 1</a>
+								<a th:href="@{'/watch/'+${movie.id}}"
+								class="btn btn-primary btn-lg">sesion 1</a>
+								<a th:href="@{'/watch/'+${movie.id}}"
+								class="btn btn-primary btn-lg">sesion 1</a>
+								<a th:href="@{'/watch/'+${movie.id}}"
+								class="btn btn-primary btn-lg">sesion 1</a>
+								<a th:href="@{'/watch/'+${movie.id}}"
+								class="btn btn-primary btn-lg">sesion 1</a>
+								<a th:href="@{'/watch/'+${movie.id}}"
+								class="btn btn-primary btn-lg">sesion 1</a>
+								
 							</div>
 							<div class="movie-rate">
 								<div class="movie-rate__point">

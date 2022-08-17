@@ -25,6 +25,7 @@ body, button, input {
 body, .search-bar {
 	display: flex;
 }
+
 .search-bar input, .search-btn, .search-btn:before, .search-btn:after {
 	transition: all 0.25s ease-out;
 }
@@ -201,8 +202,8 @@ body, .search-bar {
 				<nav class="navbar top-menu">
 					<ul class="navbar-nav d-flex flex-row">
 						<li class="nav-item"><a class="nav-link"
-							href="list-movies.html"><span class="sr-only"></span>Đăng nhập</a>
-						</li>
+							href="list-movies.html"><span class="sr-only"></span>Đăng
+								nhập</a></li>
 					</ul>
 					<form action="search" class="search-bar" method="get">
 						<input type="search" name="keyword" pattern=".*\S.*" required>
@@ -213,44 +214,7 @@ body, .search-bar {
 				</nav>
 				<!-- /.top-menu -->
 
-				<div id="carouselMovieIndicators" class="carousel slide"
-					data-ride="carousel">
-					<ol class="carousel-indicators">
-						<li data-target="#carouselMovieIndicators" data-slide-to="0"
-							class="active"></li>
-						<li data-target="#carouselMovieIndicators" data-slide-to="1"></li>
-						<li data-target="#carouselMovieIndicators" data-slide-to="2"></li>
-						<li data-target="#carouselMovieIndicators" data-slide-to="3"></li>
-						<li data-target="#carouselMovieIndicators" data-slide-to="4"></li>
-					</ol>
-					<div class="carousel-inner" role="listbox">
-						<th:block th:each="slide, state: ${slides}">
-							<div th:if="${state.first}" class="carousel-item active">
-								<a th:href="@{${'/detail/'+slide.id}}"> <img
-									class="d-block img-fluid"
-									th:src="@{${'https://image.tmdb.org/t/p/original'+slide.backdrop_path}}"
-									alt="First slide"></a>
-
-							</div>
-							<div th:unless="${state.first}" class="carousel-item">
-								<a th:href="@{${'/detail/'+slide.id}}"> <img
-									class="d-block img-fluid"
-									th:src="@{${'https://image.tmdb.org/t/p/original'+slide.backdrop_path}}"
-									alt="Second slide">
-								</a>
-							</div>
-						</th:block>
-					</div>
-					<a class="carousel-control-prev" href="#carouselMovieIndicators"
-						role="button" data-slide="prev"> <span
-						class="carousel-control-prev-icon" aria-hidden="true"></span> <span
-						class="sr-only">Previous</span>
-					</a> <a class="carousel-control-next" href="#carouselMovieIndicators"
-						role="button" data-slide="next"> <span
-						class="carousel-control-next-icon" aria-hidden="true"></span> <span
-						class="sr-only">Next</span>
-					</a>
-				</div>
+				<div style="margin-bottom: 100px;"></div>
 
 				<!-- /.carousel -->
 
@@ -268,9 +232,14 @@ body, .search-bar {
 							<!-- / item 4 -->
 							<div class="col-md-3" th:each="movie : ${SearchMovies}">
 								<div class="card">
-									<a th:href="@{'/detail/'+${movie.id}}"><img
+									<a th:if="${movie.poster_path}"
+										th:href="@{'/detail/'+${movie.id}}"><img
 										class="card-img-top"
 										th:src="@{${'https://image.tmdb.org/t/p/w500'+movie.poster_path}}"
+										th:alt="${movie.original_title}"></a> <a
+										th:unless="${movie.poster_path}"
+										th:href="@{'/detail/'+${movie.id}}"><img
+										class="card-img-top" th:src="@{/images/poster105665.jpg}"
 										th:alt="${movie.original_title}"></a>
 									<div class="card-block">
 										<h4 class="card-title text-center">
@@ -280,6 +249,7 @@ body, .search-bar {
 									</div>
 								</div>
 							</div>
+								<h2 style="text-align: center;">Not found</h2>
 						</div>
 					</section>
 					<!-- /.section -->

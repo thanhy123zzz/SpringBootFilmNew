@@ -15,6 +15,13 @@ private String imdb_id;
 private String author;
 private String content;
 private author_details author_details;
+private String original_name;
+public String getOriginal_name() {
+	return original_name;
+}
+public void setOriginal_name(String original_name) {
+	this.original_name = original_name;
+}
 public String getAuthor() {
 	return author;
 }

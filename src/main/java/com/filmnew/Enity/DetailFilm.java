@@ -11,11 +11,32 @@ private String overview;
 private double vote_average;
 private int vote_count;
 private String tagline;
+private String original_name;
+private int number_of_episodes;
+private int number_of_seasons;
 public String getId() {
 	return id;
 }
 public void setId(String id) {
 	this.id = id;
+}
+public String getOriginal_name() {
+	return original_name;
+}
+public void setOriginal_name(String original_name) {
+	this.original_name = original_name;
+}
+public int getNumber_of_episodes() {
+	return number_of_episodes;
+}
+public void setNumber_of_episodes(int number_of_episodes) {
+	this.number_of_episodes = number_of_episodes;
+}
+public int getNumber_of_seasons() {
+	return number_of_seasons;
+}
+public void setNumber_of_seasons(int number_of_seasons) {
+	this.number_of_seasons = number_of_seasons;
 }
 public String getImdb_id() {
 	return imdb_id;

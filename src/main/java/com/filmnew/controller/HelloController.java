@@ -49,6 +49,8 @@ public class HelloController extends CommonController {
 		film film = new Gson().fromJson(getDetailwPage("1"), film.class);
 		film trending = new Gson().fromJson(getTrending(), film.class);
 		film toprates = new Gson().fromJson(getTopRated(), film.class);
+		film popularTVs = new Gson().fromJson(getPopularTV(), film.class);
+		
 		List<results> slides = new ArrayList<results>();
 		for(int i = 0;i<5;i++) {
 			slides.add(film.getResults().get(i));
@@ -56,11 +58,14 @@ public class HelloController extends CommonController {
 		List<results> r = new ArrayList<results>();
 		List<results> trend = new ArrayList<results>();
 		List<results> toprate = new ArrayList<results>();
+		List<results> poupularTV = new ArrayList<results>();
 		for(int i = 0;i<8;i++) {
 			r.add(film.getResults().get(i));
 			trend.add(trending.getResults().get(i));
 			toprate.add(toprates.getResults().get(i));
+			poupularTV.add(popularTVs.getResults().get(i));
 		}
+		mv.addObject("tvs", poupularTV);
 		mv.addObject("slides", slides);
 		mv.addObject("newMovies", r);
 		mv.addObject("trends", trend);
@@ -177,9 +182,48 @@ public class HelloController extends CommonController {
 	@GetMapping("/search")
 	public ModelAndView searchMovie(@RequestParam("keyword")String keyWord) throws JsonSyntaxException, URISyntaxException, IOException, InterruptedException {
 		mv.setViewName("Search");
-		film film = new Gson().fromJson(findWithKeyword(keyWord), film.class);
+		film film = new Gson().fromJson(findWithKeyword(keyWord.replaceAll(" ", "")), film.class);
 		List<results> r = film.getResults();
 		mv.addObject("SearchMovies", r);
+		return mv;
+	}
+	@GetMapping("/detail/tv/{id}")
+	public ModelAndView detailTV(@PathVariable("id") String id)
+			throws JsonSyntaxException, URISyntaxException, IOException, InterruptedException {
+		videos v = new Gson().fromJson(getVideosTV(id), videos.class);
+		DetailFilm dt = new Gson().fromJson(getDetailTV(id), DetailFilm.class);
+		String key = null;
+		for(results r: v.getResults()) {
+			if(r.getType().equals("Trailer")) {
+				key = r.getKey();
+				break;
+			}
+		}
+		Casts cs = new Gson().fromJson(getCastsTV(id), Casts.class);
+		List<Cast> casts = new ArrayList<Cast>();
+		for(int i = 0; i < cs.getCast().size();i++) {
+			if(i==16) {
+				break;
+			}
+			casts.add(cs.getCast().get(i));
+		}
+		comments cms = new Gson().fromJson(getReviewsTV(id), comments.class);
+		List<results> r = new ArrayList<results>();
+		for(int i = 0; i < cms.getResults().size();i++) {
+			if(i==5)break;
+			r.add(cms.getResults().get(i));
+			if(r.get(i).getAuthor_details().getAvatar_path()==null || !r.get(i).getAuthor_details().getAvatar_path().startsWith("/http")) {
+				r.get(i).getAuthor_details().setAvatar_path(null);
+			}
+			else {
+				r.get(i).getAuthor_details().setAvatar_path(r.get(i).getAuthor_details().getAvatar_path().substring(1));
+			}
+		}
+		mv.addObject("comments", r);
+		mv.addObject("key", key);
+		mv.addObject("casts", casts);
+		mv.setViewName("detailTV");
+		mv.addObject("movie", dt);
 		return mv;
 	}
 }
