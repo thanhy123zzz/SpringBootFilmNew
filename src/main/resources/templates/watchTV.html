@@ -1,265 +1,190 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:
+	layout:decorate="~{layout.html}">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta http-equiv="X-UA-Compatible" content="ie=edge">
 <title th:text="${movie.original_name}"></title>
-<link rel="stylesheet" th:href="@{/css/main.css}">
-<style>
-.modal-backdrop.show {
-	z-index: 0
-}
-
-@media ( min-width : 576px) {
-	.modal-dialog {
-		max-width: 892px;
-		margin: 30px auto;
-	}
-	.modal-sm {
-		max-width: 300px;
-	}
-}
-</style>
 </head>
 <body>
-	<div class="container-fluid">
-		<div class="row">
-			<nav class="sidebar">
-				<a class="sidebar__brand" href="/">MOVIE</a>
-				<ul class="nav nav-pills flex-column">
-					<li class="nav-item"><a class="nav-link" href="/">
-							<div class="sidebar__icon">
-								<i class="fa fa-home"></i>
-							</div> Trang chủ <span class="sr-only">(current)</span>
-					</a></li>
-					<li class="nav-item"><a class="nav-link" href="discover.html">
-							<div class="sidebar__icon">
-								<i class="fa fa-bullseye"></i>
-							</div> Khám phá
-					</a></li>
-					<li class="nav-item"><a class="nav-link" href="news.html">
-							<div class="sidebar__icon">
-								<i class="fa fa-newspaper-o"></i>
-							</div> Tin tức
-					</a></li>
-					<li class="nav-item"><a class="nav-link" href="cast.html">
-							<div class="sidebar__icon">
-								<i class="fa fa-street-view"></i>
-							</div> Diễn viên
-					</a></li>
-				</ul>
-			</nav>
-
-			<main role="main" class="main">
-				<!-- <nav class="navbar top-menu">
-            <ul class="navbar-nav d-flex flex-row">
-              <li class="nav-item active">
-                <a class="nav-link" href="list-movies.html">Đề cử <span class="sr-only">(current)</span></a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="list-movies.html">Phim lẻ mới</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="list-movies.html">Phim bộ mới</a>
-              </li>
-              <li class="nav-item">
-                  <a class="nav-link" href="list-movies.html">Phim sắp chiếu</a>
-                </li>
-            </ul>
-          </nav> -->
-				<!-- /.top-menu -->
-
-				<div class="cast-container"
-					th:style="'background-image: url(https://image.tmdb.org/t/p/w500'+${movie.backdrop_path}+')'">
-					<div class="cast-wrap d-flex movie-wrap">
-						<div style="margin: 0px 80px 50px 80px;"
-							class="embed-responsive embed-responsive-21by9">
-							<iframe class="embed-responsive-item"
-								th:src="@{${'https://www.2embed.to/embed/tmdb/tv?id='+movie.id+'&s='+ss+'&e='+ep}}"
-								allowfullscreen="allowfullscreen"></iframe>
-						</div>
-					</div>
+	<th:block layout:fragment="content">
+		<div class="cast-container"
+			th:style="'background-image: url(https://image.tmdb.org/t/p/w500'+${movie.backdrop_path}+')'">
+			<div class="cast-wrap d-flex movie-wrap">
+				<div style="margin: 0px 80px 50px 80px;"
+					class="embed-responsive embed-responsive-21by9">
+					<iframe class="embed-responsive-item"
+						th:src="@{${'https://www.2embed.to/embed/tmdb/tv?id='+movie.id+'&s='+ss+'&e='+ep}}"
+						allowfullscreen="allowfullscreen"></iframe>
 				</div>
-				<div class="container-fluid pading-md">
-					<h1 style="margin-left: 30px;" class="movie-watching__title">
-						<a th:href="@{${'/detail/tv/'+movie.id}}"
-							th:text="${movie.original_name + ' | Season: ' + ss + ' | Episode: ' + ep}"></a>
-					</h1>
-					<section th:each = "sesion :${movie.seasons}" class="wrap">
-						<div class="wrap-heading">
-							<h3 class="wrap-heading__title" th:text = "${sesion.name}">
-							</h3>
-						</div>
-						<div  class="row knowfor">
-						<th:block th:each = "i : ${#numbers.sequence(1,sesion.episode_count)}">
-							
-							<a style="pointer-events: none" th:if = "${ep == i && sesion.season_number == ss}" th:href="@{'/watch/tv/'+${movie.id}+'/'+${sesion.season_number}+'/'+${i}}"
-								class="btn btn-secondary active" th:text = "${'Ep '+ i}"></a>
-							<a th:unless = "${i == ep && sesion.season_number == ss}" th:href="@{'/watch/tv/'+${movie.id}+'/'+${sesion.season_number}+'/'+${i}}"
-								class="btn btn-secondary" th:text = "${'Ep '+ i}"></a>
-								
-						</th:block>
-						</div>
-					</section>
+			</div>
+		</div>
+		<div class="container-fluid pading-md">
+			<h1 style="margin-left: 30px;" class="movie-watching__title">
+				<a th:href="@{${'/detail/tv/'+movie.id}}"
+					th:text="${movie.original_name + ' | Season: ' + ss + ' | Episode: ' + ep}"></a>
+			</h1>
+			<section th:each="sesion :${movie.seasons}" class="wrap">
+				<div class="wrap-heading">
+					<h3 class="wrap-heading__title" th:text="${sesion.name}"></h3>
+				</div>
+				<div class="row knowfor">
+					<th:block
+						th:each="i : ${#numbers.sequence(1,sesion.episode_count)}">
 
-					<section class="wrap">
+						<a style="pointer-events: none"
+							th:if="${ep == i && sesion.season_number == ss}"
+							th:href="@{'/watch/tv/'+${movie.id}+'/'+${sesion.season_number}+'/'+${i}}"
+							class="btn btn-secondary active" th:text="${'Ep '+ i}"></a>
+						<a th:unless="${i == ep && sesion.season_number == ss}"
+							th:href="@{'/watch/tv/'+${movie.id}+'/'+${sesion.season_number}+'/'+${i}}"
+							class="btn btn-secondary" th:text="${'Ep '+ i}"></a>
 
-						<div class="container">
-							<div class="row">
-								<div class="comments-container">
-									<h3>Bình luận về phim</h3>
+					</th:block>
+				</div>
+			</section>
 
-									<ul id="comments-list" class="comments-list">
+			<section class="wrap">
+
+				<div class="container">
+					<div class="row">
+						<div class="comments-container">
+							<h3>Bình luận về phim</h3>
+
+							<ul id="comments-list" class="comments-list">
+								<li>
+									<div class="comment-main-level">
+										<!-- Avatar -->
+										<div class="comment-avatar">
+											<img src="images/common/default-avatar.png" alt="">
+										</div>
+										<!-- Comment Container -->
+										<div class="comment-box">
+											<div class="comment-head">
+												<h6 class="comment-name">
+													<a href="#">Văn Tám</a>
+												</h6>
+												<span>20 phút trước</span>
+											</div>
+											<div class="comment-content">Lorem ipsum dolor sit
+												amet, consectetur adipisicing elit. Velit omnis animi et
+												iure laudantium vitae, praesentium optio, sapiente
+												distinctio illo?</div>
+										</div>
+									</div> <!-- Comments responses -->
+									<ul class="comments-list reply-list">
 										<li>
-											<div class="comment-main-level">
-												<!-- Avatar -->
-												<div class="comment-avatar">
-													<img src="images/common/default-avatar.png" alt="">
+											<!-- Avatar -->
+											<div class="comment-avatar">
+												<img src="images/common/default-avatar-asian-girl.png"
+													alt="">
+											</div> <!-- Comment Container -->
+											<div class="comment-box">
+												<div class="comment-head">
+													<h6 class="comment-name">
+														<a href="#">Khánh Linh</a>
+													</h6>
+													<span>10 phút trước</span>
 												</div>
-												<!-- Comment Container -->
-												<div class="comment-box">
-													<div class="comment-head">
-														<h6 class="comment-name">
-															<a href="#">Văn Tám</a>
-														</h6>
-														<span>20 phút trước</span>
-													</div>
-													<div class="comment-content">Lorem ipsum dolor sit
-														amet, consectetur adipisicing elit. Velit omnis animi et
-														iure laudantium vitae, praesentium optio, sapiente
-														distinctio illo?</div>
-												</div>
-											</div> <!-- Comments responses -->
-											<ul class="comments-list reply-list">
-												<li>
-													<!-- Avatar -->
-													<div class="comment-avatar">
-														<img src="images/common/default-avatar-asian-girl.png"
-															alt="">
-													</div> <!-- Comment Container -->
-													<div class="comment-box">
-														<div class="comment-head">
-															<h6 class="comment-name">
-																<a href="#">Khánh Linh</a>
-															</h6>
-															<span>10 phút trước</span>
-														</div>
-														<div class="comment-content">Lorem ipsum dolor sit
-															amet, consectetur adipisicing elit. Velit omnis animi et
-															iure laudantium vitae, praesentium optio, sapiente
-															distinctio illo?</div>
-													</div>
-												</li>
-
-												<li>
-													<!-- Avatar -->
-													<div class="comment-avatar">
-														<img src="images/common/default-avatar.png" alt="">
-													</div> <!-- Comment Container -->
-													<div class="comment-box">
-														<div class="comment-head">
-															<h6 class="comment-name">
-																<a href="#">Văn Tám</a>
-															</h6>
-															<span>10 phút trước</span>
-														</div>
-														<div class="comment-content">Lorem ipsum dolor sit
-															amet, consectetur adipisicing elit. Velit omnis animi et
-															iure laudantium vitae, praesentium optio, sapiente
-															distinctio illo?</div>
-													</div>
-												</li>
-											</ul>
+												<div class="comment-content">Lorem ipsum dolor sit
+													amet, consectetur adipisicing elit. Velit omnis animi et
+													iure laudantium vitae, praesentium optio, sapiente
+													distinctio illo?</div>
+											</div>
 										</li>
 
 										<li>
-											<div class="comment-main-level">
-												<!-- Avatar -->
-												<div class="comment-avatar">
-													<img src="images/common/default-avatar-asian-girl.png"
-														alt="">
+											<!-- Avatar -->
+											<div class="comment-avatar">
+												<img src="images/common/default-avatar.png" alt="">
+											</div> <!-- Comment Container -->
+											<div class="comment-box">
+												<div class="comment-head">
+													<h6 class="comment-name">
+														<a href="#">Văn Tám</a>
+													</h6>
+													<span>10 phút trước</span>
 												</div>
-												<!-- Comment Container -->
-												<div class="comment-box">
-													<div class="comment-head">
-														<h6 class="comment-name">
-															<a href="#">Khánh Linh</a>
-														</h6>
-														<span>10 phút trước</span>
-
-													</div>
-													<div class="comment-content">Lorem ipsum dolor sit
-														amet, consectetur adipisicing elit. Velit omnis animi et
-														iure laudantium vitae, praesentium optio, sapiente
-														distinctio illo?</div>
-												</div>
+												<div class="comment-content">Lorem ipsum dolor sit
+													amet, consectetur adipisicing elit. Velit omnis animi et
+													iure laudantium vitae, praesentium optio, sapiente
+													distinctio illo?</div>
 											</div>
 										</li>
 									</ul>
-								</div>
-							</div>
-						</div>
-					</section>
+								</li>
 
-					<section class="wrap">
+								<li>
+									<div class="comment-main-level">
+										<!-- Avatar -->
+										<div class="comment-avatar">
+											<img src="images/common/default-avatar-asian-girl.png" alt="">
+										</div>
+										<!-- Comment Container -->
+										<div class="comment-box">
+											<div class="comment-head">
+												<h6 class="comment-name">
+													<a href="#">Khánh Linh</a>
+												</h6>
+												<span>10 phút trước</span>
 
-						<div class="wrap-heading">
-							<h2 class="wrap-heading__title">
-								<a href="list-movies.html">Similar TV</a>
-							</h2>
-						</div>
-						<!-- /.wrap-heading -->
-
-						<div class="row knowfor">
-							<div th:each="movie : ${slm}" class="col-md-3">
-								<div th:if="${movie.poster_path}"
-									class="card bg-dark text-white">
-									<a th:href="@{'/detail/tv/'+${movie.id}}"> <img
-										class="card-img"
-										th:src="@{${'https://image.tmdb.org/t/p/w500'+movie.poster_path}}">
-									</a>
-									<div class="card-img-overlay">
-										<h4 class="card-title">
-											<a th:href="@{'/detail/tv/'+${movie.id}}" th:text="${movie.original_name}"> </a>
-										</h4>
-										<p class="card-text card-year" th:text="${movie.release_date}"></p>
+											</div>
+											<div class="comment-content">Lorem ipsum dolor sit
+												amet, consectetur adipisicing elit. Velit omnis animi et
+												iure laudantium vitae, praesentium optio, sapiente
+												distinctio illo?</div>
+										</div>
 									</div>
-								</div>
-
-								<div th:unless="${movie.poster_path}"
-									class="card bg-dark text-white">
-									<a th:href="@{'/detail/tv/'+${movie.id}}"> <img
-										class="card-img" th:src="@{/images/poster105665.jpg}">
-									</a>
-									<div class="card-img-overlay">
-										<h4 class="card-title">
-											<a th:href="@{'/detail/tv/'+${movie.id}}" th:text="${movie.original_name}"> </a>
-										</h4>
-										<p class="card-text card-year" th:text="${movie.release_date}"></p>
-									</div>
-								</div>
-							</div>
+								</li>
+							</ul>
 						</div>
-					</section>
-					<!-- /.section -->
-
+					</div>
 				</div>
-			</main>
+			</section>
+
+			<section class="wrap">
+
+				<div class="wrap-heading">
+					<h2 class="wrap-heading__title">
+						<a href="list-movies.html">Similar TV</a>
+					</h2>
+				</div>
+				<!-- /.wrap-heading -->
+
+				<div class="row knowfor">
+					<div th:each="movie : ${slm}" class="col-md-3">
+						<div th:if="${movie.poster_path}" class="card bg-dark text-white">
+							<a th:href="@{'/detail/tv/'+${movie.id}}"> <img
+								class="card-img"
+								th:src="@{${'https://image.tmdb.org/t/p/w500'+movie.poster_path}}">
+							</a>
+							<div class="card-img-overlay">
+								<h4 class="card-title">
+									<a th:href="@{'/detail/tv/'+${movie.id}}"
+										th:text="${movie.original_name}"> </a>
+								</h4>
+								<p class="card-text card-year" th:text="${movie.release_date}"></p>
+							</div>
+						</div>
+
+						<div th:unless="${movie.poster_path}"
+							class="card bg-dark text-white">
+							<a th:href="@{'/detail/tv/'+${movie.id}}"> <img
+								class="card-img" th:src="@{/images/poster105665.jpg}">
+							</a>
+							<div class="card-img-overlay">
+								<h4 class="card-title">
+									<a th:href="@{'/detail/tv/'+${movie.id}}"
+										th:text="${movie.original_name}"> </a>
+								</h4>
+								<p class="card-text card-year" th:text="${movie.release_date}"></p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+			<!-- /.section -->
+
 		</div>
-	</div>
-
-	<!-- Bootstrap core JavaScript
-    ================================================== -->
-	<!-- Placed at the end of the document so the pages load faster -->
-
-	<script th:src="@{/js/jquery-3.2.1.slim.min.js}"></script>
-	<script>
-		window.jQuery
-				|| document
-						.write('<script th:src="@{/js/jquery.min.js}"><\/script>')
-	</script>
-	<script th:src="@{/js/vendor/popper.min.js}"></script>
-	<script th:src="@{/js/bootstrap.min.js}"></script>
+	</th:block>
 </body>
 </html>

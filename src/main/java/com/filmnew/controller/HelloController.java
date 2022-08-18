@@ -260,4 +260,14 @@ public class HelloController extends CommonController {
 		mv.setViewName("watchTV");
 		return mv;
 	}
+	@GetMapping("/movies")
+	public ModelAndView Movies() {
+		mv.setViewName("Movies");
+		return mv;
+	}
+	@GetMapping("/tv")
+	public ModelAndView Tv() {
+		mv.setViewName("TV");
+		return mv;
+	}
 }

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+</head>
+<body>
+	<nav class="sidebar" th:fragment="nav">
+		<a class="sidebar__brand" th:href="@{/}">Movie</a>
+		<ul class="nav nav-pills flex-column" id="myDIV">
+			<li class="nav-item"><a class="nav-link ycd" th:href="@{/}">
+					<div class="sidebar__icon">
+						<i class="fa fa-home"></i>
+					</div>Home
+			</a></li>
+			<li class="nav-item"><a class="nav-link ycd" th:href="@{/movies}">
+					<div class="sidebar__icon">
+						<i class="fa fa-film"></i>
+					</div> Movies
+			</a></li>
+			<li class="nav-item"><a class="nav-link ycd" th:href="@{/tv}">
+					<div class="sidebar__icon">
+						<i class="fa fa-newspaper-o"></i>
+					</div> TV series
+			</a></li>
+		</ul>
+	</nav>
+</body>
+</html>
