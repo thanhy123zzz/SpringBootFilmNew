@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
-<title th:text="${movie.original_title}"></title>
+<title th:text="${movie.original_name}"></title>
 <link rel="stylesheet" th:href="@{/css/main.css}">
 <style>
 .modal-backdrop.show {
@@ -74,13 +74,11 @@
 					th:style="'background-image: url(https://image.tmdb.org/t/p/w500'+${movie.backdrop_path}+')'">
 					<div class="cast-wrap d-flex">
 						<div class="movie-poster">
-							<img th:if = "${movie.poster_path}"
+							<img th:if="${movie.poster_path}"
 								th:src="@{${'https://image.tmdb.org/t/p/w500'+movie.poster_path}}"
-								alt="">
-							<img th:unless = "${movie.poster_path}"
-								th:src="@{/images/poster105665.jpg}"
-								alt="">
-								 <a th:href="@{'/watch/'+${movie.id}}"
+								alt=""> <img th:unless="${movie.poster_path}"
+								th:src="@{/images/poster105665.jpg}" alt=""> <a
+								th:href="@{'/watch/tv/'+${movie.id}+'/1/1'}"
 								class="btn btn-primary btn-lg btn-block"><i
 								class="fa fa-television" aria-hidden="true"></i> Watch Now</a>
 
@@ -119,25 +117,16 @@
 								<h3 th:text="${movie.original_name}"></h3>
 							</div>
 							<div class="cast-job">
-								<a href="#"
-									th:text="${movie.tagline}"></a>
+								<a href="#" th:text="${movie.tagline}"></a>
 							</div>
 							<div class="movie-social">
 								<a href="#"><i class="fa fa-heart" aria-hidden="true"></i>
 									Lưu phim</a>
-								<a th:href="@{'/watch/'+${movie.id}}"
-								class="btn btn-primary btn-lg">sesion 1</a>
-								<a th:href="@{'/watch/'+${movie.id}}"
-								class="btn btn-primary btn-lg">sesion 1</a>
-								<a th:href="@{'/watch/'+${movie.id}}"
-								class="btn btn-primary btn-lg">sesion 1</a>
-								<a th:href="@{'/watch/'+${movie.id}}"
-								class="btn btn-primary btn-lg">sesion 1</a>
-								<a th:href="@{'/watch/'+${movie.id}}"
-								class="btn btn-primary btn-lg">sesion 1</a>
-								<a th:href="@{'/watch/'+${movie.id}}"
-								class="btn btn-primary btn-lg">sesion 1</a>
-								
+								<th:block
+									th:each="i : ${#numbers.sequence(1,movie.number_of_seasons)}">
+									<a th:href="@{'/watch/tv/'+${movie.id}+'/'+${i}+'/1'}"
+										class="btn btn-primary" th:text="${'Sesion '+i}"></a>
+								</th:block>
 							</div>
 							<div class="movie-rate">
 								<div class="movie-rate__point">
@@ -244,92 +233,53 @@
 					</div>
 				</div>
 
-		<div class="container-fluid pading-md">
+				<div class="container-fluid pading-md">
 
-			<section class="wrap post-news">
+					<section class="wrap">
 
-				<div class="wrap-heading">
-					<h2 class="wrap-heading__title">
-						<a href="list-movies.html">Tin tức liên quan</a>
-					</h2>
-				</div>
-				<!-- /.wrap-heading -->
+						<div class="wrap-heading">
+							<h2 class="wrap-heading__title">
+								<a href="list-movies.html">Similar TV</a>
+							</h2>
+						</div>
+						<!-- /.wrap-heading -->
 
-				<div class="row">
-					<div class="col-md-4">
-						<article class="card">
-							<a href="news_post.html"> <img class="card-img-top"
-								src="images/news/news-5.jpg"
-								alt="Bạn biết gì về bộ tộc nữ chiến binh Amazon đang làm mưa làm gió trên các rạp phim toàn thế giới?">
-							</a>
-							<div class="card-block">
-								<h4 class="card-title">
-									<a href="#">Bạn biết gì về bộ tộc nữ chiến binh Amazon đang
-										làm mưa làm gió trên các rạp phim toàn thế giới?</a>
-								</h4>
-								<p class="card-text">Wonder Woman là một nhân vật hư cấu của
-									vũ trụ điện ảnh DC. Với hình hài từ đất được nhào nặn bởi nữ
-									hoàng Hippolyta cùng với sự sống được nữ thần Tình yêu
-									Aphrodite...</p>
-							</div>
-							<div class="card-footer">
-								<small class="text-muted">02/11/2017</small>
-							</div>
-						</article>
-					</div>
-					<!-- item -->
+						<div class="row knowfor">
+							<div th:each="movie : ${slm}" class="col-md-3">
+								<div th:if="${movie.poster_path}"
+									class="card bg-dark text-white">
+									<a th:href="@{'/detail/tv/'+${movie.id}}"> <img
+										class="card-img"
+										th:src="@{${'https://image.tmdb.org/t/p/w500'+movie.poster_path}}">
+									</a>
+									<div class="card-img-overlay">
+										<h4 class="card-title">
+											<a th:href="@{'/detail/tv/'+${movie.id}}" th:text="${movie.original_name}"> </a>
+										</h4>
+										<p class="card-text card-year" th:text="${movie.release_date}"></p>
+									</div>
+								</div>
 
-					<div class="col-md-4">
-						<article class="card">
-							<a href="news_post.html"> <img class="card-img-top"
-								src="images/news/news-6.jpg" alt="Card image cap">
-							</a>
-							<div class="card-block">
-								<h4 class="card-title">
-									<a href="#">Warner Bros. tiết lộ thêm thông tin thú vị về
-										hai bom tấn "Wonder Woman" và "Aquaman"</a>
-								</h4>
-								<p class="card-text">Giống như "Justice League" trên phim
-									ảnh, các ngôi sao của DC đã tụ hội lại với nhau tại ComicCon
-									thứ 4 vừa qua để quảng cáo cho bộ phim sắp ra mắt của Warner
-									Bros...</p>
+								<div th:unless="${movie.poster_path}"
+									class="card bg-dark text-white">
+									<a th:href="@{'/detail/tv/'+${movie.id}}"> <img
+										class="card-img" th:src="@{/images/poster105665.jpg}">
+									</a>
+									<div class="card-img-overlay">
+										<h4 class="card-title">
+											<a th:href="@{'/detail/tv/'+${movie.id}}" th:text="${movie.original_name}"> </a>
+										</h4>
+										<p class="card-text card-year" th:text="${movie.release_date}"></p>
+									</div>
+								</div>
 							</div>
-							<div class="card-footer">
-								<small class="text-muted">02/11/2017</small>
-							</div>
-						</article>
-					</div>
-					<!-- item -->
-
-					<div class="col-md-4">
-						<article class="card">
-							<img class="card-img-top" src="images/news/news-7.jpg"
-								alt="Quên hết hiềm khích đi, hôm nay là ngày sung sướng nhất của fan Marvel và DC">
-							<div class="card-block">
-								<h4 class="card-title">
-									<a href="#">Quên hết hiềm khích đi, hôm nay là ngày sung
-										sướng nhất của fan Marvel và DC</a>
-								</h4>
-								<p class="card-text">Như thường lệ, lễ hội truyện tranh San
-									Diego Comic-Con là dịp để các hãng giới thiệu các dự án tiếp
-									theo. Comic-Con đã khiến người hâm mộ chết ngất trong sung
-									sướng...</p>
-							</div>
-							<div class="card-footer">
-								<small class="text-muted">02/11/2017</small>
-							</div>
-						</article>
-					</div>
-					<!-- item -->
+						</div>
+					</section>
+					<!-- /section.wrap -->
 
 				</div>
-				<!-- /.row -->
-			</section>
-			<!-- /section.wrap -->
-
+			</main>
 		</div>
-		</main>
-	</div>
 	</div>
 
 	<!-- Bootstrap core JavaScript

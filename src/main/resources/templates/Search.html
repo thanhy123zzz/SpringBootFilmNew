@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
-<title>Trang chủ</title>
+<title>Tìm kiếm</title>
 <style type="text/css">
 * {
 	border: 0;
@@ -222,8 +222,7 @@ body, .search-bar {
 					<section class="wrap">
 
 						<div class="wrap-heading">
-							<h2 class="wrap-heading__title">
-								<a href="list-movies.html">Tìm kiếm:</a>
+							<h2 class="wrap-heading__title" th:text = "${'Từ khoá: '+key}">
 							</h2>
 						</div>
 						<!-- /.wrap-heading -->
@@ -232,25 +231,49 @@ body, .search-bar {
 							<!-- / item 4 -->
 							<div class="col-md-3" th:each="movie : ${SearchMovies}">
 								<div class="card">
-									<a th:if="${movie.poster_path}"
-										th:href="@{'/detail/'+${movie.id}}"><img
-										class="card-img-top"
-										th:src="@{${'https://image.tmdb.org/t/p/w500'+movie.poster_path}}"
-										th:alt="${movie.original_title}"></a> <a
-										th:unless="${movie.poster_path}"
-										th:href="@{'/detail/'+${movie.id}}"><img
-										class="card-img-top" th:src="@{/images/poster105665.jpg}"
-										th:alt="${movie.original_title}"></a>
+								<th:block th:if="${movie.media_type == 'movie'}">
+									<a th:if="${movie.poster_path}" th:href="@{'/detail/'+${movie.id}}">
+									<img class="card-img-top" th:src="@{${'https://image.tmdb.org/t/p/w500'+movie.poster_path}}"
+									th:alt="${movie.original_title}">
+									</a> 
+									
+									<a th:unless="${movie.poster_path}" th:href="@{'/detail/'+${movie.id}}">
+									<img class="card-img-top" th:src="@{/images/poster105665.jpg}"
+										th:alt="${movie.original_title}">
+									</a>
+									
 									<div class="card-block">
 										<h4 class="card-title text-center">
 											<a th:href="@{${'/detail/'+movie.id}}"
 												th:text="${movie.title}"></a>
 										</h4>
 									</div>
+									</th:block>
+								</div>
+								<div class="card">
+								<th:block th:unless="${movie.media_type == 'movie'}">
+									<a th:if="${movie.poster_path}" th:href="@{'/detail/tv/'+${movie.id}}">
+									<img class="card-img-top" th:src="@{${'https://image.tmdb.org/t/p/w500'+movie.poster_path}}"
+									th:alt="${movie.original_name}">
+									</a> 
+									
+									<a th:unless="${movie.poster_path}" th:href="@{'/detail/tv/'+${movie.id}}">
+									<img class="card-img-top" th:src="@{/images/poster105665.jpg}"
+										th:alt="${movie.original_name}">
+									</a>
+									
+									<div class="card-block">
+										<h4 class="card-title text-center">
+											<a th:href="@{${'/detail/tv/'+movie.id}}"
+												th:text="${movie.original_name}"></a>
+										</h4>
+									</div>
+									</th:block>
 								</div>
 							</div>
-								<h2 style="text-align: center;">Not found</h2>
+								
 						</div>
+						<h2 th:if = "!${SearchMovies}" style="text-align: center;">Not found</h2>
 					</section>
 					<!-- /.section -->
 				</div>

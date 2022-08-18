@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
-<title th:text="${movie.original_title}"></title>
+<title th:text="${movie.original_name}"></title>
 <link rel="stylesheet" th:href="@{/css/main.css}">
 <style>
 .modal-backdrop.show {
@@ -73,24 +73,35 @@
 				<div class="cast-container"
 					th:style="'background-image: url(https://image.tmdb.org/t/p/w500'+${movie.backdrop_path}+')'">
 					<div class="cast-wrap d-flex movie-wrap">
-
-						<div style="margin: 30px 80px 50px 80px;"
+						<div style="margin: 0px 80px 50px 80px;"
 							class="embed-responsive embed-responsive-21by9">
 							<iframe class="embed-responsive-item"
-								th:src="@{${'https://www.2embed.to/embed/tmdb/movie?id='+movie.id}}"
+								th:src="@{${'https://www.2embed.to/embed/tmdb/tv?id='+movie.id+'&s='+ss+'&e='+ep}}"
 								allowfullscreen="allowfullscreen"></iframe>
 						</div>
-
 					</div>
-
 				</div>
-				<h2 style="margin-left: 30px;" class="movie-watching__title">
-					<a th:href="@{${'/detail/'+movie.id}}"
-						th:text="${movie.original_title +' ('+movie.release_date +')'}"></a>
-				</h2>
-
-
 				<div class="container-fluid pading-md">
+					<h1 style="margin-left: 30px;" class="movie-watching__title">
+						<a th:href="@{${'/detail/tv/'+movie.id}}"
+							th:text="${movie.original_name + ' | Season: ' + ss + ' | Episode: ' + ep}"></a>
+					</h1>
+					<section th:each = "sesion :${movie.seasons}" class="wrap">
+						<div class="wrap-heading">
+							<h3 class="wrap-heading__title" th:text = "${sesion.name}">
+							</h3>
+						</div>
+						<div  class="row knowfor">
+						<th:block th:each = "i : ${#numbers.sequence(1,sesion.episode_count)}">
+							
+							<a style="pointer-events: none" th:if = "${ep == i && sesion.season_number == ss}" th:href="@{'/watch/tv/'+${movie.id}+'/'+${sesion.season_number}+'/'+${i}}"
+								class="btn btn-secondary active" th:text = "${'Ep '+ i}"></a>
+							<a th:unless = "${i == ep && sesion.season_number == ss}" th:href="@{'/watch/tv/'+${movie.id}+'/'+${sesion.season_number}+'/'+${i}}"
+								class="btn btn-secondary" th:text = "${'Ep '+ i}"></a>
+								
+						</th:block>
+						</div>
+					</section>
 
 					<section class="wrap">
 
@@ -195,36 +206,37 @@
 
 						<div class="wrap-heading">
 							<h2 class="wrap-heading__title">
-								<a href="list-movies.html">Similar Movies</a>
+								<a href="list-movies.html">Similar TV</a>
 							</h2>
 						</div>
 						<!-- /.wrap-heading -->
 
 						<div class="row knowfor">
-							<div th:each = "movie : ${slm}" class="col-md-3">
-								<div th:if = "${movie.poster_path}" class="card bg-dark text-white" >
-									<a th:href="@{'/detail/'+${movie.id}}"> <img class="card-img"
-										th:src="@{${'https://image.tmdb.org/t/p/w500'+movie.poster_path}}"
-										>
+							<div th:each="movie : ${slm}" class="col-md-3">
+								<div th:if="${movie.poster_path}"
+									class="card bg-dark text-white">
+									<a th:href="@{'/detail/tv/'+${movie.id}}"> <img
+										class="card-img"
+										th:src="@{${'https://image.tmdb.org/t/p/w500'+movie.poster_path}}">
 									</a>
 									<div class="card-img-overlay">
 										<h4 class="card-title">
-											<a th:href="@{'/detail/'+${movie.id}}" th:text = "${movie.original_title}"> </a>
+											<a th:href="@{'/detail/tv/'+${movie.id}}" th:text="${movie.original_name}"> </a>
 										</h4>
-										<p class="card-text card-year" th:text = "${movie.release_date}"></p>
+										<p class="card-text card-year" th:text="${movie.release_date}"></p>
 									</div>
 								</div>
-								
-								<div th:unless = "${movie.poster_path}" class="card bg-dark text-white" >
-									<a th:href="@{'/detail/'+${movie.id}}"> <img class="card-img"
-										th:src="@{/images/poster105665.jpg}"
-										>
+
+								<div th:unless="${movie.poster_path}"
+									class="card bg-dark text-white">
+									<a th:href="@{'/detail/tv/'+${movie.id}}"> <img
+										class="card-img" th:src="@{/images/poster105665.jpg}">
 									</a>
 									<div class="card-img-overlay">
 										<h4 class="card-title">
-											<a th:href="@{'/detail/'+${movie.id}}" th:text = "${movie.original_title}"> </a>
+											<a th:href="@{'/detail/tv/'+${movie.id}}" th:text="${movie.original_name}"> </a>
 										</h4>
-										<p class="card-text card-year" th:text = "${movie.release_date}"></p>
+										<p class="card-text card-year" th:text="${movie.release_date}"></p>
 									</div>
 								</div>
 							</div>

@@ -16,6 +16,24 @@ private String author;
 private String content;
 private author_details author_details;
 private String original_name;
+private String media_type;
+private String backdrop_path;
+private String poster_path;
+private String release_date;
+public String getRelease_date() {
+	return release_date;
+}
+public void setRelease_date(String release_date) {
+	this.release_date = release_date;
+}
+@DateTimeFormat(pattern = "MM/dd/yyyy")
+private Date updated_at;
+public String getMedia_type() {
+	return media_type;
+}
+public void setMedia_type(String media_type) {
+	this.media_type = media_type;
+}
 public String getOriginal_name() {
 	return original_name;
 }
@@ -46,8 +64,7 @@ public Date getUpdated_at() {
 public void setUpdated_at(Date updated_at) {
 	this.updated_at = updated_at;
 }
-@DateTimeFormat(pattern = "MM/dd/yyyy")
-private Date updated_at;
+
 public String getImdb_id() {
 	return imdb_id;
 }
@@ -90,8 +107,7 @@ public String getPoster_path() {
 public void setPoster_path(String poster_path) {
 	this.poster_path = poster_path;
 }
-private String backdrop_path;
-private String poster_path;
+
 public String getName() {
 	return name;
 }

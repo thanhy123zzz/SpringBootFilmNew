@@ -1626,7 +1626,9 @@ fieldset[disabled] a.btn {
 .btn-primary {
   color: #fff;
   background-color: #ed215e;
-  border-color: #ed215e; }
+  border-color: #ed215e; 
+  margin: 4px 4px 4px 4px;
+  }
   .btn-primary:hover {
     color: #fff;
     background-color: #d6114c;
@@ -1646,7 +1648,9 @@ fieldset[disabled] a.btn {
 .btn-secondary {
   color: #fff;
   background-color: #868e96;
-  border-color: #868e96; }
+  border-color: #868e96; 
+  margin: 3px 3px 3px 3px;
+  }
   .btn-secondary:hover {
     color: #fff;
     background-color: #727b84;
@@ -1970,7 +1974,9 @@ fieldset[disabled] a.btn {
   padding: 0.5rem 1rem;
   font-size: 1.25rem;
   line-height: 1.5;
-  border-radius: 0.3rem; }
+  border-radius: 0.3rem; 
+  margin-right: 10px
+  }
 
 .btn-sm, .btn-group-sm > .btn {
   padding: 0.25rem 0.5rem;
@@ -8672,7 +8678,7 @@ button:focus {
   margin: 20px 0 0; }
 
 .movie-social {
-  margin: 20px 0 2px 2px; }
+  margin: 20px 10px 10px 10px; }
   .movie-social a {
     font-size: 1.3rem;
     padding-right: 20px; 

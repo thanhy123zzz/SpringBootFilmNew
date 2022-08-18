@@ -1,5 +1,7 @@
 package com.filmnew.Enity;
 
+import java.util.List;
+
 public class DetailFilm {
 private String id;
 private String imdb_id;
@@ -14,6 +16,23 @@ private String tagline;
 private String original_name;
 private int number_of_episodes;
 private int number_of_seasons;
+private String media_type;
+private List<sesion> seasons;
+public String getMedia_type() {
+	return media_type;
+}
+
+public List<sesion> getSeasons() {
+	return seasons;
+}
+
+public void setSeasons(List<sesion> seasons) {
+	this.seasons = seasons;
+}
+
+public void setMedia_type(String media_type) {
+	this.media_type = media_type;
+}
 public String getId() {
 	return id;
 }

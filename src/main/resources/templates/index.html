@@ -293,19 +293,42 @@ body, .search-bar {
 
 						<div class="row">
 							<div class="col-md-3" th:each="movie : ${trends}">
-								<div class="card">
+								<div th:if ="${movie.media_type == 'movie'}" class="card">
 									<a th:if = "${movie.poster_path}" th:href="@{'/detail/'+${movie.id}}"><img
 										class="card-img-top"
 										th:src="@{${'https://image.tmdb.org/t/p/w500'+movie.poster_path}}"
 										th:alt="${movie.original_title}"></a>
+										
+										
 									<a th:unless = "${movie.poster_path}" th:href="@{'/detail/'+${movie.id}}"><img
 										class="card-img-top"
 										th:src="@{/images/poster105665.jpg}"
 										th:alt="${movie.original_title}"></a>
+										
 									<div class="card-block">
 										<h4 class="card-title text-center">
 											<a th:href="@{${'/detail/'+movie.id}}"
 												th:text="${movie.title}"></a>
+										</h4>
+									</div>
+								</div>
+								
+								<div th:if ="${movie.media_type == 'tv'}" class="card">
+									<a th:if = "${movie.poster_path}" th:href="@{'/detail/tv/'+${movie.id}}"><img
+										class="card-img-top"
+										th:src="@{${'https://image.tmdb.org/t/p/w500'+movie.poster_path}}"
+										th:alt="${movie.original_name}"></a>
+										
+										
+									<a th:unless = "${movie.poster_path}" th:href="@{'/detail/tv/'+${movie.id}}"><img
+										class="card-img-top"
+										th:src="@{/images/poster105665.jpg}"
+										th:alt="${movie.original_name}"></a>
+										
+									<div class="card-block">
+										<h4 class="card-title text-center">
+											<a th:href="@{${'/detail/tv/'+movie.id}}"
+												th:text="${movie.original_name}"></a>
 										</h4>
 									</div>
 								</div>

@@ -141,6 +141,7 @@ public class HelloController extends CommonController {
 		videos v = new Gson().fromJson(getVideos(id), videos.class);
 		Casts cs = new Gson().fromJson(getCasts(id), Casts.class);
 		comments cms = new Gson().fromJson(getReviews(id), comments.class);
+		film similar = new Gson().fromJson(getSimilarMovie(id), film.class);
 		String key = null;
 		for(results r: v.getResults()) {
 			if(r.getType().equals("Trailer")) {
@@ -166,6 +167,11 @@ public class HelloController extends CommonController {
 				r.get(i).getAuthor_details().setAvatar_path(r.get(i).getAuthor_details().getAvatar_path().substring(1));
 			}
 		}
+		List<results> slm = new ArrayList<results>();
+		for(int i = 0; i < 4;i++) {
+			slm.add(similar.getResults().get(i));
+		}
+		mv.addObject("slm", slm);
 		mv.addObject("comments", r);
 		mv.addObject("casts", casts);
 		mv.addObject("key", key);
@@ -176,15 +182,22 @@ public class HelloController extends CommonController {
 	public ModelAndView watchMovie(@PathVariable("id") String id) throws JsonSyntaxException, URISyntaxException, IOException, InterruptedException {
 		mv.setViewName("Watching");
 		DetailFilm dt = new Gson().fromJson(getDetailFilm(id), DetailFilm.class);
+		film similar = new Gson().fromJson(getSimilarMovie(id), film.class);
+		List<results> slm = new ArrayList<results>();
+		for(int i = 0; i < 4;i++) {
+			slm.add(similar.getResults().get(i));
+		}
+		mv.addObject("slm", slm);
 		mv.addObject("movie", dt);
 		return mv;
 	}
 	@GetMapping("/search")
 	public ModelAndView searchMovie(@RequestParam("keyword")String keyWord) throws JsonSyntaxException, URISyntaxException, IOException, InterruptedException {
 		mv.setViewName("Search");
-		film film = new Gson().fromJson(findWithKeyword(keyWord.replaceAll(" ", "")), film.class);
+		film film = new Gson().fromJson(findWithKeyword(keyWord.replaceAll(" ", "+")), film.class);
 		List<results> r = film.getResults();
 		mv.addObject("SearchMovies", r);
+		mv.addObject("key", keyWord);
 		return mv;
 	}
 	@GetMapping("/detail/tv/{id}")
@@ -192,6 +205,7 @@ public class HelloController extends CommonController {
 			throws JsonSyntaxException, URISyntaxException, IOException, InterruptedException {
 		videos v = new Gson().fromJson(getVideosTV(id), videos.class);
 		DetailFilm dt = new Gson().fromJson(getDetailTV(id), DetailFilm.class);
+		film similar = new Gson().fromJson(getSimilarTV(id), film.class);
 		String key = null;
 		for(results r: v.getResults()) {
 			if(r.getType().equals("Trailer")) {
@@ -219,11 +233,31 @@ public class HelloController extends CommonController {
 				r.get(i).getAuthor_details().setAvatar_path(r.get(i).getAuthor_details().getAvatar_path().substring(1));
 			}
 		}
+		List<results> slm = new ArrayList<results>();
+		for(int i = 0; i < 4;i++) {
+			slm.add(similar.getResults().get(i));
+		}
+		mv.addObject("slm", slm);
 		mv.addObject("comments", r);
 		mv.addObject("key", key);
 		mv.addObject("casts", casts);
 		mv.setViewName("detailTV");
 		mv.addObject("movie", dt);
+		return mv;
+	}
+	@GetMapping("/watch/tv/{id}/{ss}/{ep}")
+	public ModelAndView watchTV(@PathVariable("id") int id,@PathVariable("ss") int sesion,@PathVariable("ep") int ep) throws JsonSyntaxException, URISyntaxException, IOException, InterruptedException {
+		DetailFilm dt = new Gson().fromJson(getDetailTV(String.valueOf(id)), DetailFilm.class);
+		film similar = new Gson().fromJson(getSimilarTV(String.valueOf(id)), film.class);
+		List<results> slm = new ArrayList<results>();
+		for(int i = 0; i < 4;i++) {
+			slm.add(similar.getResults().get(i));
+		}
+		mv.addObject("slm", slm);
+		mv.addObject("movie", dt);
+		mv.addObject("ep", ep);
+		mv.addObject("ss", sesion);
+		mv.setViewName("watchTV");
 		return mv;
 	}
 }
