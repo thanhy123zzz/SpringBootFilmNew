@@ -24,7 +24,6 @@ import com.filmnew.Enity.Casts;
 import com.filmnew.Enity.DetailFilm;
 import com.filmnew.Enity.IMDB;
 import com.filmnew.Enity.User;
-import com.filmnew.Enity.author_details;
 import com.filmnew.Enity.comments;
 import com.filmnew.Enity.film;
 import com.filmnew.Enity.image;
@@ -55,11 +54,11 @@ public class HelloController extends CommonController {
 		return mv;
 	}
 
-//	@DeleteMapping(value="/xoa")
-//	public String xoa(@RequestParam("name") String name, Model model) {
-//		userService.delete(name);
-//		throw new UserNotFoundException("ad");
-//	}
+	// @DeleteMapping(value="/xoa")
+	// public String xoa(@RequestParam("name") String name, Model model) {
+	// userService.delete(name);
+	// throw new UserNotFoundException("ad");
+	// }
 	@PutMapping(value = "/sua")
 	public String update(@RequestBody User user, Model model) {
 		int kq = userService.update(user);
@@ -124,27 +123,28 @@ public class HelloController extends CommonController {
 		Casts cs = new Gson().fromJson(getCasts(id), Casts.class);
 		comments cms = new Gson().fromJson(getReviews(id), comments.class);
 		String key = null;
-		for(results r: v.getResults()) {
-			if(r.getType().equals("Trailer")) {
+		for (results r : v.getResults()) {
+			if (r.getType().equals("Trailer")) {
 				key = r.getKey();
 				break;
 			}
 		}
 		List<Cast> casts = new ArrayList<Cast>();
-		for(int i = 0; i < cs.getCast().size();i++) {
-			if(i==16) {
+		for (int i = 0; i < cs.getCast().size(); i++) {
+			if (i == 16) {
 				break;
 			}
 			casts.add(cs.getCast().get(i));
 		}
 		List<results> r = new ArrayList<results>();
-		for(int i = 0; i < cms.getResults().size();i++) {
-			if(i==5)break;
+		for (int i = 0; i < cms.getResults().size(); i++) {
+			if (i == 5)
+				break;
 			r.add(cms.getResults().get(i));
-			if(r.get(i).getAuthor_details().getAvatar_path()==null || !r.get(i).getAuthor_details().getAvatar_path().startsWith("/http")) {
+			if (r.get(i).getAuthor_details().getAvatar_path() == null
+					|| !r.get(i).getAuthor_details().getAvatar_path().startsWith("/http")) {
 				r.get(i).getAuthor_details().setAvatar_path(null);
-			}
-			else {
+			} else {
 				r.get(i).getAuthor_details().setAvatar_path(r.get(i).getAuthor_details().getAvatar_path().substring(1));
 			}
 		}
