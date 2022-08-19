@@ -43,13 +43,33 @@ public class HelloController extends CommonController {
 		mv.addObject("kq", kq);
 		return mv;
 	}
-
 	@GetMapping("/")
 	public ModelAndView hele(HttpServletRequest request)
 			throws JsonSyntaxException, URISyntaxException, IOException, InterruptedException {
 		film film = new Gson().fromJson(getDetailwPage("1"), film.class);
-		List<results> r = film.getResults();
+		film trending = new Gson().fromJson(getTrending(), film.class);
+		film toprates = new Gson().fromJson(getTopRated(), film.class);
+		film popularTVs = new Gson().fromJson(getPopularTV(), film.class);
+		
+		List<results> slides = new ArrayList<results>();
+		for(int i = 0;i<5;i++) {
+			slides.add(film.getResults().get(i));
+		}
+		List<results> r = new ArrayList<results>();
+		List<results> trend = new ArrayList<results>();
+		List<results> toprate = new ArrayList<results>();
+		List<results> poupularTV = new ArrayList<results>();
+		for(int i = 0;i<8;i++) {
+			r.add(film.getResults().get(i));
+			trend.add(trending.getResults().get(i));
+			toprate.add(toprates.getResults().get(i));
+			poupularTV.add(popularTVs.getResults().get(i));
+		}
+		mv.addObject("tvs", poupularTV);
+		mv.addObject("slides", slides);
 		mv.addObject("newMovies", r);
+		mv.addObject("trends", trend);
+		mv.addObject("toprate", toprate);
 		mv.setViewName("index");
 		return mv;
 	}
@@ -113,7 +133,6 @@ public class HelloController extends CommonController {
 		return mv;
 	}
 
-	@SuppressWarnings("null")
 	@GetMapping("/detail/{id}")
 	public ModelAndView detailFilm(@PathVariable("id") String id)
 			throws JsonSyntaxException, URISyntaxException, IOException, InterruptedException {
@@ -122,6 +141,7 @@ public class HelloController extends CommonController {
 		videos v = new Gson().fromJson(getVideos(id), videos.class);
 		Casts cs = new Gson().fromJson(getCasts(id), Casts.class);
 		comments cms = new Gson().fromJson(getReviews(id), comments.class);
+		film similar = new Gson().fromJson(getSimilarMovie(id), film.class);
 		String key = null;
 		for (results r : v.getResults()) {
 			if (r.getType().equals("Trailer")) {
@@ -148,10 +168,107 @@ public class HelloController extends CommonController {
 				r.get(i).getAuthor_details().setAvatar_path(r.get(i).getAuthor_details().getAvatar_path().substring(1));
 			}
 		}
+		List<results> slm = new ArrayList<results>();
+		for(int i = 0; i < 4;i++) {
+			slm.add(similar.getResults().get(i));
+		}
+		mv.addObject("slm", slm);
 		mv.addObject("comments", r);
 		mv.addObject("casts", casts);
 		mv.addObject("key", key);
 		mv.addObject("movie", dt);
+		return mv;
+	}
+	@GetMapping("/watch/{id}")
+	public ModelAndView watchMovie(@PathVariable("id") String id) throws JsonSyntaxException, URISyntaxException, IOException, InterruptedException {
+		mv.setViewName("Watching");
+		DetailFilm dt = new Gson().fromJson(getDetailFilm(id), DetailFilm.class);
+		film similar = new Gson().fromJson(getSimilarMovie(id), film.class);
+		List<results> slm = new ArrayList<results>();
+		for(int i = 0; i < 4;i++) {
+			slm.add(similar.getResults().get(i));
+		}
+		mv.addObject("slm", slm);
+		mv.addObject("movie", dt);
+		return mv;
+	}
+	@GetMapping("/search")
+	public ModelAndView searchMovie(@RequestParam("keyword")String keyWord) throws JsonSyntaxException, URISyntaxException, IOException, InterruptedException {
+		mv.setViewName("Search");
+		film film = new Gson().fromJson(findWithKeyword(keyWord.replaceAll(" ", "+")), film.class);
+		List<results> r = film.getResults();
+		mv.addObject("SearchMovies", r);
+		mv.addObject("key", keyWord);
+		return mv;
+	}
+	@GetMapping("/detail/tv/{id}")
+	public ModelAndView detailTV(@PathVariable("id") String id)
+			throws JsonSyntaxException, URISyntaxException, IOException, InterruptedException {
+		videos v = new Gson().fromJson(getVideosTV(id), videos.class);
+		DetailFilm dt = new Gson().fromJson(getDetailTV(id), DetailFilm.class);
+		film similar = new Gson().fromJson(getSimilarTV(id), film.class);
+		String key = null;
+		for(results r: v.getResults()) {
+			if(r.getType().equals("Trailer")) {
+				key = r.getKey();
+				break;
+			}
+		}
+		Casts cs = new Gson().fromJson(getCastsTV(id), Casts.class);
+		List<Cast> casts = new ArrayList<Cast>();
+		for(int i = 0; i < cs.getCast().size();i++) {
+			if(i==16) {
+				break;
+			}
+			casts.add(cs.getCast().get(i));
+		}
+		comments cms = new Gson().fromJson(getReviewsTV(id), comments.class);
+		List<results> r = new ArrayList<results>();
+		for(int i = 0; i < cms.getResults().size();i++) {
+			if(i==5)break;
+			r.add(cms.getResults().get(i));
+			if(r.get(i).getAuthor_details().getAvatar_path()==null || !r.get(i).getAuthor_details().getAvatar_path().startsWith("/http")) {
+				r.get(i).getAuthor_details().setAvatar_path(null);
+			}
+			else {
+				r.get(i).getAuthor_details().setAvatar_path(r.get(i).getAuthor_details().getAvatar_path().substring(1));
+			}
+		}
+		List<results> slm = new ArrayList<results>();
+		for(int i = 0; i < 4;i++) {
+			slm.add(similar.getResults().get(i));
+		}
+		mv.addObject("slm", slm);
+		mv.addObject("comments", r);
+		mv.addObject("key", key);
+		mv.addObject("casts", casts);
+		mv.setViewName("detailTV");
+		mv.addObject("movie", dt);
+		return mv;
+	}
+	@GetMapping("/watch/tv/{id}/{ss}/{ep}")
+	public ModelAndView watchTV(@PathVariable("id") int id,@PathVariable("ss") int sesion,@PathVariable("ep") int ep) throws JsonSyntaxException, URISyntaxException, IOException, InterruptedException {
+		DetailFilm dt = new Gson().fromJson(getDetailTV(String.valueOf(id)), DetailFilm.class);
+		film similar = new Gson().fromJson(getSimilarTV(String.valueOf(id)), film.class);
+		List<results> slm = new ArrayList<results>();
+		for(int i = 0; i < 4;i++) {
+			slm.add(similar.getResults().get(i));
+		}
+		mv.addObject("slm", slm);
+		mv.addObject("movie", dt);
+		mv.addObject("ep", ep);
+		mv.addObject("ss", sesion);
+		mv.setViewName("watchTV");
+		return mv;
+	}
+	@GetMapping("/movies")
+	public ModelAndView Movies() {
+		mv.setViewName("Movies");
+		return mv;
+	}
+	@GetMapping("/tv")
+	public ModelAndView Tv() {
+		mv.setViewName("TV");
 		return mv;
 	}
 }

@@ -1,5 +1,7 @@
 package com.filmnew.Enity;
 
+import java.util.List;
+
 public class DetailFilm {
 private String id;
 private String imdb_id;
@@ -11,11 +13,49 @@ private String overview;
 private double vote_average;
 private int vote_count;
 private String tagline;
+private String original_name;
+private int number_of_episodes;
+private int number_of_seasons;
+private String media_type;
+private List<sesion> seasons;
+public String getMedia_type() {
+	return media_type;
+}
+
+public List<sesion> getSeasons() {
+	return seasons;
+}
+
+public void setSeasons(List<sesion> seasons) {
+	this.seasons = seasons;
+}
+
+public void setMedia_type(String media_type) {
+	this.media_type = media_type;
+}
 public String getId() {
 	return id;
 }
 public void setId(String id) {
 	this.id = id;
+}
+public String getOriginal_name() {
+	return original_name;
+}
+public void setOriginal_name(String original_name) {
+	this.original_name = original_name;
+}
+public int getNumber_of_episodes() {
+	return number_of_episodes;
+}
+public void setNumber_of_episodes(int number_of_episodes) {
+	this.number_of_episodes = number_of_episodes;
+}
+public int getNumber_of_seasons() {
+	return number_of_seasons;
+}
+public void setNumber_of_seasons(int number_of_seasons) {
+	this.number_of_seasons = number_of_seasons;
 }
 public String getImdb_id() {
 	return imdb_id;
