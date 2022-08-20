@@ -1,12 +1,44 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:
-	layout:decorate = "~{layout.html}"
-	>
+	layout:decorate="~{layout.html}">
 <head>
 <title>Movies</title>
 </head>
-<body layout:fragment = "content">
-hi
+<body layout:fragment="content">
+	<div style="margin-bottom: 100px;"></div>
+	<div class="container-fluid pading-md">
+		<section class="wrap">
+			<div class="wrap-heading">
+				<h2 class="wrap-heading__title">Movies</h2>
+			</div>
+			<!-- /.wrap-heading -->
+
+			<div class="row">
+				<!-- / item 4 -->
+				<div class="col-md-3" th:each="movie : ${movies}">
+					<div class="card">
+						<a th:if="${movie.poster_path}"
+							th:href="@{'/detail/'+${movie.id}}"> <img
+							class="card-img-top"
+							th:src="@{${'https://image.tmdb.org/t/p/w500'+movie.poster_path}}"
+							th:alt="${movie.original_title}">
+						</a> <a th:unless="${movie.poster_path}"
+							th:href="@{'/detail/'+${movie.id}}"> <img
+							class="card-img-top" th:src="@{/images/poster105665.jpg}"
+							th:alt="${movie.original_title}">
+						</a>
+
+						<div class="card-block">
+							<h4 class="card-title text-center">
+								<a th:href="@{${'/detail/'+movie.id}}" th:text="${movie.title}"></a>
+							</h4>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+		<!-- /.section -->
+	</div>
 </body>
 </html>

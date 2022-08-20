@@ -17,7 +17,15 @@ private String original_name;
 private int number_of_episodes;
 private int number_of_seasons;
 private String media_type;
+public List<genres> getGenres() {
+	return genres;
+}
+
+public void setGenres(List<genres> genres) {
+	this.genres = genres;
+}
 private List<sesion> seasons;
+private List<genres> genres;
 public String getMedia_type() {
 	return media_type;
 }

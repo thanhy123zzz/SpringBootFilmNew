@@ -59,10 +59,18 @@
 					<div class="movie-social">
 						<a href="#"><i class="fa fa-heart" aria-hidden="true"></i> Lưu
 							phim</a>
+					</div>
+					<div class="movie-social">
 						<th:block
 							th:each="i : ${#numbers.sequence(1,movie.number_of_seasons)}">
 							<a th:href="@{'/watch/tv/'+${movie.id}+'/'+${i}+'/1'}"
 								class="btn btn-primary" th:text="${'Sesion '+i}"></a>
+						</th:block>
+					</div>
+					<div class="movie-social">
+						<th:block th:each="genre : ${movie.genres}">
+							<a href="#" class="btn btn-outline-danger"
+								th:text="${genre.name}" style="margin: 4px 4px 4px 4px;"> </a>
 						</th:block>
 					</div>
 					<div class="movie-rate">

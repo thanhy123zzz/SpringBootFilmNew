@@ -29,10 +29,16 @@ public class CommonController{
 	}
 	private final String urlTrending = "https://api.themoviedb.org/3/trending/all/day?api_key=b7c3309b3ea8fdf5c9afa62154eefc7f";
 	private final String urlTopRated = "https://api.themoviedb.org/3/movie/top_rated?api_key=b7c3309b3ea8fdf5c9afa62154eefc7f&language=en-US&page=1";
-	private final String urlPopularTV = "https://api.themoviedb.org/3/tv/popular?api_key=b7c3309b3ea8fdf5c9afa62154eefc7f&language=en-US&page=1";
+	private String urlPopularTV(String page)
+	{
+	return "https://api.themoviedb.org/3/tv/popular?api_key=b7c3309b3ea8fdf5c9afa62154eefc7f&language=en-US&page="+page;
+	}
+	private final String urlLaste = "https://api.themoviedb.org/3/movie/latest?api_key=b7c3309b3ea8fdf5c9afa62154eefc7f&language=en-US";
+	
 	private String urlDetailFilm(String idFilm) {
 		return "https://api.themoviedb.org/3/movie/"+idFilm+"?api_key=b7c3309b3ea8fdf5c9afa62154eefc7f&append_to_response=videos";
 	}
+	
 	private String urlDetailTV(String idFilm) {
 		return "https://api.themoviedb.org/3/tv/"+idFilm+"?api_key=b7c3309b3ea8fdf5c9afa62154eefc7f&language=en-US&append_to_response=videos";
 	}
@@ -153,9 +159,9 @@ public class CommonController{
 		HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
 		return response.body();
 	}
-	public String getPopularTV() throws URISyntaxException, IOException, InterruptedException {
+	public String getPopularTV(String page) throws URISyntaxException, IOException, InterruptedException {
 		HttpRequest request = HttpRequest.newBuilder()
-				.uri(URI.create(urlPopularTV))
+				.uri(URI.create(urlPopularTV(page)))
 				.method("GET", HttpRequest.BodyPublishers.noBody())
 				.build();
 		HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
@@ -179,6 +185,14 @@ public class CommonController{
 	}public String getSimilarTV(String idFilm) throws URISyntaxException, IOException, InterruptedException {
 		HttpRequest request = HttpRequest.newBuilder()
 				.uri(URI.create(getUrlSimilarMovie(idFilm,"tv")))
+				.method("GET", HttpRequest.BodyPublishers.noBody())
+				.build();
+		HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
+		return response.body();
+	}
+	public String getNewFilm() throws URISyntaxException, IOException, InterruptedException {
+		HttpRequest request = HttpRequest.newBuilder()
+				.uri(URI.create(urlLaste))
 				.method("GET", HttpRequest.BodyPublishers.noBody())
 				.build();
 		HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());

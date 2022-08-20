@@ -49,11 +49,11 @@ public class HelloController extends CommonController {
 		film film = new Gson().fromJson(getDetailwPage("1"), film.class);
 		film trending = new Gson().fromJson(getTrending(), film.class);
 		film toprates = new Gson().fromJson(getTopRated(), film.class);
-		film popularTVs = new Gson().fromJson(getPopularTV(), film.class);
+		film popularTVs = new Gson().fromJson(getPopularTV("1"), film.class);
 		
 		List<results> slides = new ArrayList<results>();
 		for(int i = 0;i<5;i++) {
-			slides.add(film.getResults().get(i));
+			slides.add(trending.getResults().get(i));
 		}
 		List<results> r = new ArrayList<results>();
 		List<results> trend = new ArrayList<results>();
@@ -260,13 +260,17 @@ public class HelloController extends CommonController {
 		mv.setViewName("watchTV");
 		return mv;
 	}
-	@GetMapping("/movies")
-	public ModelAndView Movies() {
+	@GetMapping("/movies/{page}")
+	public ModelAndView Movies(@PathVariable("page") String page) throws JsonSyntaxException, URISyntaxException, IOException, InterruptedException {
+		film film = new Gson().fromJson(getDetailwPage(page), film.class);
+		mv.addObject("movies", film.getResults());
 		mv.setViewName("Movies");
 		return mv;
 	}
-	@GetMapping("/tv")
-	public ModelAndView Tv() {
+	@GetMapping("/tv/{page}")
+	public ModelAndView Tv(@PathVariable("page") String page) throws JsonSyntaxException, URISyntaxException, IOException, InterruptedException {
+		film film = new Gson().fromJson(getPopularTV(page), film.class);
+		mv.addObject("tv", film.getResults());
 		mv.setViewName("TV");
 		return mv;
 	}

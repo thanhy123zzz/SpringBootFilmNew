@@ -63,6 +63,12 @@
 						phim</a> <a href="#"><i class="fa fa-facebook-official"
 						aria-hidden="true"></i> Chia sẻ</a>
 				</div>
+				<div class="movie-social">
+				<th:block th:each = "genre : ${movie.genres}">
+					<a href="#" class = "btn btn-outline-danger" th:text = "${genre.name}" style="margin: 4px 4px 4px 4px;">
+					</a>
+					</th:block>
+				</div>
 				<div class="movie-rate">
 					<div class="movie-rate__point">
 						<i class="fa fa-star" aria-hidden="true"></i>
