@@ -48,14 +48,14 @@
 									<input type="text" id="name" name="name" placeholder="Enter Username" required>
 								</div>
 								<div class="mess">
-									<label id="messUser"></label>
+									<label id="messUser" th:text = "${messUser}"></label>
 								</div>
 								<div class="field">
 									<i class="fa fa-lock" aria-hidden="true"></i>
 									<input type="password" id="pass" name="pass" placeholder="Enter Password" required>
 								</div>
 								<div class="mess">
-									<label id="messUser"></label>
+									<label id="messUser" th:text = "${messUser}"></label>
 								</div>
 								<div class="pass-link"><a href="#">Forgot password?</a></div>
 								<div class="field btn">
