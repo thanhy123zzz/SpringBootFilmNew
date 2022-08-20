@@ -259,6 +259,10 @@ public class HelloController extends CommonController {
 		mv.addObject("ep", ep);
 		mv.addObject("ss", sesion);
 		mv.setViewName("watchTV");
+		
+		
+		
+		
 		return mv;
 	}
 	@GetMapping("/movies/{page}")
