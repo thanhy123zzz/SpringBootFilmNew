@@ -73,12 +73,6 @@ public class HelloController extends CommonController {
 	// userService.delete(name);
 	// throw new UserNotFoundException("ad");
 	// }
-	@PutMapping(value = "/sua")
-	public String update(@RequestBody User user, Model model) {
-		int kq = userService.update(user);
-		model.addAttribute("kq", kq);
-		return "info";
-	}
 
 	@GetMapping("/tim-kiem")
 	public ModelAndView findFilm(@RequestParam(value = "keyword", required = false) String keyword)
