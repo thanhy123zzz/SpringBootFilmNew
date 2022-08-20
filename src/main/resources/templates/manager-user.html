@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Quản Lý Tài Khoản</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" th:href="@{/css/style-manager.css}">
+    <link rel="icon" th:href="@{/images/manager/user.ico}">
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+    <script type="text/javascript" th:src="@{/js/manager.js}"></script>
+    <script>
+        $(document).ready(function () {
+            $('[data-toggle="tooltip"]').tooltip();
+        });
+        function showmess() {
+            window.alert("hello!");
+        };
+    </script>
+</head>
+
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-2">
+                <div class="menu">
+                    <ul class="nav">
+                        <div class="col-sm-12">
+                            <li><a class="nav-link " th:href="@{/}"><i class="material-icons"><span
+                                            class="material-icons">
+                                            home
+                                        </span></i><br>Trang chủ</a></li>
+                        </div>
+                        <div class="col-sm-12">
+                            <li><a class="nav-link active" th:href="@{/manager-user}"><i class="material-icons"><span
+                                            class="material-icons">
+                                            manage_accounts
+                                        </span></i><br>Tài khoản</a></li>
+                        </div>
+                        <div class="col-sm-12">
+                            <li><a class="nav-link " th:href="@{/manager-film}"><i class="material-icons"><span
+                                            class="material-icons">movie
+                                        </span></i><br>Phim</a></li>
+                        </div>
+                        <div class="col-sm-12">
+                            <li><a class="nav-link " th:href="@{/manager-comment}"><i class="material-icons"><span
+                                            class="material-icons">
+                                            chat
+                                        </span></i><br>Bình luận</a></li>
+                        </div>
+                        <div class="col-sm-12">
+                            <li><a class="nav-link " th:href="@{/manager-favorite}"><i class="material-icons"><span class="material-icons">
+                                favorite
+                                </span></i><br>Yêu thích</a></li>
+                        </div>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-sm-10">
+                <div class="table-responsive">
+                    <div class="table-wrapper">
+                        <div class="table-title">
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <h2>Manager <b>User</b></h2>
+                                </div>
+                                <div class="col-sm-8">
+                                    <a href="#" class="btn btn-outline-success nBtn" data-toggle="modal"
+                                        data-target="#addUser" aria-label="Close"><i class="material-icons"><span
+                                                class="material-icons-round">person_add</span>
+                                        </i></a>
+                                    <a th:href="@{/manager-user}" class="btn btn-primary"><i
+                                            class="material-icons">&#xE863;</i>
+                                        <span>Refresh List</span></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="table-filter">
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <div class="show-entries">
+                                    <span>Hiển thị</span>
+                                    <select class="form-control">
+                                        <option selected disabled>8</option>
+                                    </select>
+                                    <span>Hàng</span>
+                                </div>
+                            </div>
+                            <div class="col-sm-9">
+                                <div class="filter-group">
+                                    <form th:action="@{/manager-user/search}" method="get">
+                                        <label>Tài khoản</label>
+                                        <input type="text" name="keyword" th:value="${keyword}" class="form-control">
+                                        <button id="sBtn" class="btn btn-primary"><i class="fa fa-search"></i></button>
+                                    </form>
+                                </div>
+                                <div class="filter-group">
+                                    <label>Phân quyền</label>
+                                    <select id="idfunction" th:value="${idfunction}" class="form-control">
+                                        <option selected disabled value="0">Lựa chọn</option>
+                                        <option value="1">Admin</option>
+                                        <option value="2">Người Dùng</option>
+                                    </select>
+                                </div>
+                                <span class="filter-icon"><i class="fa fa-filter"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                    <table class="table table-active table-hover">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Họ Và Tên</th>
+                                <th>Giới Tính</th>
+                                <th>Ngày Sinh</th>
+                                <th>Email</th>
+                                <th>Số Điện Thoại</th>
+                                <th colspan="2">Chỉnh sửa</th>
+                                <th>
+                                <th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="user: ${listUser}">
+                                <td>#</td>
+                                <td><a href="#"><img th:src="@{'images/manager/'+${user.avatar}}" class="avatar"
+                                            alt="Avatar" th:text="${user.fullname}"></a></td>
+                                <td th:text="${user.gender}"></td>
+                                <td th:text="${user.dateofbirth}"></td>
+                                <td th:text="${user.email}"></td>
+                                <td th:text="${user.numberphone}"></td>
+                                <td><a th:href="@{/manager-user/findOne/(name=${user.name})}" class="view eBtn"
+                                        title="Edit" data-toggle="modal" data-target="#editUser"><i
+                                            class="material-icons"><span
+                                                class="material-icons-round">edit</span></i></a></td>
+                                <td><a th:href="@{/manager-user/removeUser/(name=${user.name})}" class="view dBtn"
+                                        title="Delete" data-toggle="modal" data-target="#removeUser"><i
+                                            class="material-icons"><span
+                                                class="material-icons-round">remove</span></i></a></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="clearfix">
+                        <div class="hint-text">Showing <b>5</b> out of <b>25</b> entries</div>
+                        <ul class="pagination">
+                            <li class="page-item disabled"><a href="#">Previous</a></li>
+                            <li class="page-item"><a href="#" class="page-link">1</a></li>
+                            <li class="page-item"><a href="#" class="page-link">2</a></li>
+                            <li class="page-item"><a href="#" class="page-link">3</a></li>
+                            <li class="page-item active"><a href="#" class="page-link">4</a></li>
+                            <li class="page-item"><a href="#" class="page-link">5</a></li>
+                            <li class="page-item"><a href="#" class="page-link">6</a></li>
+                            <li class="page-item"><a href="#" class="page-link">7</a></li>
+                            <li class="page-item"><a href="#" class="page-link">Next</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="formAdd">
+        <form action="#" method="post" th:action="@{/manager-user/addUser}">
+            <div class="modal fade" id="addUser" tabindex="-1" role="dialog" aria-labelledby="addUserLabel"
+                aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="addUserLabel">Thêm mới một tài khoản</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="container-fluid">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <label id="name">Tài khoản</label><br>
+                                        <input id="name" name="name" type="text" value="" required>
+                                    </div>
+                                    <div class="col-sm-12">
+                                        <label id="pass">Mật khẩu</label><br>
+                                        <input id="pass" name="pass" type="password" value="" required>
+                                    </div>
+                                    <div class="col-sm-12">
+                                        <label id="fullname">Họ Và Tên</label><br>
+                                        <input id="fullname" name="fullname" type="text" value="" required>
+                                    </div>
+                                    <div class="col-sm-12">
+                                        <label id="gender">Giới Tính</label><br>
+                                        <select id="gender" name="gender" class="form-select " aria-label="Giới tính">
+                                            <option selected disabled>Lựa chọn</option>
+                                            <option value="Nam">Nam</option>
+                                            <option value="Nữ">Nữ</option>
+                                            <option value="Not">Not</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-12">
+                                        <label id="dateofbirth">Ngày Sinh</label><br>
+                                        <input id="dateofbirth" name="dateofbirth" type="date" value="" required>
+                                    </div>
+                                    <div class="col-sm-12">
+                                        <label id="email">Email</label><br>
+                                        <input id="email" name="email" type="text" value="" required>
+                                    </div>
+                                    <div class="col-sm-12">
+                                        <label id="numberphone">Số điện thoại</label><br>
+                                        <input id="numberphone" name="numberphone" type="text" value="" required>
+                                    </div>
+                                    <div class="col-sm-12">
+                                        <label id="avatar">Ảnh đại diện</label><br>
+                                        <input id="avatar" name="avatar" type="text" value="">
+                                    </div>
+                                    <div class="col-sm-12">
+                                        <label id="idfunction">Phân quyền</label><br>
+                                        <select id="idfunction" name="idfunction" class="form-select "
+                                            aria-label="Phân quyền">
+                                            <option selected disabled>Lựa chọn</option>
+                                            <option value="1">Admin</option>
+                                            <option value="2">Người dùng</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">Hủy</button>
+                            <button type="submit" class="btn btn-success">Tạo mới</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div class="formEdit">
+        <form action="#" method="post" th:action="@{/manager-user/editUser}">
+            <div class="modal fade" id="editUser" tabindex="-1" role="dialog" aria-labelledby="editUserLabel"
+                aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="editUserLabel">Cập nhật tài khoản</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="container-fluid">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <label id="name">Tài khoản</label><br>
+                                        <input id="name" name="name" type="text" readonly value="">
+                                    </div>
+                                    <div class="col-sm-12">
+                                        <label id="pass">Mật khẩu</label><br>
+                                        <input id="pass" name="pass" type="text" value="">
+                                    </div>
+                                    <div class="col-sm-12">
+                                        <label id="fullname">Họ Và Tên</label><br>
+                                        <input id="fullname" name="fullname" type="text" value="">
+                                    </div>
+                                    <div class="col-sm-12">
+                                        <label id="gender">Giới Tính</label><br>
+                                        <select id="gender" name="gender" class="form-select active"
+                                            aria-label="Giới tính">
+                                            <option selected disabled>Lựa chọn</option>
+                                            <option value="Nam">Nam</option>
+                                            <option value="Nữ">Nữ</option>
+                                            <option value="Not">Not</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-12">
+                                        <label id="dateofbirth">Ngày Sinh</label><br>
+                                        <input id="dateofbirth" name="dateofbirth" type="date" value="">
+                                    </div>
+                                    <div class="col-sm-12">
+                                        <label id="email">Email</label><br>
+                                        <input id="email" name="email" type="text" value="">
+                                    </div>
+                                    <div class="col-sm-12">
+                                        <label id="numberphone">Số điện thoại</label><br>
+                                        <input id="numberphone" name="numberphone" type="text" value="">
+                                    </div>
+                                    <div class="col-sm-12">
+                                        <label id="avatar">Ảnh đại diện</label><br>
+                                        <input id="avatar" name="avatar" type="text" value="">
+                                    </div>
+                                    <div class="col-sm-12">
+                                        <label id="idfunction">Phân quyền</label><br>
+                                        <select id="idfunction" name="idfunction" class="form-select active"
+                                            aria-label="Phân quyền">
+                                            <option selected disabled>Lựa chọn</option>
+                                            <option value="1">Admin</option>
+                                            <option value="2">Người dùng</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">Hủy</button>
+                            <button type="submit" class="btn btn-success">Cập nhật</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <!-- Delete User -->
+    <div class="modal fade" id="removeUser" tabindex="-1" role="dialog" aria-labelledby="removeUserLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="removeUserLabel">Xóa tài khoản</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <h4 class="alert alert-danger">Bạn có muốn xóa tài khoản <b name="name1" id="name1"></b> này không?</h4>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Hủy</button>
+                    <a type="submit" class="btn btn-danger" id="dConfirm">Xác nhận</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

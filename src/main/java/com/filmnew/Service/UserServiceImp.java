@@ -15,8 +15,8 @@ public class UserServiceImp implements UserService{
 	private UserDao userDao;
 	
 	@Override
-	public int delete(String id) {
-		return userDao.delete(id);
+	public int delete(String name) {
+		return userDao.delete(name);
 	}
 
 	@Override
@@ -37,6 +37,26 @@ public class UserServiceImp implements UserService{
 	@Override
 	public List<User> findAll() {
 		return userDao.findAll();
+	}
+
+	@Override
+	public List<User> findlistbyname(String name){
+		return userDao.findlistbyname(name);
+	}
+
+	@Override
+	public List<User> login(String name, String pass){
+		return userDao.login(name,pass);
+	}
+
+	/*@Override
+	public Boolean checkExistUser(String name){
+		return userDao.checkExistUser(name);
+	}
+ */
+	@Override
+	public List<User> pageofUser(int page){
+		return userDao.pageofUser(page);
 	}
 
 }
