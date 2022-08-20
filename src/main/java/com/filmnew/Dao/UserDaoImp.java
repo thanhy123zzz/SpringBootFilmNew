@@ -72,17 +72,26 @@ public class UserDaoImp implements UserDao {
 		list = jdbctemplate.query(sql, new MapperUser());
 		return list;
 	}
-/* 
+
 	@Override
-	public Boolean checkExistUser(String name) {
-		String sql = "select * from user where name = '" + name + "'";
-		List<User> list = jdbctemplate.query(sql, new MapperUser());
-		User user = list.get(0);
-		if (user.getName().equals(name)) {
-			return true;
-		} else {
-			return false;
-		}
-	} */
+	public List<User>login(String name, String pass) {
+
+		String sql = "SELECT * FROM user WHERE name = '"+name+"' AND pass = '"+pass+"' ";
+		List<User> user = jdbctemplate.query(sql, new MapperUser());
+		return user;
+	}
+	/*
+	 * @Override
+	 * public Boolean checkExistUser(String name) {
+	 * String sql = "select * from user where name = '" + name + "'";
+	 * List<User> list = jdbctemplate.query(sql, new MapperUser());
+	 * User user = list.get(0);
+	 * if (user.getName().equals(name)) {
+	 * return true;
+	 * } else {
+	 * return false;
+	 * }
+	 * }
+	 */
 
 }

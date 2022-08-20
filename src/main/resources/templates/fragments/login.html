@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/css/style-login.css}">
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="modal fade" id="LoginAndsignup" tabindex="-1" role="dialog" aria-labelledby="LogIn And SignUp"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content wrapper">
+                <div class="">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="title-text">
+                    <div class="title login">Login Form</div>
+                    <div class="title signup">Signup Form</div>
+                </div>
+                <div class="form-container">
+                    <div class="slide-controls">
+                        <input type="radio" name="slide" id="login" checked>
+                        <input type="radio" name="slide" id="signup">
+                        <label for="login" class="slide login">Login</label>
+                        <label for="signup" class="slide signup">Signup</label>
+                        <div class="slider-tab"></div>
+                    </div>
+                    <div class="form-inner">
+                        <form action="#" class="login">
+                            <div class="field">
+                                <i class="fa fa-user" aria-hidden="true"></i>
+                                <input type="text" id="user" name="user" placeholder="Email Address" required>
+                            </div>
+                            <div class="field">
+                                <i class="fa fa-lock" aria-hidden="true"></i>
+                                <input type="password" id="pass" name="pass" placeholder="Password" required>
+                            </div>
+                            <div class="pass-link"><a href="#">Forgot password?</a></div>
+                            <div class="field btn">
+                                <div class="btn-layer">
+                                    <input type="submit" value="Login">
+                                </div>
+                            </div>
+                            <div class="signup-link">Not a member? <a href=""></i>Signup now</a></div>
+                        </form>
+                        <form action="#" class="signup">
+                            <div class="field">
+                                <i class="fa fa-user" aria-hidden="true"></i>
+                                <input class="ml-2" type="text" id="user" name="user" placeholder="Email Address"
+                                    required>
+                            </div>
+                            <div class="field">
+                                <i class="fa fa-lock" aria-hidden="true"></i>
+                                <input class="ml-2" type="password" id="pass" name="pass" placeholder="Password"
+                                    required>
+                            </div>
+                            <div class="field">
+                                <i class="fa fa-lock" aria-hidden="true"></i>
+                                <input class="ml-2" type="password" id="repass" name="repass"
+                                    placeholder="Confirm password" required>
+                            </div>
+                            <div class="field btn">
+                                <div class="btn-layer">
+                                    <input class="text-center" type="submit" value="Signup">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <script>
+        const loginText = document.querySelector(".title-text .login");
+        const loginForm = document.querySelector("form.login");
+        const loginBtn = document.querySelector("label.login");
+        const signupBtn = document.querySelector("label.signup");
+        const signupLink = document.querySelector("form .signup-link a");
+        signupBtn.onclick = (() => {
+            loginForm.style.marginLeft = "-50%";
+            loginText.style.marginLeft = "-50%";
+        });
+        loginBtn.onclick = (() => {
+            loginForm.style.marginLeft = "0%";
+            loginText.style.marginLeft = "0%";
+        });
+        signupLink.onclick = (() => {
+            signupBtn.click();
+            return false;
+        });
+    </script>
+</body>
+
+</html>

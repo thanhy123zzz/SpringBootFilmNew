@@ -44,6 +44,11 @@ public class UserServiceImp implements UserService{
 		return userDao.findlistbyname(name);
 	}
 
+	@Override
+	public List<User> login(String name, String pass){
+		return userDao.login(name,pass);
+	}
+
 	/*@Override
 	public Boolean checkExistUser(String name){
 		return userDao.checkExistUser(name);

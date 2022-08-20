@@ -109,6 +109,11 @@ public class User {
 		this.idfunction = idfunction;
 	}
 
+	public User(String name, String pass) {
+		this.name = name;
+		this.pass = pass;
+	}
+
 	public User() {
 	}
 }

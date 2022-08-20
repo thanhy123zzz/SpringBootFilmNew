@@ -9,13 +9,12 @@ body {
 	padding: 10px 2px;
     border-radius: 3px;
 	max-height: fit-content;
-	height: fit-content;
+	height: auto;
     background-color: darkcyan;
 }
 .menu i .material-icons{
     margin: 0px;
     font-size: 150px;
-	width: 100%;
     text-align: center;
 	max-width: fit-content;
 	min-width: fit-content;
