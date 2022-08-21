@@ -19,6 +19,8 @@ public interface UserDao {
 	
 	List<User> findAll();
 
+	int signup(User user);
+
 	List<User> login(String name, String pass);
 
 	//Boolean checkExistUser(String name);

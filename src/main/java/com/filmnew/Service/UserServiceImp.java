@@ -45,8 +45,13 @@ public class UserServiceImp implements UserService{
 	}
 
 	@Override
-	public List<User> login(String name, String pass){
-		return userDao.login(name,pass);
+	public User login(String name, String pass){
+		return userDao.login(name,pass).get(0);
+	}
+
+	@Override
+	public int signup(User user){
+		return userDao.signup(user);
 	}
 
 	/*@Override

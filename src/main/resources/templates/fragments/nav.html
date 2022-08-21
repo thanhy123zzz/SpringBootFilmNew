@@ -1,30 +1,47 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org"
-	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
 <head>
 </head>
+
 <body>
 	<nav class="sidebar" th:fragment="nav">
 		<a class="sidebar__brand" th:href="@{/}">Movie</a>
 		<ul class="nav nav-pills flex-column" id="myDIV">
 			<li class="nav-item">
-			<a th:class="${index == 1 ? 'nav-link ycd active': 'nav-link ycd'}" th:href="@{/}">
+				<a th:class="${index == 1 ? 'nav-link ycd active': 'nav-link ycd'}" th:href="@{/}">
 					<div class="sidebar__icon">
 						<i class="fa fa-home"></i>
 					</div>Home
-			</a>
+				</a>
 			</li>
-			<li class="nav-item"><a th:class="${index == 2 ? 'nav-link ycd active': 'nav-link ycd'}" th:href="@{/movies/1}">
+			<li class="nav-item"><a th:class="${index == 2 ? 'nav-link ycd active': 'nav-link ycd'}"
+					th:href="@{/movies/1}">
 					<div class="sidebar__icon">
 						<i class="fa fa-film"></i>
 					</div> Movies
-			</a></li>
+				</a>
+			</li>
 			<li class="nav-item"><a th:class="${index == 3 ? 'nav-link ycd active': 'nav-link ycd'}" th:href="@{/tv/1}">
 					<div class="sidebar__icon">
 						<i class="fa fa-newspaper-o"></i>
 					</div> TV series
-			</a></li>
+				</a>
+			</li>
+			<li th:if="${session.ROLE_USER == 2}" class="nav-item nak"><a class="nav-link" th:href="@{/tv/1}">
+					<div class="sidebar__icon">
+						<i class="fa fa-user"></i>
+					</div> Account
+				</a>
+			</li>
+			<li th:if="${session.ROLE_USER == 1}" class="nav-item"><a class="nav-link"  th:href="@{/manager-user}">
+					<div class="sidebar__icon">
+						<i class="fa fa-suitcase"></i>
+					</div> Manager
+				</a>
+			</li>
 		</ul>
 	</nav>
 </body>
+
 </html>

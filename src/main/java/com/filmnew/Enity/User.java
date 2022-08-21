@@ -11,6 +11,8 @@ public class User {
 	private String dateofbirth;
 	private int idfunction;
 
+	private String repass;
+
 	public String getName() {
 		return name;
 	}
@@ -26,6 +28,16 @@ public class User {
 	public void setPass(String pass) {
 		this.pass = pass;
 	}
+
+
+	public String getRepass() {
+		return this.repass;
+	}
+
+	public void setRepass(String repass) {
+		this.repass = repass;
+	}
+
 
 	public String getFullname() {
 		return this.fullname;
@@ -112,6 +124,12 @@ public class User {
 	public User(String name, String pass) {
 		this.name = name;
 		this.pass = pass;
+	}
+
+	public User(String name, String pass,String repass) {
+		this.name = name;
+		this.pass = pass;
+		this.repass = repass;
 	}
 
 	public User() {

@@ -6,10 +6,16 @@ import java.net.URISyntaxException;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.filmnew.Enity.film;
+import com.filmnew.Enity.results;
 import com.filmnew.Service.UserService;
+import com.google.gson.Gson;
+import com.google.gson.JsonSyntaxException;
 
 public class CommonController{
 	ModelAndView mv = new ModelAndView();

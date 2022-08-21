@@ -30,6 +30,10 @@ public class UserDaoImp implements UserDao {
 		String sql = "select * from user where name = '" + name + "'";
 		List<User> user = new ArrayList<User>();
 		user = jdbctemplate.query(sql, new MapperUser());
+		User user1 = new User("", "");
+		if (user.size() < 1) {
+			user.add(user1);
+		}
 		return user;
 	}
 
@@ -74,12 +78,22 @@ public class UserDaoImp implements UserDao {
 	}
 
 	@Override
-	public List<User>login(String name, String pass) {
-
-		String sql = "SELECT * FROM user WHERE name = '"+name+"' AND pass = '"+pass+"' ";
+	public List<User> login(String name, String pass) {
+		String sql = "SELECT * FROM user WHERE name = '" + name + "' AND pass = '" + pass + "' ";
 		List<User> user = jdbctemplate.query(sql, new MapperUser());
+		User user1 = new User("", "");
+		if (user.size() < 1) {
+			user.add(user1);
+		}
 		return user;
 	}
+
+	@Override
+	public int signup(User user) {
+		String sql = "INSERT INTO `user` (`name`, `pass`) VALUES (?,?)";
+		return jdbctemplate.update(sql, new Object[] { user.getName(), user.getPass() });
+	}
+
 	/*
 	 * @Override
 	 * public Boolean checkExistUser(String name) {

@@ -12,6 +12,7 @@ public interface UserService {
 	List<User> findAll();
 	List<User> findlistbyname(String name);
 	List<User> pageofUser(int page);
-	List<User> login(String name, String pass);
+	User login(String name, String pass);
+	int signup(User user);
 	//Boolean checkExistUser(String name);
 }

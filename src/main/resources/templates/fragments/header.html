@@ -7,11 +7,17 @@
 <body>
 	<nav class="navbar top-menu" th:fragment="header">
 		<ul class="navbar-nav d-flex flex-row">
-			<li class="nav-item"><a href="#" class="nav-link" type="button" data-toggle="modal"
-					data-target="#exampleModal"><span class="sr-only"></span>Login</a></li>
 			<li class="nav-item"><a class="nav-link" href="#" onclick="history.back()"><span
 						class="sr-only"></span>Back</a></li>
-
+			<li th:if="${session.NAME_USER == null}" class="nav-item"><a href="#" class="nav-link" type="button"
+					data-toggle="modal" data-target="#exampleModal"><span class="sr-only"></span>Login</a></li>
+			<li th:unless="${session.NAME_USER == null}" class="nav-item"><a class="nav-link" th:href="@{/logout}"><span
+						class="sr-only"></span>Logout</a></li>
+			<li th:if="${session.NAME_USER != null && session.ROLE_USER == 1}" class="nav-item"><a class="nav-link"
+					th:text="${session.NAME_USER}" id="Modalshow" th:href="@{/manager-user}"><span
+						class="sr-only"></span></a></li>
+			<li th:if="${session.NAME_USER != null && session.ROLE_USER == 2}" class="nav-item"><a class="nav-link"
+					th:text="${session.NAME_USER}" id="Modalshow" href="#"><span class="sr-only"></span></a></li>
 		</ul>
 		<form action="/filmnew.com/search" class="search-bar" method="get">
 			<input type="search" name="keyword" pattern=".*\S.*" required>
@@ -43,19 +49,21 @@
 						</div>
 						<div class="form-inner">
 							<form th:action="@{/login}" th:object="${user}" method="post" class="login">
+								<label class="text-center text-warning" id="ErrorMess" th:text="${messError}"></label>
+								<label class="text-center text-warning" hidden id="ErrorMess2" th:text="${messError}"></label>
 								<div class="field">
 									<i class="fa fa-user" aria-hidden="true"></i>
 									<input type="text" id="name" name="name" placeholder="Enter Username" required>
 								</div>
 								<div class="mess">
-									<label id="messUser" th:text = "${messUser}"></label>
+									<label id="messUser" th:text="${messUser}"></label>
 								</div>
 								<div class="field">
 									<i class="fa fa-lock" aria-hidden="true"></i>
 									<input type="password" id="pass" name="pass" placeholder="Enter Password" required>
 								</div>
 								<div class="mess">
-									<label id="messUser" th:text = "${messUser}"></label>
+									<label id="messUser" th:text="${messUser}"></label>
 								</div>
 								<div class="pass-link"><a href="#">Forgot password?</a></div>
 								<div class="field btn">
@@ -65,16 +73,26 @@
 								</div>
 								<div class="signup-link">Not a member? <a href=""></i>Signup now</a></div>
 							</form>
-							<form action="#" class="signup">
+							<form th:action="@{/signup}" method="post" action="#" class="signup">
+								<label class="text-center text-warning" id="ErrorSign" th:text="${ErrorSign}"></label>
+								<div class="mess">
+									<label id="messUser" th:text="${messUser}"></label>
+								</div>
 								<div class="field">
 									<i class="fa fa-user" aria-hidden="true"></i>
 									<input class="ml-2" type="text" id="name" name="name" placeholder="Enter Username"
 										required>
 								</div>
+								<div class="mess">
+									<label id="messUser" th:text="${messUser}"></label>
+								</div>
 								<div class="field">
 									<i class="fa fa-lock" aria-hidden="true"></i>
 									<input class="ml-2" type="password" id="pass" name="pass"
 										placeholder="Enter Password" required>
+								</div>
+								<div class="mess">
+									<label id="messUser" th:text="${messUser}"></label>
 								</div>
 								<div class="field">
 									<i class="fa fa-lock" aria-hidden="true"></i>
@@ -93,6 +111,7 @@
 
 			</div>
 		</div>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 		<style>
 			@import url('https://fonts.googleapis.com/css?family=Poppins:400,500,600,700&display=swap');
 
@@ -233,15 +252,17 @@
 				width: 100%;
 				margin-top: 20px;
 				flex-direction: column;
-			} 
+			}
+
 			.form-inner form .mess {
 				height: 15px;
 				width: 100%;
-			} 
-			.form-inner form .field label{
+			}
+
+			.form-inner form .field label {
 				font-size: 12px;
 				color: #691919;
-			} 
+			}
 
 
 			.form-inner form .field .btn-layer input {
@@ -364,7 +385,41 @@
 			signupLink.onclick = (() => {
 				signupBtn.click();
 				return false;
-			});
+			}); /*
+			$(window).on('load', function () {
+				$('#exampleModal').modal('show');
+			}); */
+
+			var x = document.getElementById('Modalshow');
+			var y = document.getElementById('ErrorMess');
+			var z = document.getElementById('ErrorSign');
+			var yy = document.getElementById('ErrorMess2');
+			/*
+			if (x == "") {
+				$(document).ready(function () {
+					//event.preventDefault();
+					$('#exampleModal').modal('show');
+
+				})
+			}else{
+
+			} */
+
+			if (y != "" ) {
+				$(document).ready(function () {
+					//event.preventDefault();
+					$('#exampleModal').modal('show');
+
+				})
+			}else{
+			if (z == "") {
+				$(document).ready(function () {
+					//event.preventDefault();
+					signupLink.onclick();
+					$('#exampleModal').modal('show');
+				})
+			}}
+
 		</script>
 
 	</nav>
