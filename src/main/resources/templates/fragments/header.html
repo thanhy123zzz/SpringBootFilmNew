@@ -10,7 +10,7 @@
 			<li class="nav-item"><a class="nav-link" href="#" onclick="history.back()"><span
 						class="sr-only"></span>Back</a></li>
 			<li th:if="${session.NAME_USER == null}" class="nav-item"><a href="#" class="nav-link" type="button"
-					data-toggle="modal" data-target="#exampleModal"><span class="sr-only"></span>Login</a></li>
+					data-toggle="modal" id="idlogin" data-target="#exampleModal"><span class="sr-only" ></span>Login</a></li>
 			<li th:unless="${session.NAME_USER == null}" class="nav-item"><a class="nav-link" th:href="@{/logout}"><span
 						class="sr-only"></span>Logout</a></li>
 			<li th:if="${session.NAME_USER != null && session.ROLE_USER == 1}" class="nav-item"><a class="nav-link"
@@ -50,7 +50,8 @@
 						<div class="form-inner">
 							<form th:action="@{/login}" th:object="${user}" method="post" class="login">
 								<label class="text-center text-warning" id="ErrorMess" th:text="${messError}"></label>
-								<label class="text-center text-warning" hidden id="ErrorMess2" th:text="${messError}"></label>
+								<label class="text-center text-warning" hidden id="ErrorMess2"
+									th:text="${messError}"></label>
 								<div class="field">
 									<i class="fa fa-user" aria-hidden="true"></i>
 									<input type="text" id="name" name="name" placeholder="Enter Username" required>
@@ -393,7 +394,7 @@
 			var x = document.getElementById('Modalshow');
 			var y = document.getElementById('ErrorMess');
 			var z = document.getElementById('ErrorSign');
-			var yy = document.getElementById('ErrorMess2');
+			var yy = document.getElementById('idlogin');
 			/*
 			if (x == "") {
 				$(document).ready(function () {
@@ -405,20 +406,21 @@
 
 			} */
 
-			if (y != "" ) {
+			if (/^\s+$/.test(y)) {
 				$(document).ready(function () {
 					//event.preventDefault();
 					$('#exampleModal').modal('show');
 
 				})
-			}else{
-			if (z == "") {
+				
+			}
+			if (/^\s+$/.test(z)) {
 				$(document).ready(function () {
 					//event.preventDefault();
 					signupLink.onclick();
 					$('#exampleModal').modal('show');
 				})
-			}}
+			}
 
 		</script>
 

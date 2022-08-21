@@ -88,6 +88,13 @@ public class ManagerController extends CommonController {
 		return mav;
 	}
 
+	public void StringUser(String name,String pass,String repass){
+		mav.addObject("name", name);
+		mav.addObject("pass",pass);
+		mav.addObject("repass",repass);
+	}
+
+
 	// Login and SignUp
 	@PostMapping("/login")
 	public ModelAndView login(@ModelAttribute(name = "user") User user, HttpSession session, HttpServletRequest res)
@@ -95,6 +102,9 @@ public class ManagerController extends CommonController {
 		User user1 = userService.login(user.getName(), user.getPass());
 		if (user1.getName().equals(null) && user.equals(null)) {
 			mav.addObject("messError", "Username Or PassWord Not Is True");
+			mav.addObject("ErrorSign", "");
+			
+			StringUser(user.getName(), user.getPass(), "");
 			return hele(res);
 		} else {
 			if (user1.getName().equals(user.getName()) && user1.getPass().equals(user.getPass())) {
@@ -114,6 +124,8 @@ public class ManagerController extends CommonController {
 					e.printStackTrace();
 				}
 				mav.addObject("messError", "Username Or PassWord Not Is True");
+				mav.addObject("ErrorSign", "");
+				StringUser(user.getName(), user.getPass(), "");
 				return hele(res);
 			}
 		}
@@ -125,7 +137,8 @@ public class ManagerController extends CommonController {
 			throws JsonSyntaxException, URISyntaxException, IOException, InterruptedException {
 		session.removeAttribute("NAME_USER");
 		session.removeAttribute("ROLE_USER");
-		mav.setViewName("index");
+		mav.addObject("ErrorSign", "");
+		mav.addObject("messError", "");
 		hele(res);
 		return mav;
 	}
@@ -141,6 +154,9 @@ public class ManagerController extends CommonController {
 			if (user1.getName().equals(null) && user.getPass().equals(null)) {
 				if (!user1.getName().equals("")) {
 					mav.addObject("ErrorSign", "Username Was Exist");
+					mav.addObject("messError", "");
+					
+					StringUser(user.getName(), user.getPass(), user.getRepass());
 					hele(request);
 				} else {
 					if (repass.equals(pass)) {
@@ -149,10 +165,16 @@ public class ManagerController extends CommonController {
 						user3.setPass(user.getPass());
 						userService.signup(user3); // function Insert User signup()
 						mav.addObject("name", user.getName());
-						mav.addObject("messError", "Sign Up Success");
+						mav.addObject("messError", "Sign Up Success!!!");
+						mav.addObject("ErrorSign", "");
+						
+						StringUser(user.getName(),"", "");
 						hele(request);
 					} else {
 						mav.addObject("ErrorSign", "Password and Respassword Is Not The Same");
+						mav.addObject("messError", "");
+						
+						StringUser(user.getName(), user.getPass(), user.getRepass());
 						hele(request);
 					}
 				}
@@ -160,6 +182,8 @@ public class ManagerController extends CommonController {
 			} else {
 				if (!user1.getName().equals("")) {
 					mav.addObject("ErrorSign", "Username Was Exist");
+					mav.addObject("messError", "");
+					
 					hele(request);
 				} else {
 					if (repass.equals(pass)) {
@@ -169,9 +193,13 @@ public class ManagerController extends CommonController {
 						userService.signup(user3);
 						mav.addObject("name", user.getName());
 						mav.addObject("messError", "Sign Up Success");
+						mav.addObject("ErrorSign", "");
+						
 						hele(request);
 					} else {
 						mav.addObject("ErrorSign", "Password and Respassword Is Not The Same");
+						mav.addObject("messError", "");
+						
 						hele(request);
 					}
 				}
