@@ -24,6 +24,7 @@
 					th:text="${movie.original_name + ' | Season: ' + ss + ' | Episode: ' + ep}"></a>
 			</h1>
 			<section th:each="sesion :${movie.seasons}" class="wrap">
+			<th:block th:if= "${sesion.season_number >=1}">
 				<div class="wrap-heading">
 					<h3 class="wrap-heading__title" th:text="${sesion.name}"></h3>
 				</div>
@@ -41,6 +42,7 @@
 
 					</th:block>
 				</div>
+				</th:block>
 			</section>
 
 			<section class="wrap">
@@ -48,7 +50,7 @@
 				<div class="container">
 					<div class="row">
 						<div class="comments-container">
-							<h3>Bình luận về phim</h3>
+							<h3>Comments</h3>
 
 							<ul id="comments-list" class="comments-list">
 								<li>

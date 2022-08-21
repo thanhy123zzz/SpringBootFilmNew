@@ -1635,6 +1635,7 @@ fieldset[disabled] a.btn {
   background-color: #ed215e;
   border-color: #ed215e; 
   margin: 4px 4px 4px 4px;
+  width: 110px;
   }
   .btn-primary:hover {
     color: #fff;
@@ -1657,6 +1658,7 @@ fieldset[disabled] a.btn {
   background-color: #868e96;
   border-color: #868e96; 
   margin: 3px 3px 3px 3px;
+  width: 71px;
   }
   .btn-secondary:hover {
     color: #fff;

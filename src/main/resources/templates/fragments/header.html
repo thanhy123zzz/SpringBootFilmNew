@@ -1,15 +1,16 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org"
-	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
 <head>
 </head>
+
 <body>
 	<nav class="navbar top-menu" th:fragment="header">
 		<ul class="navbar-nav d-flex flex-row">
-			<li class="nav-item"><a class="nav-link" href="list-movies.html"><span
-					class="sr-only"></span>Login</a></li>
+			<li class="nav-item"><a href="#" class="nav-link" type="button" data-toggle="modal"
+					data-target="#exampleModal"><span class="sr-only"></span>Login</a></li>
 			<li class="nav-item"><a class="nav-link" href="#" onclick="history.back()"><span
-					class="sr-only"></span>Go back</a></li>
+						class="sr-only"></span>Back</a></li>
 
 		</ul>
 		<form action="/filmnew.com/search" class="search-bar" method="get">
@@ -18,7 +19,358 @@
 				<span>Search</span>
 			</button>
 		</form>
+		<!-- -->
+		<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+			aria-hidden="true">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content wrapper">
+					<div class="btnclose">
+						<button type="button" class="btn btn-primary close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="title-text">
+						<div class="title login">Login Form</div>
+						<div class="title signup">Signup Form</div>
+					</div>
+					<div class="form-container">
+						<div class="slide-controls">
+							<input type="radio" name="slide" id="login" checked>
+							<input type="radio" name="slide" id="signup">
+							<label for="login" class="slide login">Login</label>
+							<label for="signup" class="slide signup">Signup</label>
+							<div class="slider-tab"></div>
+						</div>
+						<div class="form-inner">
+							<form th:action="@{/login}" th:object="${user}" method="post" class="login">
+								<div class="field">
+									<i class="fa fa-user" aria-hidden="true"></i>
+									<input type="text" id="name" name="name" placeholder="Enter Username" required>
+								</div>
+								<div class="mess">
+									<label id="messUser" th:text = "${messUser}"></label>
+								</div>
+								<div class="field">
+									<i class="fa fa-lock" aria-hidden="true"></i>
+									<input type="password" id="pass" name="pass" placeholder="Enter Password" required>
+								</div>
+								<div class="mess">
+									<label id="messUser" th:text = "${messUser}"></label>
+								</div>
+								<div class="pass-link"><a href="#">Forgot password?</a></div>
+								<div class="field btn">
+									<div class="btn-layer">
+										<input type="submit" value="Login">
+									</div>
+								</div>
+								<div class="signup-link">Not a member? <a href=""></i>Signup now</a></div>
+							</form>
+							<form action="#" class="signup">
+								<div class="field">
+									<i class="fa fa-user" aria-hidden="true"></i>
+									<input class="ml-2" type="text" id="name" name="name" placeholder="Enter Username"
+										required>
+								</div>
+								<div class="field">
+									<i class="fa fa-lock" aria-hidden="true"></i>
+									<input class="ml-2" type="password" id="pass" name="pass"
+										placeholder="Enter Password" required>
+								</div>
+								<div class="field">
+									<i class="fa fa-lock" aria-hidden="true"></i>
+									<input class="ml-2" type="password" id="repass" name="repass"
+										placeholder="Confirm password" required>
+								</div>
+								<div class="field btn">
+									<div class="btn-layer">
+										<input class="text-center" type="submit" value="Signup">
+									</div>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</div>
+		<style>
+			@import url('https://fonts.googleapis.com/css?family=Poppins:400,500,600,700&display=swap');
+
+			* {
+				margin: 0;
+				padding: 0;
+				box-sizing: border-box;
+				font-family: 'Poppins', sans-serif;
+			}
+
+			html,
+			body {
+				display: grid;
+				height: 100%;
+				width: 100%;
+				place-items: center;
+			}
+
+			::selection {
+				background: #4a0525;
+				color: #fff;
+			}
+
+			.modal .btnclose button {
+				background-color: #710232;
+				height: 30px;
+				width: 0px;
+			}
+
+			.wrapper {
+				overflow: hidden;
+				max-width: 390px;
+				background: #088084;
+				margin: auto auto;
+				padding: 30px;
+				border-radius: 5px;
+				box-shadow: 0px 15px 20px rgba(0, 0, 0, 0.1);
+			}
+
+			.wrapper .title-text {
+				display: flex;
+				width: 200%;
+			}
+
+			.wrapper .title {
+				width: 50%;
+				font-size: 35px;
+				font-weight: 600;
+				text-align: center;
+				transition: all 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+			}
+
+			.wrapper .slide-controls {
+				position: relative;
+				display: flex;
+				height: 50px;
+				width: 100%;
+				overflow: hidden;
+				margin: 30px 0 10px 0;
+				justify-content: space-between;
+				border: 1px solid lightgrey;
+				border-radius: 5px;
+			}
+
+			.slide-controls .slide {
+				height: 100%;
+				width: 100%;
+				color: #fff;
+				font-size: 18px;
+				font-weight: 500;
+				text-align: center;
+				line-height: 48px;
+				cursor: pointer;
+				z-index: 1;
+				transition: all 0.6s ease;
+			}
+
+			.slide-controls label.signup {
+				color: #000;
+			}
+
+			.slide-controls .slider-tab {
+				position: absolute;
+				height: 100%;
+				width: 50%;
+				left: 0;
+				z-index: 0;
+				border-radius: 5px;
+				background: -webkit-linear-gradient(left, #b30f40, #4a0525);
+				transition: all 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+			}
+
+			input[type="radio"] {
+				display: none;
+			}
+
+			#signup:checked~.slider-tab {
+				left: 50%;
+			}
+
+			#signup:checked~label.signup {
+				color: #fff;
+				cursor: default;
+				user-select: none;
+			}
+
+			#signup:checked~label.login {
+				color: #000;
+			}
+
+			#login:checked~label.signup {
+				color: #000;
+			}
+
+			#login:checked~label.login {
+				cursor: default;
+				user-select: none;
+			}
+
+			.wrapper .form-container {
+				width: 100%;
+				overflow: hidden;
+			}
+
+			.form-container .form-inner {
+				display: flex;
+				width: 200%;
+				margin-top: 5px;
+			}
+
+			.form-container .form-inner form {
+				width: 50%;
+				transition: all 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+			}
+
+			.form-inner form .field {
+				height: 50px;
+				width: 100%;
+				margin-top: 20px;
+				flex-direction: column;
+			} 
+			.form-inner form .mess {
+				height: 15px;
+				width: 100%;
+			} 
+			.form-inner form .field label{
+				font-size: 12px;
+				color: #691919;
+			} 
+
+
+			.form-inner form .field .btn-layer input {
+				text-align: center;
+				border-radius: 20px;
+				height: 100%;
+				padding: auto;
+				margin: 0px;
+			}
+
+			.form-inner form .field i {
+				font-size: 30px;
+				height: 100%;
+				width: 10%;
+				margin-left: 5px;
+			}
+
+			.form-inner form .field input {
+				height: 100%;
+				width: 80%;
+				color: #710232;
+				;
+				outline: none;
+				margin-left: 20px;
+				padding-left: 15px;
+				border-radius: 5px;
+				border: 1px solid lightgrey;
+				border-bottom-width: 2px;
+				font-size: 17px;
+				transition: all 0.3s ease;
+			}
+
+			.form-inner form .field input:focus {
+				border-color: #710232;
+				/* box-shadow: inset 0 0 3px #fb6aae; */
+			}
+
+			.form-inner form .field input::placeholder {
+				color: #088084;
+				transition: all 0.3s ease;
+			}
+
+			form .field input:focus::placeholder {
+				color: #710232;
+			}
+
+			.form-inner form .pass-link {
+				margin-top: 5px;
+			}
+
+			.form-inner form .signup-link {
+				text-align: center;
+				margin-top: 30px;
+			}
+
+			.form-inner form .pass-link a,
+			.form-inner form .signup-link a {
+				color: #5f0e2e;
+				text-decoration: none;
+				margin-top: 5px;
+			}
+
+			.form-inner form .pass-link a:hover,
+			.form-inner form .signup-link a:hover {
+				text-decoration: underline;
+			}
+
+			form .btn {
+				height: 50px;
+				width: 100%;
+				border-radius: 5px;
+				position: relative;
+				overflow: hidden;
+			}
+
+			form .btn .btn-layer {
+				height: 100%;
+				width: 300%;
+				position: absolute;
+				left: -100%;
+				background: -webkit-linear-gradient(right, #b30f40, #4a0525, #b30f40, #4a0525);
+				border-radius: 5px;
+				transition: all 0.4s ease;
+				;
+			}
+
+			form .btn:hover .btn-layer {
+				left: 0;
+			}
+
+			form .btn input[type="submit"] {
+				height: 100%;
+				width: 100%;
+				z-index: 1;
+				position: relative;
+				background: none;
+				border: none;
+				color: #fff;
+				padding-left: 0;
+				border-radius: 5px;
+				font-size: 20px;
+				font-weight: 500;
+				cursor: pointer;
+			}
+		</style>
+		<script>
+			const loginText = document.querySelector(".title-text .login");
+			const loginForm = document.querySelector("form.login");
+			const loginBtn = document.querySelector("label.login");
+			const signupBtn = document.querySelector("label.signup");
+			const signupLink = document.querySelector("form .signup-link a");
+			signupBtn.onclick = (() => {
+				loginForm.style.marginLeft = "-50%";
+				loginText.style.marginLeft = "-50%";
+			});
+			loginBtn.onclick = (() => {
+				loginForm.style.marginLeft = "0%";
+				loginText.style.marginLeft = "0%";
+			});
+			signupLink.onclick = (() => {
+				signupBtn.click();
+				return false;
+			});
+		</script>
 
 	</nav>
+	<!---->
+
+
 </body>
+
 </html>

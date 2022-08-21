@@ -39,6 +39,21 @@
 			</div>
 		</section>
 		<!-- /.section -->
+		<nav aria-label="...">
+			<ul class="pagination justify-content-center" >
+			
+				<li th:if = "${pages.get(0)==1}" class="page-item disabled"><a class="page-link" th:href="@{'/movies/'+${pages.get(1)}}" tabindex="-1">Previous</a></li>
+				<li th:unless = "${pages.get(0)==1}" class="page-item"><a class="page-link" th:href="@{'/movies/'+${pages.get(1)}}" tabindex="-1">Previous</a></li>
+				<li th:if="${pages.get(1)>=1}" class="page-item" ><a  class="page-link" th:href="@{'/movies/'+${pages.get(1)}}" th:text = "${pages.get(1)}"></a></li>
+				
+				<li class="page-item active" ><a  class="page-link" href="#" th:text = "${pages.get(0)}"></a></li>
+				
+				<li class="page-item" ><a  class="page-link" th:href="@{'/movies/'+${pages.get(2)}}" th:text = "${pages.get(2)}"></a></li>
+				<li class="page-item"><a class="page-link" th:href="@{'/movies/'+${pages.get(2)}}">Next</a></li>
+				
+			</ul>
+			
+		</nav>
 	</div>
 </body>
 </html>
