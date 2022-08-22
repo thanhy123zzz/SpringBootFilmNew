@@ -3,7 +3,10 @@ package com.filmnew.controller;
 import java.io.IOException;
 import java.lang.reflect.Array;
 import java.net.URISyntaxException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -11,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.http.MediaType;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -26,10 +30,12 @@ import com.filmnew.Enity.Counter;
 import com.filmnew.Enity.DetailFilm;
 import com.filmnew.Enity.IMDB;
 import com.filmnew.Enity.User;
+import com.filmnew.Enity.UserComments;
 import com.filmnew.Enity.comments;
 import com.filmnew.Enity.film;
 import com.filmnew.Enity.image;
 import com.filmnew.Enity.results;
+import com.filmnew.Enity.sesion;
 import com.filmnew.Enity.videos;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
@@ -73,53 +79,6 @@ public class HelloController extends CommonController {
 	// userService.delete(name);
 	// throw new UserNotFoundException("ad");
 	// }
-
-	@GetMapping("/tim-kiem")
-	public ModelAndView findFilm(@RequestParam(value = "keyword", required = false) String keyword)
-			throws JsonSyntaxException, URISyntaxException, IOException, InterruptedException {
-		List<image> images = new ArrayList<image>();
-		List<String> urls = new ArrayList<String>();
-		film film = new Gson().fromJson(findWithKeyword(keyword), film.class);
-		for (results a : film.getResults()) {
-			images.add(new Gson().fromJson(getDetailFilm(a.getId()), image.class));
-		}
-		for (image a : images) {
-			if (a.getBackdrop_path() == null) {
-				urls.add(urlPosterNothing);
-			} else {
-				urls.add(getURLImage(a.getBackdrop_path()));
-			}
-		}
-		mv.addObject("urls", urls);
-		mv.setViewName("info");
-		return mv;
-	}
-
-	@GetMapping("/popular/{page}")
-	public ModelAndView popular(@PathVariable("page") String page)
-			throws JsonSyntaxException, URISyntaxException, IOException, InterruptedException {
-		film film = new Gson().fromJson(getDetailwPage(page), film.class);
-
-		List<results> r = film.getResults();
-
-		for (int i = 0; i < r.size(); i++) {
-			videos v = new Gson().fromJson(getVideos(r.get(i).getId()), videos.class);
-			IMDB imdb = new Gson().fromJson(getDetailFilm(r.get(i).getId()), IMDB.class);
-			String key = null;
-			for (results a : v.getResults()) {
-				if (a.getType().equals("Trailer")) {
-					key = a.getKey();
-					break;
-				}
-			}
-			r.get(i).setImdb_id(imdb.getImdb_id());
-			r.get(i).setKey(key);
-		}
-
-		mv.addObject("details", r);
-		mv.setViewName("popular");
-		return mv;
-	}
 
 	@GetMapping("/detail/{id}")
 	public ModelAndView detailFilm(@PathVariable("id") String id)
@@ -174,10 +133,12 @@ public class HelloController extends CommonController {
 		mv.setViewName("Watching");
 		DetailFilm dt = new Gson().fromJson(getDetailFilm(id), DetailFilm.class);
 		film similar = new Gson().fromJson(getSimilarMovie(id), film.class);
+		List<UserComments> cmts = userCMTService.getComment(id);
 		List<results> slm = new ArrayList<results>();
 		for (int i = 0; i < 4; i++) {
 			slm.add(similar.getResults().get(i));
 		}
+		mv.addObject("cmts", cmts);
 		mv.addObject("slm", slm);
 		mv.addObject("movie", dt);
 		return mv;
@@ -283,5 +244,16 @@ public class HelloController extends CommonController {
 		mv.addObject("pages", Integer.parseInt(page));
 		mv.setViewName("TV");
 		return mv;
+	}
+	
+	@RequestMapping(value="/insert-comment/{id}", method=RequestMethod.POST)
+	public ModelAndView getEventCount(@PathVariable("id") String id,@ModelAttribute("UserComments") UserComments cmt) throws JsonSyntaxException, URISyntaxException, IOException, InterruptedException { 
+		if(cmt.getName().isEmpty()){
+			cmt.setName("freeUser");
+		}
+		cmt.setId_film(id);
+		userCMTService.insertComment(cmt);
+		mv.setViewName("redirect:/watch/"+id);
+	    return mv;
 	}
 }
