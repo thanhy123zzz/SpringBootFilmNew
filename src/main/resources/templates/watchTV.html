@@ -51,89 +51,66 @@
 					<div class="row">
 						<div class="comments-container">
 							<h3>Comments</h3>
-
 							<ul id="comments-list" class="comments-list">
-								<li>
-									<div class="comment-main-level">
-										<!-- Avatar -->
-										<div class="comment-avatar">
-											<img src="images/common/default-avatar.png" alt="">
-										</div>
-										<!-- Comment Container -->
-										<div class="comment-box">
-											<div class="comment-head">
-												<h6 class="comment-name">
-													<a href="#">Văn Tám</a>
-												</h6>
-												<span>20 phút trước</span>
-											</div>
-											<div class="comment-content">Lorem ipsum dolor sit
-												amet, consectetur adipisicing elit. Velit omnis animi et
-												iure laudantium vitae, praesentium optio, sapiente
-												distinctio illo?</div>
-										</div>
-									</div> <!-- Comments responses -->
-									<ul class="comments-list reply-list">
-										<li>
+								<th:block th:each="cmt : ${cmts}">
+									<li>
+										<div class="comment-main-level">
 											<!-- Avatar -->
 											<div class="comment-avatar">
-												<img src="images/common/default-avatar-asian-girl.png"
-													alt="">
-											</div> <!-- Comment Container -->
+												<img th:src="@{/images/cast/default.jpg}" alt="">
+											</div>
+											<!-- Comment Container -->
 											<div class="comment-box">
 												<div class="comment-head">
 													<h6 class="comment-name">
-														<a href="#">Khánh Linh</a>
+														<a href="#" th:text="${cmt.name}"></a>
 													</h6>
-													<span>10 phút trước</span>
-												</div>
-												<div class="comment-content">Lorem ipsum dolor sit
-													amet, consectetur adipisicing elit. Velit omnis animi et
-													iure laudantium vitae, praesentium optio, sapiente
-													distinctio illo?</div>
-											</div>
-										</li>
 
-										<li>
-											<!-- Avatar -->
-											<div class="comment-avatar">
-												<img src="images/common/default-avatar.png" alt="">
-											</div> <!-- Comment Container -->
-											<div class="comment-box">
-												<div class="comment-head">
-													<h6 class="comment-name">
-														<a href="#">Văn Tám</a>
-													</h6>
-													<span>10 phút trước</span>
 												</div>
-												<div class="comment-content">Lorem ipsum dolor sit
-													amet, consectetur adipisicing elit. Velit omnis animi et
-													iure laudantium vitae, praesentium optio, sapiente
-													distinctio illo?</div>
+												<div class="comment-content"
+													th:text="${cmt.content_comment}"></div>
 											</div>
-										</li>
-									</ul>
-								</li>
-
+										</div> <!-- Comments responses -->
+									</li>
+								</th:block>
+							</ul>
+							<ul class="comments-list">
 								<li>
-									<div class="comment-main-level">
-										<!-- Avatar -->
-										<div class="comment-avatar">
-											<img src="images/common/default-avatar-asian-girl.png" alt="">
-										</div>
-										<!-- Comment Container -->
-										<div class="comment-box">
-											<div class="comment-head">
-												<h6 class="comment-name">
-													<a href="#">Khánh Linh</a>
-												</h6>
-												<span>10 phút trước</span>
-
+									<div class="comments-le">
+										<div class="card">
+											<div class="card-body p-4">
+												<div class="d-flex flex-start w-100">
+													<img class="rounded-circle shadow-1-strong me-3"
+														th:src="@{/images/cast/default.jpg}" alt="avatar"
+														width="65" height="65" />
+													<div class="w-100"
+														th:action="@{'/insert-comment/'+${movie.id}}">
+														<h4 th:if="${session.NAME_USER}"
+															th:text="${session.NAME_USER}"></h4>
+														<h4 th:unless="${session.NAME_USER}">Free User</h4>
+														<h5>Add a comment</h5>
+														<div id = "info"></div>
+														<div class="form-outline">
+															<textarea class="form-control" id="content_comment"
+																 rows="4"></textarea>
+															<input hidden="hidden" id="name_user"
+																th:value="${session.NAME_USER}"> 
+															<input hidden="hidden" id="id_film"
+																th:value="${movie.id}">	
+																<label
+																class="form-label" for="textAreaExample"
+																th:text="${textNe}">What do you think?</label>
+																
+														</div>
+														<div class="d-flex justify-content-between mt-3">
+															<button type="submit" class="btn btn-success"
+																th:onclick="updateOutput();">
+																Send <i class="fas fa-long-arrow-alt-right ms-1"></i>
+															</button>
+														</div>
+													</div>
+												</div>
 											</div>
-											<div class="comment-content">Lorem ipsum dolor sit
-												amet, consectetur adipisicing elit. Velit omnis animi et
-												iure laudantium vitae, praesentium optio, sapiente
-												distinctio illo?</div>
 										</div>
 									</div>
 								</li>

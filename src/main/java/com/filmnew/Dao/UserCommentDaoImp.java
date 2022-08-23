@@ -19,7 +19,7 @@ public class UserCommentDaoImp implements UserCommentDao{
 
 	@Override
 	public Void insert(UserComments cmt) {
-		String query = "insert into comment(name,id_film,content_comment,time_comment) values (?,?,?,curdate());";
+		String query = "insert into comment(name,id_film,content_comment,time_comment) values (?,?,?,current_timestamp());";
 		jdbctemplate.update(query,new Object[] { cmt.getName(), cmt.getId_film(), cmt.getContent_comment()});
 		return null;
 	}

@@ -10,12 +10,14 @@ import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.swing.plaf.basic.BasicInternalFrameTitlePane.MoveAction;
 
 import org.springframework.http.MediaType;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -81,7 +83,7 @@ public class HelloController extends CommonController {
 	// }
 
 	@GetMapping("/detail/{id}")
-	public ModelAndView detailFilm(@PathVariable("id") String id)
+	public ModelAndView detailFilm(@PathVariable("id") String id,HttpServletRequest request)
 			throws JsonSyntaxException, URISyntaxException, IOException, InterruptedException {
 		mv.setViewName("detailFilm");
 		DetailFilm dt = new Gson().fromJson(getDetailFilm(id), DetailFilm.class);
@@ -127,8 +129,8 @@ public class HelloController extends CommonController {
 		return mv;
 	}
 
-	@GetMapping("/watch/{id}")
-	public ModelAndView watchMovie(@PathVariable("id") String id)
+	@GetMapping(value = "/watch/{id}")
+	public ModelAndView watchMovie(@PathVariable("id") String id,HttpServletRequest request)
 			throws JsonSyntaxException, URISyntaxException, IOException, InterruptedException {
 		mv.setViewName("Watching");
 		DetailFilm dt = new Gson().fromJson(getDetailFilm(id), DetailFilm.class);
@@ -207,10 +209,12 @@ public class HelloController extends CommonController {
 			throws JsonSyntaxException, URISyntaxException, IOException, InterruptedException {
 		DetailFilm dt = new Gson().fromJson(getDetailTV(String.valueOf(id)), DetailFilm.class);
 		film similar = new Gson().fromJson(getSimilarTV(String.valueOf(id)), film.class);
+		List<UserComments> cmts = userCMTService.getComment(String.valueOf(id));
 		List<results> slm = new ArrayList<results>();
 		for (int i = 0; i < 4; i++) {
 			slm.add(similar.getResults().get(i));
 		}
+		mv.addObject("cmts", cmts);
 		mv.addObject("slm", slm);
 		mv.addObject("movie", dt);
 		mv.addObject("ep", ep);
@@ -245,15 +249,35 @@ public class HelloController extends CommonController {
 		mv.setViewName("TV");
 		return mv;
 	}
-	
-	@RequestMapping(value="/insert-comment/{id}", method=RequestMethod.POST)
-	public ModelAndView getEventCount(@PathVariable("id") String id,@ModelAttribute("UserComments") UserComments cmt) throws JsonSyntaxException, URISyntaxException, IOException, InterruptedException { 
+
+//	@RequestMapping(value="/insert-comment/{id}", method=RequestMethod.POST)
+//	public ModelAndView Insert() throws JsonSyntaxException, URISyntaxException, IOException, InterruptedException { 
+//		if(cmt.getName().isEmpty()){
+//			cmt.setName("freeUser");
+//		}
+//		cmt.setId_film(id);
+//		userCMTService.insertComment(cmt);
+//	}
+	@PostMapping("/watch/insert-comment")
+	public ModelAndView getCmt(@ModelAttribute("UserComments") UserComments cmt) {
 		if(cmt.getName().isEmpty()){
 			cmt.setName("freeUser");
 		}
-		cmt.setId_film(id);
 		userCMTService.insertComment(cmt);
-		mv.setViewName("redirect:/watch/"+id);
-	    return mv;
+		List<UserComments> cmts = userCMTService.getComment(cmt.getId_film());
+		mv.addObject("cmts", cmts);
+		mv.setViewName("Watching :: #comments-list");
+		return mv;
+	}
+	@PostMapping("/watch/tv/{id_film}/{ss}/insert-comment")
+	public ModelAndView getCmtTV(@ModelAttribute("UserComments") UserComments cmt) {
+		if(cmt.getName().isEmpty()){
+			cmt.setName("freeUser");
+		}
+		userCMTService.insertComment(cmt);
+		List<UserComments> cmts = userCMTService.getComment(cmt.getId_film());
+		mv.addObject("cmts", cmts);
+		mv.setViewName("Watching :: #comments-list");
+		return mv;
 	}
 }
