@@ -14,8 +14,9 @@
 			</div>
 			<!-- /.wrap-heading -->
 
-			<div class="row">
+			<div class="row" id = "list-movies">
 				<!-- / item 4 -->
+				<input id = "numberone" th:value = "${tv.size()}" hidden="hidden">
 				<div class="col-md-3" th:each="movie : ${tv}">
 					<div class="card">
 						<a th:if="${movie.poster_path}"
@@ -31,14 +32,34 @@
 
 						<div class="card-block">
 							<h4 class="card-title text-center">
-								<a th:href="@{${'/detail/tv/'+movie.id}}" th:text="${movie.original_name}"></a>
+								<a th:href="@{${'/detail/tv/'+movie.id}}"
+									th:text="${movie.original_name}"></a>
 							</h4>
 						</div>
 					</div>
 				</div>
 			</div>
+			<ul class="pagination justify-content-center">
+					<div id="load" class="loader"></div>
+				</ul>
 		</section>
+		<div id= "info"></div>
 		<!-- /.section -->
+		<!-- <nav aria-label="...">
+			<ul class="pagination justify-content-center" >
+			
+				<li th:if = "${pages.get(0)==1}" class="page-item disabled"><a class="page-link" th:href="@{'/tv/'+${pages.get(1)}}" tabindex="-1">Previous</a></li>
+				<li th:unless = "${pages.get(0)==1}" class="page-item"><a class="page-link" th:href="@{'/tv/'+${pages.get(1)}}" tabindex="-1">Previous</a></li>
+				<li th:if="${pages.get(1)>=1}" class="page-item" ><a  class="page-link" th:href="@{'/tv/'+${pages.get(1)}}" th:text = "${pages.get(1)}"></a></li>
+				
+				<li class="page-item active" ><a  class="page-link" href="#" th:text = "${pages.get(0)}"></a></li>
+				
+				<li class="page-item" ><a  class="page-link" th:href="@{'/tv/'+${pages.get(2)}}" th:text = "${pages.get(2)}"></a></li>
+				<li class="page-item"><a class="page-link" th:href="@{'/tv/'+${pages.get(2)}}">Next</a></li>
+				
+			</ul>
+			
+		</nav> -->
 	</div>
 </body>
 </html>

@@ -188,6 +188,26 @@ body, .search-bar {
 		max-width: 300px;
 	}
 }
+.loader {
+  border: 16px solid #181a24;
+  border-radius: 50%;
+  border-top: 16px solid #ed215e;
+  border-bottom: 16px solid #ed215e;
+  width: 90px;
+  height: 90px;
+  -webkit-animation: spin 2s linear infinite;
+  animation: spin 2s linear infinite;
+}
+
+@-webkit-keyframes spin {
+  0% { -webkit-transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
 </style>
 <link rel="stylesheet" th:href="@{/css/main.css}">
 <link rel="stylesheet"
@@ -230,7 +250,43 @@ body, .search-bar {
 		        	 $('#info').html("lỗi");
 		         }
 		         });
-		       }
+		       };
+		        $(window).scroll(function() {
+		    	   var number = $('#number').val();
+		    	    if(number!=null){
+		    	   if($(window).scrollTop() + $(window).height() > $(document).height() - 50) {
+		    		   $.ajax({
+		  		         type: "POST",
+		  		         url: "load-movies?number="+number,
+		  		         data: "number = " + number,
+		  		         success: function(response){
+		  		        	 $("#list-movies").replaceWith(response);
+		  		         },
+		  		       error: function(){
+				        	 $('#info').html("lỗi");
+				         }
+		  		         });
+		    	   	}
+		    	   } 
+		    	}); 
+		        $(window).scroll(function() {
+			    	   var numberone = $('#numberone').val();
+			    	     if(numberone!=""){
+				    	   if($(window).scrollTop() + $(window).height() > $(document).height() - 50) {
+				    		   $.ajax({
+				  		         type: "POST",
+				  		         url: "load-tv?number="+numberone,
+				  		         data: "number = " + numberone,
+				  		         success: function(response){
+				  		        	 $("#list-movies").replaceWith(response);
+				  		         },
+				  		       error: function(){
+						        	 $('#info').html("lỗi");
+						         }
+				  		         });
+				    	   	}
+				    	   }  
+			    	}); 
 	</script>
 	<script>
 		window.jQuery	
