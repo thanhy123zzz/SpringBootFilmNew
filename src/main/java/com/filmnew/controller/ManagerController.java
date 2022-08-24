@@ -110,7 +110,6 @@ public class ManagerController extends CommonController {
 		if (user1.getName().equals(null) && user.equals(null)) {
 			mav.addObject("messError", "Username Or PassWord Not Is True");
 			mav.addObject("ErrorSign", "");
-
 			StringUser(user.getName(), user.getPass(), "");
 			StringUser1("", "", "");
 			return hele(res);

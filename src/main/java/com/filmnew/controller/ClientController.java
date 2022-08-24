@@ -267,14 +267,12 @@ public class ClientController extends CommonController {
 	public ModelAndView load_movies(@RequestParam("number") int number) throws JsonSyntaxException, URISyntaxException, IOException, InterruptedException{
 		mv.addObject("movies", getMovies(number+20));
 		mv.setViewName("Movies :: #list-movies");
-		System.out.println(number+1);
 		return mv;
 	}
 	@PostMapping("/load-tv")
 	public ModelAndView load_tv(@RequestParam("number") int number) throws JsonSyntaxException, URISyntaxException, IOException, InterruptedException{
 		mv.addObject("tv", getTV(number+20));
 		mv.setViewName("TV :: #list-movies");
-		System.out.println(number);
 		return mv;
 	}
 
@@ -308,7 +306,7 @@ public class ClientController extends CommonController {
 	}
 	@PostMapping("/watch/tv/{id_film}/{ss}/insert-comment")
 	public ModelAndView getCmtTV(@ModelAttribute("UserComments") UserComments cmt) {
-		if(cmt.getName().isEmpty()){
+		if (cmt.getName().isEmpty()) {
 			cmt.setName("freeUser");
 		}
 		userCMTService.insertComment(cmt);
