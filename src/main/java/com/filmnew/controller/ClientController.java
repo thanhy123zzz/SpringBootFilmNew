@@ -42,8 +42,10 @@ import com.filmnew.Enity.videos;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 
+import groovyjarjarpicocli.CommandLine.Parameters;
+
 @RestController
-public class HelloController extends CommonController {
+public class ClientController extends CommonController {
 	@GetMapping("/")
 	public ModelAndView hele(HttpServletRequest request)
 			throws JsonSyntaxException, URISyntaxException, IOException, InterruptedException {
@@ -224,28 +226,63 @@ public class HelloController extends CommonController {
 		return mv;
 	}
 
-	@GetMapping("/movies/{page}")
-	public ModelAndView Movies(@PathVariable("page") String page)
+	@GetMapping("/movies")
+	public ModelAndView Movies()
 			throws JsonSyntaxException, URISyntaxException, IOException, InterruptedException {
-		film film = new Gson().fromJson(getDetailwPage(page), film.class);
-		mv.addObject("movies", film.getResults());
+		mv.addObject("movies", getMovies(20));
 		mv.addObject("index", 2);
-		ArrayList<Integer> pages = new ArrayList<Integer>();
-		pages.add(Integer.parseInt(page));
-		pages.add(Integer.parseInt(page)-1);
-		pages.add(Integer.parseInt(page)+1);
-		mv.addObject("pages", pages);
+		
+//		ArrayList<Integer> pages = new ArrayList<Integer>();
+//		pages.add(Integer.parseInt(page));
+//		pages.add(Integer.parseInt(page)-1);
+//		pages.add(Integer.parseInt(page)+1);
+//		mv.addObject("pages", pages);
+		
 		mv.setViewName("Movies");
 		return mv;
 	}
+	private List<results> getMovies(int number) throws JsonSyntaxException, URISyntaxException, IOException, InterruptedException {
+		int index = number/20;
+		List<results> films = new ArrayList<results>();
+		for(int i = 1; i <= index ; i++) {
+			film film = new Gson().fromJson(getDetailwPage(String.valueOf(i)), film.class);
+			for(results r : film.getResults() ) {
+				films.add(r);
+			}
+		}
+		return films;
+	}
+	private List<results> getTV(int number) throws JsonSyntaxException, URISyntaxException, IOException, InterruptedException {
+		int index = number/20;
+		List<results> films = new ArrayList<results>();
+		for(int i = 1; i <= index ; i++) {
+			film film = new Gson().fromJson(getPopularTV(String.valueOf(i)), film.class);
+			for(results r : film.getResults() ) {
+				films.add(r);
+			}
+		}
+		return films;
+	}
+	@PostMapping("/load-movies")
+	public ModelAndView load_movies(@RequestParam("number") int number) throws JsonSyntaxException, URISyntaxException, IOException, InterruptedException{
+		mv.addObject("movies", getMovies(number+20));
+		mv.setViewName("Movies :: #list-movies");
+		System.out.println(number+1);
+		return mv;
+	}
+	@PostMapping("/load-tv")
+	public ModelAndView load_tv(@RequestParam("number") int number) throws JsonSyntaxException, URISyntaxException, IOException, InterruptedException{
+		mv.addObject("tv", getTV(number+20));
+		mv.setViewName("TV :: #list-movies");
+		System.out.println(number);
+		return mv;
+	}
 
-	@GetMapping("/tv/{page}")
-	public ModelAndView Tv(@PathVariable("page") String page)
+	@GetMapping("/tv")
+	public ModelAndView Tv()
 			throws JsonSyntaxException, URISyntaxException, IOException, InterruptedException {
-		film film = new Gson().fromJson(getPopularTV(page), film.class);
-		mv.addObject("tv", film.getResults());
+		mv.addObject("tv", getTV(20));
 		mv.addObject("index", 3);
-		mv.addObject("pages", Integer.parseInt(page));
 		mv.setViewName("TV");
 		return mv;
 	}

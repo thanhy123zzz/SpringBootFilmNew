@@ -100,7 +100,7 @@ public class ManagerController extends CommonController {
 		mav.addObject("pass1", pass);
 		mav.addObject("repass1", repass);
 	}
-
+	private int check_key = 0;
 	// Login and SignUp
 	@PostMapping("/login")
 	public ModelAndView login(@ModelAttribute(name = "user") User user, HttpSession session, HttpServletRequest res)
