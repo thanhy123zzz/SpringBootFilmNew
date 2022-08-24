@@ -94,6 +94,12 @@ public class UserDaoImp implements UserDao {
 		return jdbctemplate.update(sql, new Object[] { user.getName(), user.getPass() });
 	}
 
+	@Override
+	public int updateUser(User user){
+		String sql = "UPDATE `user` SET `fullname` = ?, `email` = ?, `phone` = ?, `gender` = ?, `dateofbirth` = ?, `avatar` = ? WHERE (`name` = ?)";
+		return jdbctemplate.update(sql, new Object[] { user.getFullname(), user.getEmail(),user.getNumberphone(),user.getGender(),user.getDateofbirth(),user.getAvatar(),user.getName() });
+	}
+
 	/*
 	 * @Override
 	 * public Boolean checkExistUser(String name) {
