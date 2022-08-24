@@ -21,12 +21,12 @@
                                 <input type="file" name="file" />
                             </div>
                             <label>--- Choose a photo ---</label>
-                            <button class="btn btn-success">Update photo</button>
+                            <button class="btn btn-info">Update photo</button>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="profile-head">
-                            <h5><i class="fa fa-user" aria-hidden="true"></i>Username</h5>
+                            <h5 id = "th5">Username</h5>
                             <h6>NGUYỄN VĂN YOU</h6>
                             <p class="proile-rating">RANKINGS : <span>8/10</span></p>
                             <ul class="nav nav-tabs" id="myTab" role="tablist">
@@ -67,50 +67,50 @@
                         <div class="tab-content profile-tab" id="myTabContent">
                             <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
                                 <div class="row">
-                                    <div class="col-md-6">
+                                    <div class="col-md-4">
                                         <label>Username</label>
                                     </div>
-                                    <div class="col-md-6">
+                                    <div class="col-md-8">
                                         <p th:text="${Obj_USER.name}"></p>
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-md-6">
+                                    <div class="col-md-4">
                                         <label>Full name</label>
                                     </div>
-                                    <div class="col-md-6">
+                                    <div class="col-md-8">
                                         <p th:text="${Obj_USER.fullname}"></p>
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-md-6">
+                                    <div class="col-md-4">
                                         <label>Gender</label>
                                     </div>
-                                    <div class="col-md-6">
+                                    <div class="col-md-8">
                                         <p th:text="${Obj_USER.gender}"></p>
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-md-6">
+                                    <div class="col-md-4">
                                         <label>Date of Birth</label>
                                     </div>
-                                    <div class="col-md-6">
+                                    <div class="col-md-8">
                                         <p id="dateofbirth_AC" th:text="${Obj_USER.dateofbirth}"></p>
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-md-6">
+                                    <div class="col-md-4">
                                         <label>Email</label>
                                     </div>
-                                    <div class="col-md-6">
+                                    <div class="col-md-8">
                                         <p th:text="${Obj_USER.email}"></p>
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-md-6">
+                                    <div class="col-md-4">
                                         <label>Phone</label>
                                     </div>
-                                    <div class="col-md-6">
+                                    <div class="col-md-8">
                                         <p th:text="${Obj_USER.numberphone}"></p>
                                     </div>
                                 </div>
@@ -119,19 +119,19 @@
                                 <form th:action="@{/account/update}" method="post">
                                     <label th:text="${messUpdate}" style="color: red;">XXXXX</label>
                                     <div class="row">
-                                        <div class="col-md-6">
+                                        <div class="col-md-4">
                                             <label>Full name</label>
                                         </div>
-                                        <div class="col-md-6">
+                                        <div class="col-md-8">
                                             <input name="fullname_AC" id="fullname_AC" th:value="${Obj_USER.fullname}"
                                                 required>
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <div class="col-md-6">
+                                        <div class="col-md-4">
                                             <label>Gender</label>
                                         </div>
-                                        <div class="col-md-6">
+                                        <div class="col-md-8">
                                             <select id="gender_AC" name="gender_AC" class="form-select "
                                                 aria-label="Giới tính" th:field="${Obj_USER.gender}">
                                                 <option th:value="Nam">Man</option>
@@ -150,27 +150,27 @@
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <div class="col-md-6">
+                                        <div class="col-md-4">
                                             <label>Date Of Birth</label>
                                         </div>
-                                        <div class="col-md-6">
+                                        <div class="col-md-8">
                                             <input type="date" id="dateofbirth_AC"
                                                 th:value="${Obj_USER.dateofbirth}"></input>
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <div class="col-md-6">
+                                        <div class="col-md-4">
                                             <label>Email</label>
                                         </div>
-                                        <div class="col-md-6">
+                                        <div class="col-md-8">
                                             <input id="email_AC" name="email_AC" th:value="${Obj_USER.email}" required>
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <div class="col-md-6">
+                                        <div class="col-md-4">
                                             <label>Phone</label>
                                         </div>
-                                        <div class="col-md-6">
+                                        <div class="col-md-8">
                                             <input id="phone_AC" name="phome_AC" th:value="${Obj_USER.numberphone}"
                                                 required>
                                         </div>
@@ -178,7 +178,7 @@
                                     </br>
                                     <div class="row">
                                         <div class="col-md-12">
-                                            <button type="submit" class="btn btn-success">Save</button>
+                                            <button type="submit" class="btn btn-info">Save</button>
                                         </div>
                                     </div>
                                 </form>
@@ -196,10 +196,9 @@
             .emp-profile {
                 padding: 3%;
                 margin-left: 3%;
-                margin-top: 5%;
+                margin-top: 100px;
                 margin-bottom: 3%;
-                border-radius: 0.5rem;
-                background: #fff;
+                background: #222;
             }
 
             .profile-img {
@@ -238,13 +237,9 @@
                 top: 0;
             }
 
-            .profile-head h5,
-            p {
-                color: #0b96a5;
-            }
 
             .profile-head h6 {
-                color: #0062cc;
+                color: #ed215e;
             }
 
             .profile-edit-btn {
@@ -258,9 +253,7 @@
             }
 
             .proile-rating {
-                font-size: 12px;
-                color: #022646;
-                margin-top: 5%;
+                font-size: 15px;
             }
 
             .proile-rating span {
@@ -281,7 +274,7 @@
             .profile-head .nav-tabs .nav-link.active {
                 border: none;
                 border-bottom: 2px solid #ed215e;
-                background-color: #60d5e8;
+                background-color: #138496;
             }
 
             .profile-work {
@@ -291,7 +284,7 @@
 
             .profile-work p {
                 font-size: 16px;
-                color: #022646;
+                color: #fff;
                 font-weight: 600;
                 margin-top: 10%;
             }
@@ -314,18 +307,20 @@
 
             .profile-tab label,
             p {
-                font-size: 30px;
-                height: 100%;
-                margin: 2px 0;
+                font-size: 20px;
+                height: 50%;
+                margin-top: 45px;
             }
 
-            .profile-tab .row .col-md-6 {
-                border-top: 1px solid #0b96a5;
+            .profile-tab .row .col-md-4 {
+                border-bottom: 1px solid #fff;
+            }
+            .profile-tab .row .col-md-8 {
+                border-bottom: 1px solid #fff;
             }
 
             .profile-tab .row .col-md-12 button {
-                width: 60%;
-                margin: 0 50px;
+                width: 30%;
             }
 
 
@@ -335,37 +330,30 @@
             }
 
             .profile-tab input {
-                background: #0b96a5;
-                color: #ed215e;
-                border-color: #000000;
-                border: 2px;
-                border-style: solid;
-                border-radius: 5px;
-                height: 80%;
-                margin-top: 5px;
+                height: 50%;
+                margin-top: 35px;
                 padding-left: 30px;
                 width: 90%;
+                color: #FFFFFF;
             }
 
             .profile-tab input,
             select {
-                font-size: 30px;
+                font-size: 20px;
                 text-align: center;
-                background: #0b96a5;
-                color: #ed215e;
-                border-color: #000000;
-                border: 2px;
-                border-style: solid;
-                border-radius: 5px;
-                height: 80%;
-                margin-top: 5px;
+                height: 50%;
+                margin-top: 35px;
                 padding-left: 30px;
                 width: 90%;
+                background: #343a40;
             }
 
             .profile-tab p {
                 font-weight: 600;
                 color: #0062cc;
+            }
+            #th5{
+                border-bottom: 1px solid #fff;
             }
         </style>
     </th:block>
