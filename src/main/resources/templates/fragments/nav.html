@@ -28,13 +28,13 @@
 					</div> TV series
 				</a>
 			</li>
-			<li th:if="${session.ROLE_USER == 2}" class="nav-item nak"><a href="#" class="nav-link">
+			<li th:if="${session.ROLE_USER == 2}" class="nav-item"><a  th:class="${index == 4 ? 'nav-link ycd active': 'nav-link ycd'}" th:href="@{/account}" class="nav-link">
 					<div class="sidebar__icon">
 						<i class="fa fa-user-circle"></i>
 					</div> Account
 				</a>
 			</li>
-			<li th:if="${session.ROLE_USER == 1}" class="nav-item"><a class="nav-link"  th:href="@{/manager-user}">
+			<li th:if="${session.ROLE_USER == 1}" class="nav-item"><a   th:class="${index == 4 ? 'nav-link ycd active': 'nav-link ycd'}" th:href="@{/manager-user}">
 					<div class="sidebar__icon">
 						<i class="fa fa-suitcase"></i>
 					</div> Manager

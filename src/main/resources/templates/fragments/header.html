@@ -391,12 +391,8 @@
 			signupLink.onclick = (() => {
 				signupBtn.click();
 				return false;
-			}); /*
-			$(window).on('load', function () {
-				$('#exampleModal').modal('show');
-			}); */
-			//var session = '@Request.RequestContext.HttpContext.Session["NAME_USER"]';
-
+			});
+			// Show modal
 			var x = document.getElementById('Modalshow');
 			var y = document.getElementById("ErrorMess").innerHTML;
 			var z = document.getElementById("ErrorSign").innerHTML;
@@ -406,21 +402,9 @@
 			if(z === null ){
 				z = "zzz";
 			}
-
-			
-
 			console.log(x);
 			console.log(y);
 			console.log(z);
-			/*
-			$(document).ready(function () {
-				//event.preventDefault();
-				$('#exampleModal').modal('show');
-			}) */
-			/*function loadModal(key){
-				$('#exampleModal').modal('show');
-			}
-			*/ 
 			if((x === null && y.length > 3) || (x === null && z.length > 3)){
 			$(document).ready(function () {
 				$('#exampleModal').modal('show');
@@ -431,64 +415,6 @@
 			}
 			}else{
 			}
-
-				/*
-			if (y !== "") {
-				$(document).ready(function () {
-					event.preventDefault();
-					if (x === "") {
-						$('#exampleModal').modal('show');
-					}
-				})
-			}/*
-			
-			/*
-				$(window).on('load', function () {
-					event.preventDefault();
-					if(y != null){
-					$('#exampleModal').modal('show');
-				}else{
-					$('#exampleModal').modal('fade');
-				}
-			});
-/*
-			if (Boolean(session) == true) {
-				/* $(document).ready(function () {
-					//event.preventDefault();
-					$('#exampleModal').modal('show');/*
-					if ((!!z)) {
-						signupLink.onclick();
-					}
-				})
-				$(window).on('load', function () {
-					$('#exampleModal').modal('show');
-					if (Boolean(session) == false){
-
-					}
-				});
-			} */
-			// /^\s+$/.test(y)
-			/*
-						if (x == "") {
-							if (y == "") {
-								$(document).ready(function () {
-									//event.preventDefault();
-									$('#exampleModal').modal('show');
-								})
-							}
-							if ((z != "" && x == "")) {
-								signupLink.onclick();
-							}
-			
-						} /*
-						if (/^\s+$/.test(z)) {
-							$(document).ready(function () {
-								//event.preventDefault();
-								signupLink.onclick();
-								$('#exampleModal').modal('show');
-							})
-						} */
-
 		</script>
 
 	</nav>

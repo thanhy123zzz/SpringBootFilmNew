@@ -7,7 +7,6 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import javax.websocket.Session;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -101,7 +100,7 @@ public class ManagerController extends CommonController {
 		mav.addObject("pass1", pass);
 		mav.addObject("repass1", repass);
 	}
-	private int check_key = 0;
+
 	// Login and SignUp
 	@PostMapping("/login")
 	public ModelAndView login(@ModelAttribute(name = "user") User user, HttpSession session, HttpServletRequest res)
@@ -124,7 +123,7 @@ public class ManagerController extends CommonController {
 					mav.setViewName("redirect:/manager-user");
 					return mav;
 				} else {
-					
+
 					mav.setViewName("redirect:/");
 					return mav;
 				}
@@ -197,7 +196,8 @@ public class ManagerController extends CommonController {
 				if (!user1.getName().equals("")) {
 					mav.addObject("ErrorSign", "Username Was Exist");
 					mav.addObject("messError", "");
-
+					StringUser1(user.getName(), user.getPass(), user.getRepass());
+					StringUser("", "", "");
 					hele(request);
 				} else {
 					if (repass.equals(pass)) {
@@ -231,23 +231,23 @@ public class ManagerController extends CommonController {
 	// Manager
 
 	@GetMapping("/manager-user")
-	public ModelAndView loadInforUser( HttpSession session) {
+	public ModelAndView loadInforUser(HttpSession session) {
 		List<User> list = userService.findAll();
 		mav.addObject("listUser", list);
 		mav.addObject("num", 0);
 		mav.setViewName("manager-user");
 		mav.addObject("keyword", "");
 		int role = 0;
-		try{
-		role = (int) session.getAttribute("ROLE_USER");
-		if (role == 1) {
-			mav.setViewName("manager-user");
-		} else if(role == 2){
+		try {
+			role = (int) session.getAttribute("ROLE_USER");
+			if (role == 1) {
+				mav.setViewName("manager-user");
+			} else if (role == 2) {
+				throw new NotFoundException("Deny access");
+			}
+		} catch (Exception e) {
 			throw new NotFoundException("Deny access");
 		}
-	}catch(Exception e){
-		throw new NotFoundException("Deny access");
-	}
 		return mav;
 	}
 
@@ -304,17 +304,18 @@ public class ManagerController extends CommonController {
 
 	@GetMapping("/manager-film")
 	public ModelAndView loadInforFilm(HttpSession session) {
-		mav.setViewName("manager-film");int role = 0;
-		try{
-		role = (int) session.getAttribute("ROLE_USER");
-		if (role == 1) {
-			mav.setViewName("manager-user");
-		} else if(role == 2){
+		mav.setViewName("manager-film");
+		int role = 0;
+		try {
+			role = (int) session.getAttribute("ROLE_USER");
+			if (role == 1) {
+				mav.setViewName("manager-user");
+			} else if (role == 2) {
+				throw new NotFoundException("Deny access");
+			}
+		} catch (Exception e) {
 			throw new NotFoundException("Deny access");
 		}
-	}catch(Exception e){
-		throw new NotFoundException("Deny access");
-	}
 		return mav;
 	}
 
@@ -322,16 +323,16 @@ public class ManagerController extends CommonController {
 	public ModelAndView loadInforComment(HttpSession session) {
 		mav.setViewName("manager-comment");
 		int role = 0;
-		try{
-		role = (int) session.getAttribute("ROLE_USER");
-		if (role == 1) {
-			mav.setViewName("manager-user");
-		} else if(role == 2){
+		try {
+			role = (int) session.getAttribute("ROLE_USER");
+			if (role == 1) {
+				mav.setViewName("manager-user");
+			} else if (role == 2) {
+				throw new NotFoundException("Deny access");
+			}
+		} catch (Exception e) {
 			throw new NotFoundException("Deny access");
 		}
-	}catch(Exception e){
-		throw new NotFoundException("Deny access");
-	}
 		return mav;
 	}
 
@@ -339,16 +340,42 @@ public class ManagerController extends CommonController {
 	public ModelAndView loadInforFavorite(HttpSession session) {
 		mav.setViewName("manager-favorite");
 		int role = 0;
-		try{
-		role = (int) session.getAttribute("ROLE_USER");
-		if (role == 1) {
-			mav.setViewName("manager-user");
-		} else if(role == 2){
+		try {
+			role = (int) session.getAttribute("ROLE_USER");
+			if (role == 1) {
+				mav.setViewName("manager-user");
+			} else if (role == 2) {
+				throw new NotFoundException("Deny access");
+			}
+		} catch (Exception e) {
 			throw new NotFoundException("Deny access");
 		}
-	}catch(Exception e){
-		throw new NotFoundException("Deny access");
+		return mav;
 	}
+
+	// Load Account
+
+	@GetMapping("/account")
+	public ModelAndView LoadAccount(HttpSession session) {
+		mav.setViewName("account");
+		String name = (String) session.getAttribute("NAME_USER");
+		User user1 = userService.finpOne(name);
+		mav.addObject("Obj_USER", user1);
+		mav.addObject("index",4);
+		return mav;
+	}
+
+	@PostMapping("/account/update")
+	public ModelAndView editOfUser(@ModelAttribute(name = "user") User user) {
+		int index = 0;
+		index = userService.updateUser(user);
+		if (index > 0) {
+			mav.addObject("messUpdate", "SuccessFully!");
+			mav.setViewName("account");
+		} else {
+			mav.addObject("messUpdate", "Faill!");
+			mav.setViewName("account");
+		}
 		return mav;
 	}
 }
