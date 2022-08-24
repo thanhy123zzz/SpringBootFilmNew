@@ -14,5 +14,6 @@ public interface UserService {
 	List<User> pageofUser(int page);
 	User login(String name, String pass);
 	int signup(User user);
+	int updateUser(User user);
 	//Boolean checkExistUser(String name);
 }

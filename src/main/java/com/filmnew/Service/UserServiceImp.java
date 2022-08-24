@@ -64,4 +64,9 @@ public class UserServiceImp implements UserService{
 		return userDao.pageofUser(page);
 	}
 
+	@Override
+	public int updateUser(User user){
+		return userDao.updateUser(user);
+	}
+
 }

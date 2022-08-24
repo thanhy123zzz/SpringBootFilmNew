@@ -25,4 +25,6 @@ public interface UserDao {
 
 	//Boolean checkExistUser(String name);
 
+	int updateUser(User user); // update for user
+
 }
