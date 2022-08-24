@@ -244,7 +244,7 @@ body, .search-bar {
 		         success: function(response){
 		        	 $("#comments-list").replaceWith(response);
 		        	 $('#content_comment').val("");
-		        	 alert("success!");
+					 $('#info').html("Thành công!");
 		         },
 		         error: function(){
 		        	 $('#info').html("lỗi");
