@@ -1,13 +1,22 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
 <title layout:title-pattern="$CONTENT_TITLE"></title>
-<link rel="icon" type="image/x-icon" th:href="@{/images/b78957f0aa7c49529f2f048b51e0d70e-_1_.ico}">
+<link rel="icon" type="image/x-icon"
+	th:href="@{/images/b78957f0aa7c49529f2f048b51e0d70e-_1_.ico}">
 <style type="text/css">
+* {
+	border: 0;
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+}
+
 * {
 	border: 0;
 	box-sizing: border-box;
@@ -51,7 +60,7 @@ body, .search-bar {
 }
 
 .search-bar {
-	margin: auto;
+	margin: 0px 120px 0px;
 	padding: 1.5em;
 	justify-content: right;
 	max-width: 30em;
@@ -179,11 +188,32 @@ body, .search-bar {
 		max-width: 300px;
 	}
 }
+.loader {
+  border: 16px solid #181a24;
+  border-radius: 50%;
+  border-top: 16px solid #ed215e;
+  border-bottom: 16px solid #ed215e;
+  width: 90px;
+  height: 90px;
+  -webkit-animation: spin 2s linear infinite;
+  animation: spin 2s linear infinite;
+}
+
+@-webkit-keyframes spin {
+  0% { -webkit-transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
 </style>
 <link rel="stylesheet" th:href="@{/css/main.css}">
 <link rel="stylesheet"
 	th:href="@{https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css}">
 </head>
+
 <body>
 
 
@@ -199,13 +229,72 @@ body, .search-bar {
 		</div>
 	</div>
 
-	<script th:src="@{/js/jquery-3.2.1.slim.min.js}"></script>
+	<!-- <script th:src="@{/js/jquery-3.2.1.slim.min.js}"></script> -->
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 	<script>
-		window.jQuery
+		function updateOutput() {
+			 var name = $('#name_user').val();
+		     var id_film = $('#id_film').val();
+		     var content_comment = $('#content_comment').val();
+		     
+		     $.ajax({
+		         type: "POST",
+		         url: "insert-comment",
+		         data: "name=" + name + "&id_film=" + id_film + "&content_comment="+content_comment,
+		         success: function(response){
+		        	 $("#comments-list").replaceWith(response);
+		        	 $('#content_comment').val("");
+					 $('#info').html("Thành công!");
+		         },
+		         error: function(){
+		        	 $('#info').html("lỗi");
+		         }
+		         });
+		       };
+		        $(window).scroll(function() {
+		    	   var number = $('#number').val();
+		    	    if(number!=null){
+		    	   if($(window).scrollTop() + $(window).height() > $(document).height() - 50) {
+		    		   $.ajax({
+		  		         type: "POST",
+		  		         url: "load-movies?number="+number,
+		  		         data: "number = " + number,
+		  		         success: function(response){
+		  		        	 $("#list-movies").replaceWith(response);
+		  		         },
+		  		       error: function(){
+				        	 $('#info').html("lỗi");
+				         }
+		  		         });
+		    	   	}
+		    	   } 
+		    	}); 
+		        $(window).scroll(function() {
+			    	   var numberone = $('#numberone').val();
+			    	     if(numberone!=""){
+				    	   if($(window).scrollTop() + $(window).height() > $(document).height() - 50) {
+				    		   $.ajax({
+				  		         type: "POST",
+				  		         url: "load-tv?number="+numberone,
+				  		         data: "number = " + numberone,
+				  		         success: function(response){
+				  		        	 $("#list-movies").replaceWith(response);
+				  		         },
+				  		       error: function(){
+						        	 $('#info').html("lỗi");
+						         }
+				  		         });
+				    	   	}
+				    	   }  
+			    	}); 
+	</script>
+	<script>
+		window.jQuery	
 				|| document
 						.write('<script th:src="@{/js/jquery.min.js}"><\/script>')
 	</script>
 	<script th:src="@{/js/vendor/popper.min.js}"></script>
 	<script th:src="@{/js/bootstrap.min.js}"></script>
 </body>
+
 </html>

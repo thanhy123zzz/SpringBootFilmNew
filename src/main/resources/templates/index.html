@@ -1,18 +1,15 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org"
-	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:
-	layout:decorate = "~{layout.html}"
-	>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:
+	layout:decorate="~{layout.html}">
 <head>
-<title>Home</title>
+	<title>Home</title>
 </head>
+
 <body>
-	<th:block layout:fragment = "content">
-		<div id="carouselMovieIndicators" class="carousel slide"
-			data-ride="carousel">
+	<th:block layout:fragment="content">
+		<div id="carouselMovieIndicators" class="carousel slide" data-ride="carousel">
 			<ol class="carousel-indicators">
-				<li data-target="#carouselMovieIndicators" data-slide-to="0"
-					class="active"></li>
+				<li data-target="#carouselMovieIndicators" data-slide-to="0" class="active"></li>
 				<li data-target="#carouselMovieIndicators" data-slide-to="1"></li>
 				<li data-target="#carouselMovieIndicators" data-slide-to="2"></li>
 				<li data-target="#carouselMovieIndicators" data-slide-to="3"></li>
@@ -22,16 +19,14 @@
 				<th:block th:each="slide, state: ${slides}">
 				<th:block th:if = "${slide.media_type == 'movie'}">
 					<div th:if="${state.first}" class="carousel-item active">
-						<a th:href="@{${'/detail/'+slide.id}}"> <img
-							class="d-block img-fluid"
-							th:src="@{${'https://image.tmdb.org/t/p/original'+slide.backdrop_path}}"
-							alt="First slide"></a>
+						<a th:href="@{${'/detail/'+slide.id}}"> <img class="d-block img-fluid"
+								th:src="@{${'https://image.tmdb.org/t/p/original'+slide.backdrop_path}}"
+								alt="First slide"></a>
 					</div>
 					<div th:unless="${state.first}" class="carousel-item">
-						<a th:href="@{${'/detail/'+slide.id}}"> <img
-							class="d-block img-fluid"
-							th:src="@{${'https://image.tmdb.org/t/p/original'+slide.backdrop_path}}"
-							alt="Second slide">
+						<a th:href="@{${'/detail/'+slide.id}}"> <img class="d-block img-fluid"
+								th:src="@{${'https://image.tmdb.org/t/p/original'+slide.backdrop_path}}"
+								alt="Second slide">
 						</a>
 					</div>
 					</th:block>
@@ -52,14 +47,10 @@
 					</th:block>
 				</th:block>
 			</div>
-			<a class="carousel-control-prev" href="#carouselMovieIndicators"
-				role="button" data-slide="prev"> <span
-				class="carousel-control-prev-icon" aria-hidden="true"></span> <span
-				class="sr-only">Previous</span>
-			</a> <a class="carousel-control-next" href="#carouselMovieIndicators"
-				role="button" data-slide="next"> <span
-				class="carousel-control-next-icon" aria-hidden="true"></span> <span
-				class="sr-only">Next</span>
+			<a class="carousel-control-prev" href="#carouselMovieIndicators" role="button" data-slide="prev"> <span
+					class="carousel-control-prev-icon" aria-hidden="true"></span> <span class="sr-only">Previous</span>
+			</a> <a class="carousel-control-next" href="#carouselMovieIndicators" role="button" data-slide="next"> <span
+					class="carousel-control-next-icon" aria-hidden="true"></span> <span class="sr-only">Next</span>
 			</a>
 		</div>
 
@@ -79,15 +70,12 @@
 					<!-- / item 4 -->
 					<div class="col-md-3" th:each="movie : ${newMovies}">
 						<div class="card">
-							<a th:if="${movie.poster_path}"
-								th:href="@{'/detail/'+${movie.id}}"><img
-								class="card-img-top"
-								th:src="@{${'https://image.tmdb.org/t/p/w500'+movie.poster_path}}"
-								th:alt="${movie.original_title}"></a> <a
-								th:unless="${movie.poster_path}"
-								th:href="@{'/detail/'+${movie.id}}"><img
-								class="card-img-top" th:src="@{/images/poster105665.jpg}"
-								th:alt="${movie.original_title}"></a>
+							<a th:if="${movie.poster_path}" th:href="@{'/detail/'+${movie.id}}"><img
+									class="card-img-top"
+									th:src="@{${'https://image.tmdb.org/t/p/w500'+movie.poster_path}}"
+									th:alt="${movie.original_title}"></a> <a th:unless="${movie.poster_path}"
+								th:href="@{'/detail/'+${movie.id}}"><img class="card-img-top"
+									th:src="@{/images/poster105665.jpg}" th:alt="${movie.original_title}"></a>
 							<div class="card-block">
 								<h4 class="card-title text-center">
 									<a th:href="@{${'/detail/'+movie.id}}" th:text="${movie.title}"></a>
@@ -111,15 +99,12 @@
 				<div class="row">
 					<div class="col-md-3" th:each="movie : ${trends}">
 						<div th:if="${movie.media_type == 'movie'}" class="card">
-							<a th:if="${movie.poster_path}"
-								th:href="@{'/detail/'+${movie.id}}"><img
-								class="card-img-top"
-								th:src="@{${'https://image.tmdb.org/t/p/w500'+movie.poster_path}}"
-								th:alt="${movie.original_title}"></a> <a
-								th:unless="${movie.poster_path}"
-								th:href="@{'/detail/'+${movie.id}}"><img
-								class="card-img-top" th:src="@{/images/poster105665.jpg}"
-								th:alt="${movie.original_title}"></a>
+							<a th:if="${movie.poster_path}" th:href="@{'/detail/'+${movie.id}}"><img
+									class="card-img-top"
+									th:src="@{${'https://image.tmdb.org/t/p/w500'+movie.poster_path}}"
+									th:alt="${movie.original_title}"></a> <a th:unless="${movie.poster_path}"
+								th:href="@{'/detail/'+${movie.id}}"><img class="card-img-top"
+									th:src="@{/images/poster105665.jpg}" th:alt="${movie.original_title}"></a>
 
 							<div class="card-block">
 								<h4 class="card-title text-center">
@@ -129,20 +114,16 @@
 						</div>
 
 						<div th:if="${movie.media_type == 'tv'}" class="card">
-							<a th:if="${movie.poster_path}"
-								th:href="@{'/detail/tv/'+${movie.id}}"><img
-								class="card-img-top"
-								th:src="@{${'https://image.tmdb.org/t/p/w500'+movie.poster_path}}"
-								th:alt="${movie.original_name}"></a> <a
-								th:unless="${movie.poster_path}"
-								th:href="@{'/detail/tv/'+${movie.id}}"><img
-								class="card-img-top" th:src="@{/images/poster105665.jpg}"
-								th:alt="${movie.original_name}"></a>
+							<a th:if="${movie.poster_path}" th:href="@{'/detail/tv/'+${movie.id}}"><img
+									class="card-img-top"
+									th:src="@{${'https://image.tmdb.org/t/p/w500'+movie.poster_path}}"
+									th:alt="${movie.original_name}"></a> <a th:unless="${movie.poster_path}"
+								th:href="@{'/detail/tv/'+${movie.id}}"><img class="card-img-top"
+									th:src="@{/images/poster105665.jpg}" th:alt="${movie.original_name}"></a>
 
 							<div class="card-block">
 								<h4 class="card-title text-center">
-									<a th:href="@{${'/detail/tv/'+movie.id}}"
-										th:text="${movie.original_name}"></a>
+									<a th:href="@{${'/detail/tv/'+movie.id}}" th:text="${movie.original_name}"></a>
 								</h4>
 							</div>
 						</div>
@@ -164,15 +145,12 @@
 				<div class="row">
 					<div class="col-md-3" th:each="movie : ${toprate}">
 						<div class="card">
-							<a th:if="${movie.poster_path}"
-								th:href="@{'/detail/'+${movie.id}}"><img
-								class="card-img-top"
-								th:src="@{${'https://image.tmdb.org/t/p/w500'+movie.poster_path}}"
-								th:alt="${movie.original_title}"></a> <a
-								th:unless="${movie.poster_path}"
-								th:href="@{'/detail/'+${movie.id}}"><img
-								class="card-img-top" th:src="@{/images/poster105665.jpg}"
-								th:alt="${movie.original_title}"></a>
+							<a th:if="${movie.poster_path}" th:href="@{'/detail/'+${movie.id}}"><img
+									class="card-img-top"
+									th:src="@{${'https://image.tmdb.org/t/p/w500'+movie.poster_path}}"
+									th:alt="${movie.original_title}"></a> <a th:unless="${movie.poster_path}"
+								th:href="@{'/detail/'+${movie.id}}"><img class="card-img-top"
+									th:src="@{/images/poster105665.jpg}" th:alt="${movie.original_title}"></a>
 							<div class="card-block">
 								<h4 class="card-title text-center">
 									<a th:href="@{${'/detail/'+movie.id}}" th:text="${movie.title}"></a>
@@ -195,19 +173,15 @@
 				<div class="row">
 					<div class="col-md-3" th:each="movie : ${tvs}">
 						<div class="card">
-							<a th:if="${movie.poster_path}"
-								th:href="@{'/detail/tv/'+${movie.id}}"><img
-								class="card-img-top"
-								th:src="@{${'https://image.tmdb.org/t/p/w500'+movie.poster_path}}"
-								th:alt="${movie.original_name}"></a> <a
-								th:unless="${movie.poster_path}"
-								th:href="@{'/detail/tv/'+${movie.id}}"><img
-								class="card-img-top" th:src="@{/images/poster105665.jpg}"
-								th:alt="${movie.original_name}"></a>
+							<a th:if="${movie.poster_path}" th:href="@{'/detail/tv/'+${movie.id}}"><img
+									class="card-img-top"
+									th:src="@{${'https://image.tmdb.org/t/p/w500'+movie.poster_path}}"
+									th:alt="${movie.original_name}"></a> <a th:unless="${movie.poster_path}"
+								th:href="@{'/detail/tv/'+${movie.id}}"><img class="card-img-top"
+									th:src="@{/images/poster105665.jpg}" th:alt="${movie.original_name}"></a>
 							<div class="card-block">
 								<h4 class="card-title text-center">
-									<a th:href="@{${'/detail/tv/'+movie.id}}"
-										th:text="${movie.original_name}"></a>
+									<a th:href="@{${'/detail/tv/'+movie.id}}" th:text="${movie.original_name}"></a>
 								</h4>
 							</div>
 						</div>
@@ -217,5 +191,7 @@
 			</section>
 		</div>
 	</th:block>
+	
 </body>
+
 </html>

@@ -13,6 +13,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.filmnew.Enity.film;
 import com.filmnew.Enity.results;
+import com.filmnew.Service.UserCommentService;
 import com.filmnew.Service.UserService;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
@@ -21,6 +22,8 @@ public class CommonController{
 	ModelAndView mv = new ModelAndView();
 	@Autowired
 	UserService userService;
+	@Autowired
+	UserCommentService userCMTService;
 	String urlPosterNothing = "https://image.tmdb.org/t/p/w500/cR6rQDFpMOQp2LzB6vL4ZcaDo1j.jpg";
 	private final String urlImage = "https://image.tmdb.org/t/p/original";
 	private final String urlBigImage = "https://image.tmdb.org/t/p/w500";

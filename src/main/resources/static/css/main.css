@@ -572,6 +572,14 @@ pre {
   padding-right: 15px;
   padding-left: 15px; }
 
+.comments-le{
+position: relative;
+  width: 100%;
+  min-height: 1px;
+  flex: 0 0 75%;
+    max-width: 100%;
+}
+
 .col {
   flex-basis: 0;
   flex-grow: 1;
@@ -1025,7 +1033,7 @@ pre {
     max-width: 66.66667%; }
   .col-xl-9 {
     flex: 0 0 75%;
-    max-width: 75%; }
+    max-width: 100%; }
   .col-xl-10 {
     flex: 0 0 83.33333%;
     max-width: 83.33333%; }
@@ -1635,6 +1643,7 @@ fieldset[disabled] a.btn {
   background-color: #ed215e;
   border-color: #ed215e; 
   margin: 4px 4px 4px 4px;
+  width: 110px;
   }
   .btn-primary:hover {
     color: #fff;
@@ -1657,6 +1666,7 @@ fieldset[disabled] a.btn {
   background-color: #868e96;
   border-color: #868e96; 
   margin: 3px 3px 3px 3px;
+  width: 71px;
   }
   .btn-secondary:hover {
     color: #fff;
