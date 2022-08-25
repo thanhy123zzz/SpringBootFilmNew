@@ -20,12 +20,11 @@
 					th:href="@{'/watch/'+${movie.id}}"
 					class="btn btn-primary btn-lg btn-block"><i
 					class="fa fa-television" aria-hidden="true"></i> Watch Now</a>
-
 				<!-- Button trigger modal -->
 				<button type="button" class="btn btn-secondary btn-lg btn-block"
 					data-toggle="modal" data-target="#trailerMovie">Watch
 					Trailer</button>
-
+				<a th:href="@{/watching}" class="btn btn-outline-info btn-lg btn-block">Watch a video</a>
 				<!-- Modal -->
 				<div class="modal fade bd-example-modal-lg" id="trailerMovie"
 					tabindex="-1" role="dialog" aria-labelledby="trailerMovieLabel"
