@@ -1,5 +1,6 @@
 package com.filmnew.Dao;
 
+import java.sql.Blob;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,5 +32,13 @@ public class UserCommentDaoImp implements UserCommentDao{
 		list = jdbctemplate.query(query, new MapperCmt());
 		return list;
 	}
-	
+
+	@Override
+	public Blob getvideo() {
+		String query = "select video from videos where MaSinhVien=?";
+		Blob video = jdbctemplate.queryForObject(query,new Object[] {"08000001"},Blob.class);
+		return video;
+	}
+
+
 }

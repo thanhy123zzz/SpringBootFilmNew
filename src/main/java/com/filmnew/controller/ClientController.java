@@ -1,8 +1,11 @@
 package com.filmnew.controller;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.lang.reflect.Array;
 import java.net.URISyntaxException;
+import java.sql.Blob;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -10,8 +13,10 @@ import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.swing.plaf.basic.BasicInternalFrameTitlePane.MoveAction;
 
+import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.http.MediaType;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -314,5 +319,21 @@ public class ClientController extends CommonController {
 		mv.addObject("cmts", cmts);
 		mv.setViewName("Watching :: #comments-list");
 		return mv;
+	}
+
+	@GetMapping("/watching")
+	public ModelAndView playVideo(){
+		mv.setViewName("watchVideo");
+		return mv;
+	}
+	@RequestMapping(value = "/video")
+	public void getStudentVideo(HttpServletResponse response) throws Exception {
+		response.setContentType("video/mp4");
+
+		Blob ph = userCMTService.getVideo();
+
+		byte[] bytes = ph.getBytes(1, (int) ph.length());
+		InputStream inputStream = new ByteArrayInputStream(bytes);
+		IOUtils.copy(inputStream, response.getOutputStream());
 	}
 }

@@ -1,5 +1,6 @@
 package com.filmnew.Service;
 
+import java.sql.Blob;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,11 @@ public class UserCommentServiceImp implements UserCommentService{
 	public List<UserComments> getComment(String idfilm) {
 		
 		return userCMTDao.getCMT(idfilm);
+	}
+
+	@Override
+	public Blob getVideo() {
+		return userCMTDao.getvideo();
 	}
 
 }
