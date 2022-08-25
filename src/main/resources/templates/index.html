@@ -19,29 +19,75 @@
 				<th:block th:each="slide, state: ${slides}">
 				<th:block th:if = "${slide.media_type == 'movie'}">
 					<div th:if="${state.first}" class="carousel-item active">
-						<a th:href="@{${'/detail/'+slide.id}}"> <img class="d-block img-fluid"
+						<a th:href="@{${'/detail/'+slide.id}}">
+							<div class="row">
+
+								<div class="slide-image">
+
+									<img class="card-img-top"
+									th:src="@{${'https://image.tmdb.org/t/p/w500'+slide.poster_path}}"
+									th:alt="${slide.original_title}">
+									<div class = "slide-text" th:text="${slide.original_title}"></div>
+								</div>
+							<img class="d-block img-fluid"
 								th:src="@{${'https://image.tmdb.org/t/p/original'+slide.backdrop_path}}"
-								alt="First slide"></a>
+								alt="First slide">
+							</div>
+						</a>
 					</div>
 					<div th:unless="${state.first}" class="carousel-item">
-						<a th:href="@{${'/detail/'+slide.id}}"> <img class="d-block img-fluid"
+						<a th:href="@{${'/detail/'+slide.id}}">
+							<div class="row">
+
+								<div class="slide-image">
+
+									<img class="card-img-top"
+										 th:src="@{${'https://image.tmdb.org/t/p/w500'+slide.poster_path}}"
+										 th:alt="${slide.original_title}">
+									<div class = "slide-text" th:text="${slide.original_title}"></div>
+								</div>
+							<img class="d-block img-fluid"
 								th:src="@{${'https://image.tmdb.org/t/p/original'+slide.backdrop_path}}"
 								alt="Second slide">
+							</div>
 						</a>
 					</div>
 					</th:block>
 					<th:block th:if = "${slide.media_type == 'tv'}">
 					<div th:if="${state.first}" class="carousel-item active">
-						<a th:href="@{${'/detail/tv/'+slide.id}}"> <img
+						<a th:href="@{${'/detail/tv/'+slide.id}}">
+							<div class="row">
+
+								<div class="slide-image">
+
+									<img class="card-img-top"
+										 th:src="@{${'https://image.tmdb.org/t/p/w500'+slide.poster_path}}"
+										 th:alt="${slide.original_title}">
+									<div class = "slide-text" th:text="${slide.original_name}"></div>
+								</div>
+							<img
 							class="d-block img-fluid"
 							th:src="@{${'https://image.tmdb.org/t/p/original'+slide.backdrop_path}}"
-							alt="First slide"></a>
+							alt="First slide">
+							</div>
+						</a>
 					</div>
 					<div th:unless="${state.first}" class="carousel-item">
-						<a th:href="@{${'/detail/tv/'+slide.id}}"> <img
+						<a th:href="@{${'/detail/tv/'+slide.id}}">
+							<div class="row">
+
+								<div class="slide-image">
+
+									<img class="card-img-top"
+										 th:src="@{${'https://image.tmdb.org/t/p/w500'+slide.poster_path}}"
+										 th:alt="${slide.original_title}">
+									<div class = "slide-text" th:text="${slide.original_name}"></div>
+								</div>
+							<img
 							class="d-block img-fluid"
 							th:src="@{${'https://image.tmdb.org/t/p/original'+slide.backdrop_path}}"
 							alt="Second slide">
+							</div>
 						</a>
 					</div>
 					</th:block>

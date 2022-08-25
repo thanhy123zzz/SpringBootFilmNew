@@ -35,7 +35,7 @@ public class UserCommentDaoImp implements UserCommentDao{
 
 	@Override
 	public Blob getvideo() {
-		String query = "select video from videos where MaSinhVien=?";
+		String query = "select video from videos where idFilm=?";
 		Blob video = jdbctemplate.queryForObject(query,new Object[] {"08000001"},Blob.class);
 		return video;
 	}
